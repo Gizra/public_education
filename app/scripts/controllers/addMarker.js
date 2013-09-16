@@ -22,6 +22,7 @@ angular.module('publicEducationApp')
     }
 
     angular.extend($scope, {
+      text: '',
       center: {
         lat: 41.0383,
         lng: 28.9869,
