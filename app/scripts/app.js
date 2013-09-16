@@ -5,7 +5,11 @@ angular.module('publicEducationApp', ["leaflet-directive"])
     $routeProvider
       .when('/', {
         templateUrl: 'views/main.html',
-        controller: 'MainCtrl'
+        controller: 'listMarkersCtrl'
+      })
+      .when('/add-marker', {
+        templateUrl: 'views/add-marker.html',
+        controller: 'AddMarkerCtrl'
       })
       .otherwise({
         redirectTo: '/'

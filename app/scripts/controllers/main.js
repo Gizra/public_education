@@ -1,13 +1,13 @@
 'use strict';
 
 angular.module('publicEducationApp')
-  .controller('MainCtrl', function ($scope) {
+  .controller('listMarkersCtrl', function ($scope) {
 
     angular.extend($scope, {
-      istanbul: {
+      center: {
         lat: 41.0383,
         lng: 28.9869,
-        zoom: 20
+        zoom: 16
       },
       markers: {
         marker1: {
@@ -15,7 +15,7 @@ angular.module('publicEducationApp')
           lng: 28.9869,
           message: "This is Gezi Parki",
           focus: false,
-          draggable: true
+          draggable: false
         },
         marker2: {
           lat: 41.0383,
@@ -25,5 +25,10 @@ angular.module('publicEducationApp')
           draggable: false
         }
       }
+    });
+
+    $scope.$on('leafletDirectiveMap.click', function(event){
+      $scope.eventDetected = "Click";
+      console.log(event);
     });
   });
