@@ -3,7 +3,7 @@
 angular.module('publicEducationApp')
   .controller('listMarkersCtrl', function ($scope, Leaflet) {
 
-    angular.extend($scope, Leaflet.getLeafletBase());
+    angular.extend($scope, Leaflet.getCenter());
 
     angular.extend($scope, {
       markers: {

@@ -5,30 +5,36 @@ angular.module('publicEducationApp')
 
     return {
 
+      // Private variable to hold the state.
       data: {
-        "leaflet": {},
-        "markers": {},
-        "marker": null
-      },
-
-      /**
-       * Return all the cart items (products, line items).
-       */
-      getLeafletBase: function() {
-        this.data.leaflet = {
+        leaflet: {
           defaults: {
             maxZoom: 20,
             minZoom: 14
-
           },
           center: {
             lat: 41.0383,
             lng: 28.9869,
             zoom: 16
           }
-        }
+        },
+        markers: {},
+        marker: null
+      },
 
-        return this.data.leaflet;
+      getDefaults: function() {
+        return this.data.leaflet.defaults;
+      },
+
+      /**
+       * Return all the cart items (products, line items).
+       */
+      getCenter: function() {
+        return this.data.leaflet.center;
+      },
+
+      setCenter: function(center) {
+        this.data.leaflet.center = center;
       }
     }
 
