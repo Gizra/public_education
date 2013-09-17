@@ -12,7 +12,7 @@
     "angular-cookies": "~1.0.7",
     "angular-sanitize": "~1.0.7",
     "phonegap": "~2.9.0",
-    "angular-leaflet": "~0.6.0",
+    "angular-leaflet": "master",
     "leaflet": "http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.js"
   },
   "devDependencies": {
