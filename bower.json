@@ -1,6 +1,7 @@
 {
   "name": "publicEducation",
   "version": "0.0.0",
+  "appPath": "www",
   "dependencies": {
     "angular": "~1.0.7",
     "json3": "~3.2.4",
