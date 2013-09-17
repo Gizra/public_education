@@ -23,14 +23,14 @@ angular.module('publicEducationApp')
       },
 
       getDefaults: function() {
-        return this.data.leaflet.defaults;
+        return {defaults: this.data.leaflet.defaults};
       },
 
       /**
        * Return all the cart items (products, line items).
        */
       getCenter: function() {
-        return this.data.leaflet.center;
+        return {center: this.data.leaflet.center};
       },
 
       setCenter: function(center) {

@@ -3,6 +3,7 @@
 angular.module('publicEducationApp')
   .controller('listMarkersCtrl', function ($scope, Leaflet) {
 
+    angular.extend($scope, Leaflet.getDefaults());
     angular.extend($scope, Leaflet.getCenter());
 
     angular.extend($scope, {
@@ -23,4 +24,11 @@ angular.module('publicEducationApp')
         }
       }
     });
+
+    angular.forEach(['zoomend','moveend'], function(value) {
+      $scope.$on('leafletDirectiveMap.' + value, function(event) {
+        Leaflet.setCenter($scope.center);
+      });
+    });
+
   });

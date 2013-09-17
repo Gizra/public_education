@@ -4,11 +4,6 @@ angular.module('publicEducationApp')
   .controller('AddMarkerCtrl', function ($scope, Leaflet) {
 
     var updateMarker = function() {
-
-      Leaflet.setCenter($scope.center);
-
-      console.log(Leaflet.getCenter());
-
       // The marker is always in the center of the map, and visible only if the
       // zoom is equal or above 16.
       if ($scope.center.zoom >= 16) {
@@ -25,15 +20,11 @@ angular.module('publicEducationApp')
       }
     }
 
+    angular.extend($scope, Leaflet.getDefaults());
     angular.extend($scope, Leaflet.getCenter());
 
     angular.extend($scope, {
       text: '',
-      center: {
-        lat: 41.0383,
-        lng: 28.9869,
-        zoom: 20
-      },
       markers: {}
     });
 
@@ -42,6 +33,7 @@ angular.module('publicEducationApp')
     angular.forEach(['zoomend','moveend'], function(value) {
       $scope.$on('leafletDirectiveMap.' + value, function(event) {
         updateMarker();
+        Leaflet.setCenter($scope.center);
       });
     });
 
