@@ -1,19 +1,11 @@
 'use strict';
 
 angular.module('publicEducationApp')
-  .controller('listMarkersCtrl', function ($scope) {
+  .controller('listMarkersCtrl', function ($scope, Leaflet) {
+
+    angular.extend($scope, Leaflet.getLeafletBase());
 
     angular.extend($scope, {
-      defaults: {
-        maxZoom: 20,
-        minZoom: 14
-
-      },
-      center: {
-        lat: 41.0383,
-        lng: 28.9869,
-        zoom: 16
-      },
       markers: {
         marker1: {
           lat: 41.0383,

@@ -1,9 +1,11 @@
 'use strict';
 
 angular.module('publicEducationApp')
-  .controller('AddMarkerCtrl', function ($scope) {
+  .controller('AddMarkerCtrl', function ($scope, Leaflet) {
 
     var updateMarker = function() {
+
+      console.log(Leaflet.getLeafletBase());
 
       // The marker is always in the center of the map, and visible only if the
       // zoom is equal or above 16.
@@ -20,6 +22,8 @@ angular.module('publicEducationApp')
         $scope.markers = {};
       }
     }
+
+    angular.extend($scope, Leaflet.getLeafletBase());
 
     angular.extend($scope, {
       text: '',
