@@ -26,9 +26,4 @@ angular.module('publicEducationApp')
         }
       }
     });
-
-    $scope.$on('leafletDirectiveMap.click', function(event){
-      $scope.eventDetected = "Click";
-      console.log(event);
-    });
   });
