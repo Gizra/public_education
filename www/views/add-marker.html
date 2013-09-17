@@ -1,3 +1,11 @@
+<div ng-show="center.zoom >= 16">
+  You need to zoom.
+</div>
+
+<div ng-show="center.zoom < 16">
+  Select place.
+</div>
+
 <leaflet center="center" markers="markers" defaults="defaults" height="200px"></leaflet>
 
 <form>
