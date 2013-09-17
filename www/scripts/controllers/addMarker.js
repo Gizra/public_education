@@ -11,7 +11,8 @@ angular.module('publicEducationApp')
           marker: {
             lat: $scope.center.lat,
             lng: $scope.center.lng,
-            message: "This is Gezi Parki"
+            message: "This is Gezi Parki",
+            draggable: true
           }
         };
       }
