@@ -6,8 +6,8 @@ angular.module('publicEducationApp')
     var updateMarker = function() {
 
       // The marker is always in the center of the map, and visible only if the
-      // zoom is equal or above 10.
-      if ($scope.center.zoom >= 10) {
+      // zoom is equal or above 16.
+      if ($scope.center.zoom >= 16) {
         $scope.markers = {
           marker: {
             lat: $scope.center.lat,

@@ -4,6 +4,11 @@ angular.module('publicEducationApp')
   .controller('listMarkersCtrl', function ($scope) {
 
     angular.extend($scope, {
+      defaults: {
+        maxZoom: 20,
+        minZoom: 14
+
+      },
       center: {
         lat: 41.0383,
         lng: 28.9869,
