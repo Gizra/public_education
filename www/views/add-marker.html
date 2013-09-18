@@ -17,8 +17,12 @@
     {{markers.marker.venue}}
   </div>
 
+  <div class="char-count" ng-class="{error: 100 - text.length < 0}">
+    {{ 100 - text.length}}
+  </div>
+
   <div>
-    <input type="submit" value="Submit">
+    <button ng-disabled="100 - text.length < 0">Submit</button>
   </div>
 </form>
 
