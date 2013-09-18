@@ -15,7 +15,8 @@ angular.module('publicEducationApp')
             lat: lat,
             lng: lng,
             draggable: false,
-            venue: Foursquare.getVenue(lat, lng)
+            // Add text until venue is loaded.
+            venue: "Loading..."
           }
         };
 
