@@ -14,7 +14,7 @@
   </div>
 
   <div class="venue">
-    {{markers.marker.venue.name}}
+    {{markers.marker.venue.name | venueName}}
   </div>
 
   <div class="char-count" ng-class="{error: 100 - text.length < 0}">
