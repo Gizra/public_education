@@ -11,9 +11,9 @@ describe('Filter: venueName', function () {
     venueName = $filter('venueName');
   }));
 
-  it('should return the input prefixed with "venueName filter:"', function () {
-    var text = 'angularjs';
-    expect(venueName(text)).toBe('venueName filter: ' + text);
+  it('should return the venue name if exists, or "Loading" if not."', function () {
+    expect(venueName('some place')).toBe('some place');
+    expect(venueName(null)).toBe('Loading...');
   });
 
 });
