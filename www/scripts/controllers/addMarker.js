@@ -16,11 +16,11 @@ angular.module('publicEducationApp')
             lng: lng,
             draggable: false,
             // Add text until venue is loaded.
-            venue: "Loading..."
+            venue: null
           }
         };
 
-        // Populate the value.
+        // Populate the venue.
         Foursquare.getVenue(lat, lng).then(function(data) {
           $scope.markers.marker.venue = data;
         });

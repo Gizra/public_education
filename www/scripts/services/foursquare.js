@@ -22,7 +22,7 @@ angular.module('publicEducationApp')
           cache: true
         })
           .success(function (data) {
-            defer.resolve(data.response.venues[0].name);
+            defer.resolve(data.response.venues[0]);
           })
           .error(function (data, status) {
           });
