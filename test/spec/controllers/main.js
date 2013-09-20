@@ -1,17 +1,17 @@
 'use strict';
 
-describe('Controller: MainCtrl', function () {
+describe('Controller: listMarkersCtrl', function () {
 
   // load the controller's module
   beforeEach(module('publicEducationApp'));
 
-  var MainCtrl,
+  var listMarkersCtrl,
     scope;
 
   // Initialize the controller and a mock scope
   beforeEach(inject(function ($controller, $rootScope) {
     scope = $rootScope.$new();
-    MainCtrl = $controller('MainCtrl', {
+    listMarkersCtrl = $controller('listMarkersCtrl', {
       $scope: scope
     });
   }));
