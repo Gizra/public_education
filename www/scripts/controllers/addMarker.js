@@ -14,7 +14,7 @@ angular.module('publicEducationApp')
           marker: {
             lat: lat,
             lng: lng,
-            draggable: false,
+            draggable: true,
             // Add text until venue is loaded.
             venue: null
           }
@@ -39,8 +39,16 @@ angular.module('publicEducationApp')
     storage.bind($scope,'markers');
     updateMarker();
 
-    angular.forEach(['zoomend','moveend'], function(value) {
-      $scope.$on('leafletDirectiveMap.' + value, function() {
+    angular.forEach(['leafletDirectiveMap.zoomend','leafletDirectiveMap.moveend', 'leafletDirectiveMarker.dragend'], function(value) {
+      $scope.$on(value, function(event, args) {
+        console.log(event);
+
+        if (event.name == 'leafletDirectiveMarker.dragend') {
+          // Marker was dragged, so center the map accordingly.
+          $scope.center.lat = args.leafletEvent.target._latlng.lat;
+          $scope.center.lng = args.leafletEvent.target._latlng.lng;
+        }
+
         updateMarker();
         Leaflet.setCenter($scope.center);
       });
