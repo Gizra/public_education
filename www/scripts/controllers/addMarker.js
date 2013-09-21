@@ -43,7 +43,7 @@ angular.module('publicEducationApp')
       $scope.$on(value, function(event, args) {
         console.log(event);
 
-        if (event.name == 'leafletDirectiveMarker.dragend') {
+        if (event.name === 'leafletDirectiveMarker.dragend') {
           // Marker was dragged, so center the map accordingly.
           $scope.center.lat = args.leafletEvent.target._latlng.lat;
           $scope.center.lng = args.leafletEvent.target._latlng.lng;
