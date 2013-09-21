@@ -43,8 +43,8 @@ describe('Controller: AddmarkerCtrl', function () {
   });
 
   it('should update the venue and marker info', function () {
-    expect(scope.markers.marker.venue).toBe(1000);
-    expect(scope.markers.marker.venue.name).toBe("Test place");
     $httpBackend.flush();
+    expect(scope.markers.marker.venue.id).toBe(1000);
+    expect(scope.markers.marker.venue.name).toBe("Test place");
   });
 });
