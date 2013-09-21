@@ -28,7 +28,7 @@ angular.module('publicEducationApp')
       else {
         $scope.markers = {};
       }
-    }
+    };
 
     angular.extend($scope, Leaflet.getDefaults());
     angular.extend($scope, Leaflet.getCenter());
@@ -41,7 +41,7 @@ angular.module('publicEducationApp')
     updateMarker();
 
     angular.forEach(['zoomend','moveend'], function(value) {
-      $scope.$on('leafletDirectiveMap.' + value, function(event) {
+      $scope.$on('leafletDirectiveMap.' + value, function() {
         updateMarker();
         Leaflet.setCenter($scope.center);
       });

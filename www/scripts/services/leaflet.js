@@ -36,6 +36,6 @@ angular.module('publicEducationApp')
       setCenter: function(center) {
         this.data.leaflet.center = center;
       }
-    }
+    };
 
   });
