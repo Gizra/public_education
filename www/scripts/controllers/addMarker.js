@@ -3,12 +3,12 @@
 angular.module('publicEducationApp')
   .controller('AddMarkerCtrl', function ($scope, Leaflet, Foursquare, storage) {
 
-    var updateMarker = function() {
+    var updateMarker = function () {
       // The marker is always in the center of the map, and visible only if the
       // zoom is equal or above 16.
       if ($scope.center.zoom >= 16) {
         var lat = $scope.center.lat,
-            lng = $scope.center.lng;
+          lng = $scope.center.lng;
 
         $scope.markers = {
           marker: {
@@ -21,7 +21,7 @@ angular.module('publicEducationApp')
         };
 
         // Populate the venue.
-        Foursquare.getVenue(lat, lng).then(function(data) {
+        Foursquare.getVenue(lat, lng).then(function (data) {
           $scope.markers.marker.venue = data;
         });
       }
@@ -34,13 +34,13 @@ angular.module('publicEducationApp')
 
 
     // @todo: Move to init function?
-    storage.bind($scope,'center', {defaultValue: Leaflet.getCenter()});
-    storage.bind($scope,'text');
-    storage.bind($scope,'markers');
+    storage.bind($scope, 'center', {defaultValue: Leaflet.getCenter()});
+    storage.bind($scope, 'text');
+    storage.bind($scope, 'markers');
     updateMarker();
 
-    angular.forEach(['leafletDirectiveMap.zoomend','leafletDirectiveMap.moveend', 'leafletDirectiveMarker.dragend'], function(value) {
-      $scope.$on(value, function(event, args) {
+    angular.forEach(['leafletDirectiveMap.zoomend', 'leafletDirectiveMap.moveend', 'leafletDirectiveMarker.dragend'], function (value) {
+      $scope.$on(value, function (event, args) {
         console.log(event);
 
         if (event.name === 'leafletDirectiveMarker.dragend') {
