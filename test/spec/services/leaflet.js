@@ -7,8 +7,8 @@ describe('Service: leaflet', function () {
 
   // instantiate service
   var leaflet;
-  beforeEach(inject(function (_leaflet_) {
-    leaflet = _leaflet_;
+  beforeEach(inject(function ($injector) {
+    leaflet = $injector.get('Leaflet');
   }));
 
   it('should do something', function () {

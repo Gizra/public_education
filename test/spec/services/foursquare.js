@@ -7,8 +7,8 @@ describe('Service: foursquare', function () {
 
   // instantiate service
   var foursquare;
-  beforeEach(inject(function (_foursquare_) {
-    foursquare = _foursquare_;
+  beforeEach(inject(function ($injector) {
+    foursquare = $injector.get('Foursquare');
   }));
 
   it('should do something', function () {
