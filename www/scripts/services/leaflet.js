@@ -8,10 +8,6 @@ angular.module('publicEducationApp')
       // Private variable to hold the state.
       data: {
         leaflet: {
-          defaults: {
-            maxZoom: 20,
-            minZoom: 14
-          },
           center: {
             lat: 41.0383,
             lng: 28.9869,
@@ -23,14 +19,19 @@ angular.module('publicEducationApp')
       },
 
       getDefaults: function() {
-        return {defaults: this.data.leaflet.defaults};
+        return {
+          defaults: {
+            maxZoom: 20,
+            minZoom: 14
+          }
+        };
       },
 
       /**
        * Return all the cart items (products, line items).
        */
       getCenter: function() {
-        return {center: this.data.leaflet.center};
+        return this.data.leaflet.center;
       },
 
       setCenter: function(center) {

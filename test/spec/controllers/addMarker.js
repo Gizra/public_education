@@ -21,14 +21,14 @@ describe('Controller: AddmarkerCtrl', function () {
       response: {
         venues: [{
           id: 1000,
-          name: "Test place"
+          name: 'Test place'
           // @todo: Add lng, lat.
         }]
       }
     };
 
     // @todo: Use wildcards.
-    $httpBackend.when('GET', 'https://api.foursquare.com/v2/venues/search?limit=1&ll=41.0383%2C28.9869&oauth_token=ARSXRAKVBW1D3KGHZVHN0IGHAITQQTIYXSKIKS2SWOSYHQEU&v=20130917').respond(venuesResponse)
+    $httpBackend.when('GET', 'https://api.foursquare.com/v2/venues/search?limit=1&ll=41.0383%2C28.9869&oauth_token=ARSXRAKVBW1D3KGHZVHN0IGHAITQQTIYXSKIKS2SWOSYHQEU&v=20130917').respond(venuesResponse);
 
     scope = $rootScope.$new();
 
@@ -45,6 +45,6 @@ describe('Controller: AddmarkerCtrl', function () {
   it('should update the venue and marker info', function () {
     $httpBackend.flush();
     expect(scope.markers.marker.venue.id).toBe(1000);
-    expect(scope.markers.marker.venue.name).toBe("Test place");
+    expect(scope.markers.marker.venue.name).toBe('Test place');
   });
 });

@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('publicEducationApp', ['leaflet-directive'])
+angular.module('publicEducationApp', ['angularLocalStorage', 'leaflet-directive'])
   .config(function ($routeProvider, $httpProvider) {
     $routeProvider
       .when('/', {

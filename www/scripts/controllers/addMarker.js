@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('publicEducationApp')
-  .controller('AddMarkerCtrl', function ($scope, Leaflet, Foursquare) {
+  .controller('AddMarkerCtrl', function ($scope, Leaflet, Foursquare, storage) {
 
     var updateMarker = function() {
       // The marker is always in the center of the map, and visible only if the
@@ -31,13 +31,12 @@ angular.module('publicEducationApp')
     };
 
     angular.extend($scope, Leaflet.getDefaults());
-    angular.extend($scope, Leaflet.getCenter());
 
-    angular.extend($scope, {
-      text: '',
-      markers: {}
-    });
 
+    // @todo: Move to init function?
+    storage.bind($scope,'center', {defaultValue: Leaflet.getCenter()});
+    storage.bind($scope,'text');
+    storage.bind($scope,'markers');
     updateMarker();
 
     angular.forEach(['zoomend','moveend'], function(value) {

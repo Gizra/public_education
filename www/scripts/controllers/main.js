@@ -1,10 +1,10 @@
 'use strict';
 
 angular.module('publicEducationApp')
-  .controller('listMarkersCtrl', function ($scope, Leaflet) {
+  .controller('listMarkersCtrl', function ($scope, Leaflet, storage) {
 
     angular.extend($scope, Leaflet.getDefaults());
-    angular.extend($scope, Leaflet.getCenter());
+    storage.bind($scope,'center', {defaultValue: Leaflet.getCenter()});
 
     angular.extend($scope, {
       markers: {
