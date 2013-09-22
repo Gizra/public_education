@@ -6,10 +6,10 @@ angular.module('publicEducationApp')
       templateUrl: '../views/sound-recorder.html',
       restrict: 'E',
       scope: {
-        fileURI: '=fileURI'
+        file: '=file'
       },
       link: function postLink(scope, element, attrs) {
-        scope.fileURI = '/tmp/foo';
+        scope.file = '/tmp/foo';
 
         var record = function() {
           console.log('record');

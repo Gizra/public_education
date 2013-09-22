@@ -36,7 +36,7 @@ angular.module('publicEducationApp')
     // @todo: Move to init function?
     storage.bind($scope, 'center', {defaultValue: Leaflet.getCenter()});
     storage.bind($scope, 'text');
-    storage.bind($scope, 'fileURI');
+    storage.bind($scope, 'file');
     storage.bind($scope, 'markers');
     updateMarker();
 
