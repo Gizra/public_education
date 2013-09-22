@@ -1,15 +1,15 @@
 'use strict';
 
 angular.module('publicEducationApp')
-  .directive('SoundRecorder', function () {
+  .directive('soundRecorder', function () {
     return {
-      templateUrl: '<div></div>',
+      template: '/views/sound-recorder',
       restrict: 'E',
       scope: {
         fileURI: '=fileURI'
       },
       link: function postLink(scope, element, attrs) {
-        element.text('this is the SoundRecorder directive');
+        scope.fileURI = '/tmp/foo';
       }
     };
   });
