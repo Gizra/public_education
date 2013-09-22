@@ -37,7 +37,6 @@ angular.module('publicEducationApp')
     storage.bind($scope, 'center', {defaultValue: Leaflet.getCenter()});
     storage.bind($scope, 'text');
     storage.bind($scope, 'markers');
-    updateMarker();
 
     angular.forEach(['leafletDirectiveMap.zoomend', 'leafletDirectiveMap.moveend', 'leafletDirectiveMarker.dragend'], function (value) {
       $scope.$on(value, function (event, args) {
