@@ -11,7 +11,7 @@ angular.module('publicEducationApp')
       link: function postLink(scope, element, attrs) {
         scope.file = '/tmp/foo';
 
-        var record = function() {
+        scope.record = function() {
           console.log('record');
         }
       }
