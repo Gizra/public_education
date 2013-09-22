@@ -6,7 +6,6 @@ angular.module('publicEducationApp')
     angular.extend($scope, Leaflet.getDefaults());
     storage.bind($scope,'center', {defaultValue: Leaflet.getCenter()});
 
-    // @todo: Replace with dynamic content.
     angular.extend($scope, {
       markers: {
         marker1: {
