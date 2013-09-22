@@ -10,6 +10,10 @@ angular.module('publicEducationApp')
       },
       link: function postLink(scope, element, attrs) {
         scope.fileURI = '/tmp/foo';
+
+        var record = function() {
+          console.log('record');
+        }
       }
     };
   });
