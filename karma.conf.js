@@ -15,6 +15,8 @@ module.exports = function(config) {
       'www/bower_components/angular-mocks/angular-mocks.js',
       'www/bower_components/angular-leaflet/src/angular-leaflet-directive.js',
       'www/bower_components/angularLocalStorage/src/angularLocalStorage.js',
+      'www/bower_components/angular-audio-player/src/angular-audio-player.js',
+      'www/bower_components/angular-audio-player/src/helpers.js',
       'www/bower_components/angular-cookies/angular-cookies.js',
       'www/scripts/*.js',
       'www/scripts/**/*.js',
