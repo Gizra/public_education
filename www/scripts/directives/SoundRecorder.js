@@ -3,7 +3,7 @@
 angular.module('publicEducationApp')
   .directive('soundRecorder', function () {
     return {
-      template: '/views/sound-recorder',
+      templateUrl: '../views/sound-recorder.html',
       restrict: 'E',
       scope: {
         fileURI: '=fileURI'
