@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('publicEducationApp')
-  .controller('AddMarkerCtrl', function ($scope, Leaflet, Foursquare, storage) {
+  .controller('addMarkerCtrl', function ($scope, Leaflet, Foursquare, storage) {
 
     var updateMarker = function () {
       // The marker is always in the center of the map, and visible only if the
