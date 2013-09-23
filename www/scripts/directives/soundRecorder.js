@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('publicEducationApp')
-  .directive('soundRecorder', function () {
+  .directive('soundRecorder', function (UploadFile, $timeout) {
     return {
       templateUrl:'views/sound-recorder.html',
       restrict: 'E',
@@ -13,48 +13,41 @@ angular.module('publicEducationApp')
 
         scope.record = function() {
           console.log('record');
-          
-            // Record audio
-		    //
+          // Record audio
+		      //
 	        var src = "myrecording.amr";
 	        var mediaRec = new Media(src, onSuccess, onError);
 	        		
-	        // Record audio
+	        // Record audio for 6 seconds.
 	        mediaRec.startRecord();
-	
-	        // Stop recording after 10 sec
-	        var recTime = 0;
-	        var recInterval = setInterval(function() {
-	            recTime = recTime + 1;
-	            setAudioPosition(recTime + " sec");
-	            if (recTime >= 10) {
-	                clearInterval(recInterval);
-	                mediaRec.stopRecord();
-	            }
-	        }, 1000);
-		
-		    // onSuccess Callback
-		    //
-		    function onSuccess() {
-		        console.log("recordAudio():Audio Success");
-		    }
-		
-		    // onError Callback
-		    //
-		    function onError(error) {
-		        alert('code: '    + error.code    + '\n' +
-		              'message: ' + error.message + '\n');
-		    }
-		    
-	        // Set audio position
-		    //
-		    function setAudioPosition(position) {
-		        document.getElementById('audio_position').innerHTML = position;
-		    }
-          
-          
-          
-        }
+          scope.counter = 6;
+          scope.onTimeout = function(){
+            scope.counter--;
+            if (scope.counter > 0) {
+              interval = $timeout(scope.onTimeout,1000);
+            }
+            else {
+              mediaRec.stopRecord();
+            }
+          };
+          var interval = $timeout(scope.onTimeout,1000);
+
+          // onSuccess Callback
+          //
+          function onSuccess() {
+              console.log("recordAudio():Audio Success");
+          }
+
+          // onError Callback
+          //
+          function onError(error) {
+            alert('code: '    + error.code    + '\n' + 'message: ' + error.message + '\n');
+          }
+        },
+
+        scope.upload = function() {
+          UploadFile.sendFile();
+        };
       }
     };
   });
