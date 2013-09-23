@@ -12,12 +12,12 @@ angular.module('publicEducationApp')
 
 
         var icon = L.icon({
-          iconUrl: 'http://leafletjs.com/docs/images/leaf-orange.png',
-          shadowUrl: 'http://leafletjs.com/docs/images/leaf-shadow.png',
-          iconSize:     [38, 95],
-          shadowSize:   [50, 64],
-          iconAnchor:   [22, 94],
-          shadowAnchor: [4, 62]
+          iconUrl: 'images/marker-icon.png',
+          shadowUrl: 'http://cdn.leafletjs.com/leaflet-0.6.4/images/marker-shadow.png',
+          iconSize:     [25, 40],
+          shadowSize:   [25, 44],
+          iconAnchor:   [10, 40],
+          shadowAnchor: [2, 42]
         });
 
         angular.extend($scope, icon);
