@@ -8,7 +8,7 @@ angular.module('publicEducationApp')
 
     angular.extend($scope, {
       markers: {
-        marker1: {
+        '513ee460e4b06c84bc3599d1': {
           lat: 41.0383,
           lng: 28.9869,
           // @todo: Remove hardcoding.

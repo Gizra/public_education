@@ -14,7 +14,8 @@
     "phonegap": "~2.9.0",
     "angular-leaflet": "master",
     "leaflet": "http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.js",
-    "angularLocalStorage": "~0.1.7"
+    "angularLocalStorage": "~0.1.7",
+    "angular-audio-player": "mrgamer/angular-audio-player#master"
   },
   "devDependencies": {
     "angular-mocks": "~1.0.7",

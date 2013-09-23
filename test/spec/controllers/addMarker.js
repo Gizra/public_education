@@ -1,12 +1,12 @@
 'use strict';
 
-describe('Controller: AddmarkerCtrl', function () {
+describe('Controller: addmarkerCtrl', function () {
 
   // load the controller's module
   beforeEach(module('publicEducationApp'));
 
   var $httpBackend,
-    AddMarkerCtrl,
+    addMarkerCtrl,
     // Define four Square venues response
     venuesResponse = {},
     scope;
@@ -32,7 +32,7 @@ describe('Controller: AddmarkerCtrl', function () {
 
     scope = $rootScope.$new();
 
-    AddMarkerCtrl = $controller('AddMarkerCtrl', {
+    addMarkerCtrl = $controller('addMarkerCtrl', {
       $scope: scope
     });
   }));

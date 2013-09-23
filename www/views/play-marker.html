@@ -1,0 +1,26 @@
+<audio data-player-control="player" playlist="selectedMarker.playList" audio-player controls></audio>
+
+</audio>
+
+<div class="btn" ng-click="player.play()">
+  <span>Simple Play</span>
+  <i class="icon-play"></i>
+</div>
+
+<div class="btn" ng-click="player.next()">
+  <span>Next</span>
+  <i class="icon-step-forward"></i>
+</div>
+
+Current Track: {{ player.currentTrack }}
+
+<div>
+  <img ng-src="{{ selectedMarker.playList[player.currentTrack - 1].user.photo }}" />
+  Text of track: {{ selectedMarker.playList[player.currentTrack - 1].text }}
+</div>
+
+<span ng-show="player.playing">Player status: Playing</span>
+<span ng-show="!player.playing">Player status: Paused</span>
+
+<a href="#/">Home</a>
+
