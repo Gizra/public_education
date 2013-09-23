@@ -32,10 +32,7 @@ angular.module('publicEducationApp')
           {
             src: 'http://demos.w3avenue.com/html5-unleashed-tips-tricks-and-techniques/demo-audio.ogg',
             text: '3rd text',
-            user: {
-              name: 'foo bar',
-              photo: 'http://facebook.com/...'
-            }
+            user: {}
           }
         ]
       }
