@@ -7,3 +7,4 @@ www/bower_components
 www/scripts/config.js
 .idea
 Gruntfile.js
+.grunt
