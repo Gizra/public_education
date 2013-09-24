@@ -5,3 +5,7 @@ dist
 app/bower_components
 www/bower_components
 .idea
+.cordova
+merges
+platforms
+plugins

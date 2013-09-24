@@ -2,31 +2,33 @@ public_education
 ================
 
 ```
+# Create new phonegap project and remove www folder
 phonegap create test com.gizra.pubedu PubicEducation
 cd test
+rm -r www
+cd ..
+
+# Clone repo and move to phonegap project folder
+git clone git@github.com:Gizra/public_education.git
+cd public_education
+cp -r . /var/test
+
 # Install Phonegap plugins
+cd ../test
+git checkout 16
 phonegap local plugin add https://git-wip-us.apache.org/repos/asf/cordova-plugin-media-capture.git
 phonegap local plugin add https://git-wip-us.apache.org/repos/asf/cordova-plugin-media.git
 phonegap local plugin add https://git-wip-us.apache.org/repos/asf/cordova-plugin-file.git
 phonegap local plugin add https://git-wip-us.apache.org/repos/asf/cordova-plugin-file-transfer.git
+
+# Install dependencies
+bower install
+
 # Build android platform
 phonegap local build android
-cd platforms/android
-sudo rm -r assets
-git clone git@github.com:Gizra/public_education.git assets
-cd assets
-git checkout 16
-bower install
-# Update config.xml to allow access to other domains
-cd ../res/xml
-cp -f /var/config.xml config.xml
 
-```
+# Install the application
+phonegap local install android
 
-```
-sudo npm install -g yo
-npm install
-bower install
-grunt server
 ```
 
