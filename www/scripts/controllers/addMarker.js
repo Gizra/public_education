@@ -8,7 +8,19 @@ angular.module('publicEducationApp')
       // zoom is equal or above 16.
       if ($scope.center.zoom >= 16) {
         var lat = $scope.center.lat,
-          lng = $scope.center.lng;
+            lng = $scope.center.lng;
+
+
+        var icon = L.icon({
+          iconUrl: 'images/marker-icon.png',
+          shadowUrl: 'http://cdn.leafletjs.com/leaflet-0.6.4/images/marker-shadow.png',
+          iconSize:     [25, 40],
+          shadowSize:   [25, 44],
+          iconAnchor:   [10, 40],
+          shadowAnchor: [2, 42]
+        });
+
+        angular.extend($scope, icon);
 
         $scope.markers = {
           marker: {
@@ -16,7 +28,8 @@ angular.module('publicEducationApp')
             lng: lng,
             draggable: true,
             // Add text until venue is loaded.
-            venue: null
+            venue: null,
+            icon: icon
           }
         };
 
@@ -36,12 +49,12 @@ angular.module('publicEducationApp')
     // @todo: Move to init function?
     storage.bind($scope, 'center', {defaultValue: Leaflet.getCenter()});
     storage.bind($scope, 'text');
+    storage.bind($scope, 'file');
     storage.bind($scope, 'markers');
     updateMarker();
 
     angular.forEach(['leafletDirectiveMap.zoomend', 'leafletDirectiveMap.moveend', 'leafletDirectiveMarker.dragend'], function (value) {
       $scope.$on(value, function (event, args) {
-        console.log(event);
 
         if (event.name === 'leafletDirectiveMarker.dragend') {
           // Marker was dragged, so center the map accordingly.
