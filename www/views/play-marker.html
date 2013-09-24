@@ -15,7 +15,9 @@
 Current Track: {{ player.currentTrack }}
 
 <div>
-  <img ng-src="{{ selectedMarker.playList[player.currentTrack - 1].user.photo }}" />
+  <div class="photo">
+    <img ng-show="selectedMarker.playList[player.currentTrack - 1].user.photo" ng-src="{{ selectedMarker.playList[player.currentTrack - 1].user.photo }}" />
+  </div>
   Text of track: {{ selectedMarker.playList[player.currentTrack - 1].text }}
 </div>
 
