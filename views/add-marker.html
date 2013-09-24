@@ -1,0 +1,33 @@
+<div ng-show="center.zoom >= 16">
+  Select place.
+</div>
+
+<div ng-show="center.zoom < 16">
+  You need to zoom.
+</div>
+
+<leaflet center="center" markers="markers" defaults="defaults" height="200px"></leaflet>
+
+<form>
+  <div>
+    <textarea rows="6" name="text" ng-model="text" placeholder="Enter text" required=""></textarea><br>
+  </div>
+
+  <div class="venue">
+    {{markers.marker.venue.name | venueName}}
+  </div>
+
+  <div class="char-count" ng-class="{error: 100 - text.length < 0}">
+    {{ 100 - text.length}}
+  </div>
+
+  <div>
+    <button ng-disabled="100 - text.length < 0">Submit</button>
+  </div>
+</form>
+
+<a href="#/">Home</a>
+
+<div>
+  {{ user }}
+</div>

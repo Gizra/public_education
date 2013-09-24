@@ -1,0 +1,12 @@
+{
+  "name": "angular-audio-player",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "components"
+  ],
+  "devDependencies": {
+    "angular-unstable": "latest",
+    "angular-mocks": "latest"
+  }
+}
