@@ -357,7 +357,9 @@ module.exports = function (grunt) {
           FOURDQUARE: {
             id: 'client_id',
             secret: 'client_secret'
-          }
+          },
+          // Define the backend URL.
+          BACKEND_URL: 'http://localhost:3000'
         }
       }],
       production: [{
@@ -369,7 +371,9 @@ module.exports = function (grunt) {
           FOURDQUARE: {
             id: 'client_id',
             secret: 'client_secret'
-          }
+          },
+          // Define the backend URL.
+          BACKEND_URL: ''
         }
       }]
     }
