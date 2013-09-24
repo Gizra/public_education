@@ -4,4 +4,6 @@ dist
 .sass-cache
 app/bower_components
 www/bower_components
+www/scripts/config.js
 .idea
+Gruntfile.js

@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('publicEducationApp')
-  .service('Foursquare', function Foursquare($http, $q) {
+  .service('Foursquare', function Foursquare($http, $q, FOURDQUARE) {
 
     return {
 
@@ -14,8 +14,8 @@ angular.module('publicEducationApp')
           params: {
             ll: lat + ',' + lng,
             v: 20130917,
-            // @todo: Change to anonymous request.
-            oauth_token: 'ARSXRAKVBW1D3KGHZVHN0IGHAITQQTIYXSKIKS2SWOSYHQEU',
+            client_id: FOURDQUARE.id,
+            client_secret: FOURDQUARE.secret,
             limit: 1
           },
           // Cache the results.
