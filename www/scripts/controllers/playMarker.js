@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('publicEducationApp')
-  .controller('playMarkerCtrl', function ($scope, $routeParams, $location) {
+  .controller('PlayMarkerCtrl', function ($scope, $routeParams, $location) {
 
     $scope.venueId = $routeParams.venueId;
 
