@@ -15,6 +15,10 @@ angular.module('publicEducationApp', ['config', 'angular-audio-player', 'angular
         templateUrl: 'views/play-marker.html',
         controller: 'playMarkerCtrl'
       })
+      .when('/login', {
+        templateUrl: 'views/login.html',
+        controller: 'loginCtrl'
+      })
       .otherwise({
         redirectTo: '/'
       });
