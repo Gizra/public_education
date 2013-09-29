@@ -4,39 +4,40 @@ Public Education - Client side
 Installation and deployment on Android Emulator.
 ----------------
 ```
-# Create new phonegap project and remove www folder
-phonegap create test com.gizra.pubedu PubicEducation
-cd test
+# Create new phonegap project.
+cd ~
+phonegap create pg-public-education com.gizra.pubedu PubicEducation
+cd pg-public-education
+# Remove www folder. Folder will be generated again git clone.
 rm -r www
 cd ..
 
-# Clone repo and move to phonegap project folder
+# Clone repo and move to phonegap project folder.
 git clone git@github.com:Gizra/public_education.git
 cd public_education
-cp -r . /var/test
+cp -r . ~/pg-public-education
 
-# Install Phonegap plugins
-cd ../test
-git checkout 16
+# Install Phonegap plugins.
+cd ../pg-public-education
 phonegap local plugin add https://git-wip-us.apache.org/repos/asf/cordova-plugin-media-capture.git
 phonegap local plugin add https://git-wip-us.apache.org/repos/asf/cordova-plugin-media.git
 phonegap local plugin add https://git-wip-us.apache.org/repos/asf/cordova-plugin-file.git
 phonegap local plugin add https://git-wip-us.apache.org/repos/asf/cordova-plugin-file-transfer.git
 
-# Install dependencies
+# Install dependencies.
 npm install
 bower install
 
 # Copy Grunt file configuration.
 cp Gruntfile.example.js Gruntfile.js
 
-# Remove node modules folder
+# Remove node modules folder as it breaks building process
 rm -rf node_modules/
 
-# Build android platform
+# Build android platform.
 phonegap local build android
 
-# Install the application
+# Install the application.
 phonegap local install android
 
 ```

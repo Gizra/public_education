@@ -6,13 +6,16 @@ angular.module('publicEducationApp')
     return {
 
       sendFile: function() {
+        // TODO@ remove hardcoding of URI and file format.
         var fileURI = '/mnt/sdcard/myrecording.amr';
         var options = new FileUploadOptions();
         options.fileKey="file";
         options.fileName = fileURI.substr(fileURI.lastIndexOf('/')+1);
         options.mimeType="audio/amr";
 
-        var headers={'Content-type': 'multipart/form-data; boundary=+++++'};
+        // Request headers needs to be in the following format.
+        // See issue @ Github: https://github.com/superjoe30/node-multiparty/pull/15
+        var headers = {'Content-type': 'multipart/form-data; boundary=+++++'};
         options.headers = headers;
 
         var ft = new FileTransfer();
@@ -22,11 +25,10 @@ angular.module('publicEducationApp')
           console.log("Code = " + r.responseCode);
           console.log("Response = " + r.response);
           console.log("Sent = " + r.bytesSent);
-          alert(r.response);
         }
 
         function fail(error) {
-          alert("An error has occurred: Code = " + error.code);
+          console.log("An error has occurred: Code = " + error.code);
         }
       }
     };
