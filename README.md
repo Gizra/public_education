@@ -31,6 +31,10 @@ bower install
 # Copy Grunt file configuration.
 cp Gruntfile.example.js Gruntfile.js
 
+# Make sure a config.js file is created.
+# todo: use the output of grunt build instead.
+grunt server
+
 # Remove node modules folder as it breaks building process
 rm -rf node_modules/
 
