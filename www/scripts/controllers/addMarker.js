@@ -33,16 +33,8 @@ angular.module('publicEducationApp')
     angular.extend($scope, Leaflet.getDefaults());
 
 
-    // @todo: Move to init function?
-    storage.bind($scope, 'center', {defaultValue: Leaflet.getCenter()});
-    storage.bind($scope, 'text');
-    storage.bind($scope, 'markers');
-    updateMarker();
-
     angular.forEach(['leafletDirectiveMap.zoomend', 'leafletDirectiveMap.moveend', 'leafletDirectiveMarker.dragend'], function (value) {
       $scope.$on(value, function (event, args) {
-        console.log(event);
-
         if (event.name === 'leafletDirectiveMarker.dragend') {
           // Marker was dragged, so center the map accordingly.
           $scope.center.lat = args.leafletEvent.target._latlng.lat;
@@ -57,5 +49,27 @@ angular.module('publicEducationApp')
     User.getUser().then(function(data) {
       $scope.user = data;
     });
+
+    /**
+     * Set the state.
+     *
+     * @param state
+     *   Possible options:
+     *   - mark:
+     *   - form:
+     *   - record:
+     *   - upload:
+     */
+    $scope.setState = function(state) {
+      $scope.state = state;
+    };
+
+
+    // @todo: Move to init function?
+    storage.bind($scope, 'center', {defaultValue: Leaflet.getCenter()});
+    storage.bind($scope, 'text');
+    storage.bind($scope, 'markers');
+    updateMarker();
+    $scope.setState('mark');
 
   });
