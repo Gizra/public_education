@@ -10,26 +10,13 @@ angular.module('publicEducationApp')
         var lat = $scope.center.lat,
             lng = $scope.center.lng;
 
-
-        var icon = L.icon({
-          iconUrl: 'images/marker-icon.png',
-          shadowUrl: 'http://cdn.leafletjs.com/leaflet-0.6.4/images/marker-shadow.png',
-          iconSize:     [25, 40],
-          shadowSize:   [25, 44],
-          iconAnchor:   [10, 40],
-          shadowAnchor: [2, 42]
-        });
-
-        angular.extend($scope, icon);
-
         $scope.markers = {
           marker: {
             lat: lat,
             lng: lng,
             draggable: true,
             // Add text until venue is loaded.
-            venue: null,
-            icon: icon
+            venue: null
           }
         };
 
@@ -46,16 +33,8 @@ angular.module('publicEducationApp')
     angular.extend($scope, Leaflet.getDefaults());
 
 
-    // @todo: Move to init function?
-    storage.bind($scope, 'center', {defaultValue: Leaflet.getCenter()});
-    storage.bind($scope, 'text');
-    storage.bind($scope, 'file');
-    storage.bind($scope, 'markers');
-    updateMarker();
-
     angular.forEach(['leafletDirectiveMap.zoomend', 'leafletDirectiveMap.moveend', 'leafletDirectiveMarker.dragend'], function (value) {
       $scope.$on(value, function (event, args) {
-
         if (event.name === 'leafletDirectiveMarker.dragend') {
           // Marker was dragged, so center the map accordingly.
           $scope.center.lat = args.leafletEvent.target._latlng.lat;
@@ -70,5 +49,27 @@ angular.module('publicEducationApp')
     User.getUser().then(function(data) {
       $scope.user = data;
     });
+
+    /**
+     * Set the state.
+     *
+     * @param state
+     *   Possible options:
+     *   - mark:
+     *   - form:
+     *   - record:
+     *   - upload:
+     */
+    $scope.setState = function(state) {
+      $scope.state = state;
+    };
+
+
+    // @todo: Move to init function?
+    storage.bind($scope, 'center', {defaultValue: Leaflet.getCenter()});
+    storage.bind($scope, 'text');
+    storage.bind($scope, 'markers');
+    updateMarker();
+    $scope.setState('mark');
 
   });

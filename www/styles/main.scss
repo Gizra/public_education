@@ -3,10 +3,56 @@ $iconWhiteSpritePath: "../images/glyphicons-halflings-white.png";
 
 @import "bootstrap-sass/lib/bootstrap";
 
-/* Put your CSS here */
-html, body {
-  margin: 20px;
+html, body, .leaflet-container, .container {
+  height: 100%;
 }
+
+.container {
+  margin: 0;
+  width: 100%;
+}
+
+
+// Home page
+.add-marker-wrapper {
+  position: absolute;
+  top: 40px;
+  right: 40px;
+  z-index: 99;
+  padding: 20px 10px;
+  background: black;
+  color: white;
+}
+
+// Add marker page
+.map-wrapper {
+  height: 100%;
+}
+
+.instructions-wrapper {
+  position: absolute;
+  top: 0;
+  z-index: 99;
+  padding: 20px 10px;
+  width: 100%;
+  background: black;
+  color: white;
+}
+
+.leaflet-control-container .leaflet-top {
+  top: 80px;
+}
+
+.location-wrapper {
+  position: absolute;
+  bottom: 0;
+  z-index: 99;
+  background: black;
+  padding: 20px 10px;
+  width: 100%;
+  color: white;
+}
+
 
 body {
     background: #fafafa;
