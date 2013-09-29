@@ -41,8 +41,9 @@ angular.module('publicEducationApp')
 
         scope.upload = function() {
           scope.state = 'uploading';
-          // @todo: Add another state -- uploaded.
-          UploadFile.sendFile();
+          UploadFile.sendFile().then(function() {
+            scope.state = 'uploaded';
+          });
         };
       }
     };

@@ -69,7 +69,7 @@ angular.module('publicEducationApp')
     storage.bind($scope, 'center', {defaultValue: Leaflet.getCenter()});
     storage.bind($scope, 'text');
     storage.bind($scope, 'markers');
+    storage.bind($scope, 'state', {defaultValue: 'mark'});
     updateMarker();
-    $scope.setState('mark');
 
   });
