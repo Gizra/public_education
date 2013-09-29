@@ -35,8 +35,9 @@ cp Gruntfile.example.js Gruntfile.js
 # todo: use the output of grunt build instead.
 grunt server
 
-# Remove node modules folder as it breaks building process
-rm -rf node_modules/
+# In some cases (e.g. Android) we need to remove "node_modules" folder as it
+# breaks the building process.
+# rm -rf node_modules
 
 # Build android platform.
 phonegap local build android
