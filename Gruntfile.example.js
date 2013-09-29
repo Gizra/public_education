@@ -341,7 +341,43 @@ module.exports = function (grunt) {
           ]
         }
       }
+    },
+    ngconstant: {
+      options: {
+        space: '  '
+      },
+
+      // targets
+      development: [{
+        dest: '<%= yeoman.app %>/scripts/config.js',
+        wrap: '"use strict";\n\n <%= __ngModule %>',
+        name: 'config',
+        constants: {
+          ENV: 'development',
+          FOURDQUARE: {
+            id: 'client_id',
+            secret: 'client_secret'
+          },
+          // Define the backend URL.
+          BACKEND_URL: 'http://localhost:3000'
+        }
+      }],
+      production: [{
+        dest: '<%= yeoman.dist %>/scripts/config.js',
+        wrap: '"use strict";\n\n <%= __ngModule %>',
+        name: 'config',
+        constants: {
+          ENV: 'production',
+          FOURDQUARE: {
+            id: 'client_id',
+            secret: 'client_secret'
+          },
+          // Define the backend URL.
+          BACKEND_URL: ''
+        }
+      }]
     }
+
   });
 
   grunt.registerTask('server', function (target) {
@@ -351,6 +387,7 @@ module.exports = function (grunt) {
 
     grunt.task.run([
       'clean:server',
+      'ngconstant:development',
       'concurrent:server',
       'autoprefixer',
       'connect:livereload',
@@ -369,6 +406,7 @@ module.exports = function (grunt) {
 
   grunt.registerTask('build', [
     'clean:dist',
+    'ngconstant:production',
     'useminPrepare',
     'concurrent:dist',
     'autoprefixer',

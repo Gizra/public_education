@@ -4,8 +4,11 @@ dist
 .sass-cache
 app/bower_components
 www/bower_components
+www/scripts/config.js
 .idea
 .cordova
 merges
 platforms
 plugins
+Gruntfile.js
+.grunt

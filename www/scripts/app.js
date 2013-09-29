@@ -1,19 +1,23 @@
 'use strict';
 
-angular.module('publicEducationApp', ['angular-audio-player', 'angularLocalStorage', 'leaflet-directive'])
+angular.module('publicEducationApp', ['config', 'angular-audio-player', 'angularLocalStorage', 'leaflet-directive'])
   .config(function ($routeProvider, $httpProvider) {
     $routeProvider
       .when('/', {
         templateUrl: 'views/main.html',
-        controller: 'listMarkersCtrl'
+        controller: 'ListMarkersCtrl'
       })
       .when('/add-marker', {
         templateUrl: 'views/add-marker.html',
-        controller: 'addMarkerCtrl'
+        controller: 'AddMarkerCtrl'
       })
       .when('/play-marker/:venueId', {
         templateUrl: 'views/play-marker.html',
-        controller: 'playMarkerCtrl'
+        controller: 'PlayMarkerCtrl'
+      })
+      .when('/login', {
+        templateUrl: 'views/login.html',
+        controller: 'loginCtrl'
       })
       .otherwise({
         redirectTo: '/'

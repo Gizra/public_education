@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('publicEducationApp')
-  .controller('addMarkerCtrl', function ($scope, Leaflet, Foursquare, storage) {
+  .controller('AddMarkerCtrl', function ($scope, Leaflet, Foursquare, storage, User) {
 
     var updateMarker = function () {
       // The marker is always in the center of the map, and visible only if the
@@ -65,6 +65,10 @@ angular.module('publicEducationApp')
         updateMarker();
         Leaflet.setCenter($scope.center);
       });
+    });
+
+    User.getUser().then(function(data) {
+      $scope.user = data;
     });
 
   });
