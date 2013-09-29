@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('publicEducationApp')
-  .service('UploadFile', function Uploadfile() {
+  .service('UploadFile', function Uploadfile(BACKEND_URL) {
 
     return {
 
@@ -19,7 +19,7 @@ angular.module('publicEducationApp')
         options.headers = headers;
 
         var ft = new FileTransfer();
-        ft.upload(fileURI, 'http://10.0.0.52:3000/recordings/create', this.win, this.fail, options);
+        ft.upload(fileURI, BACKEND_URL + 'recordings/create', this.win, this.fail, options);
 
         function win(r) {
           console.log("Code = " + r.responseCode);
