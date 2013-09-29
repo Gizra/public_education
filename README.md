@@ -24,7 +24,14 @@ phonegap local plugin add https://git-wip-us.apache.org/repos/asf/cordova-plugin
 phonegap local plugin add https://git-wip-us.apache.org/repos/asf/cordova-plugin-file-transfer.git
 
 # Install dependencies
+npm install
 bower install
+
+# Copy Grunt file configuration.
+cp Gruntfile.example.js Gruntfile.js
+
+# Remove node modules folder
+rm -rf node_modules/
 
 # Build android platform
 phonegap local build android
