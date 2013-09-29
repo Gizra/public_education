@@ -1,33 +1,60 @@
-<div ng-show="center.zoom >= 16">
-  Select place.
+<div class="map-wrapper" ng-show="state == 'mark'">
+  <div class="instructions-wrapper">
+    <div ng-show="center.zoom >= 16">
+      Select place.
+    </div>
+
+    <div ng-show="center.zoom < 16">
+      You need to zoom.
+    </div>
+
+    <a href="/#">X</a>
+  </div>
+
+  <leaflet center="center" markers="markers" defaults="defaults"></leaflet>
+
+  <div class="location-wrapper" ng-show="center.zoom >= 16">
+    <div class="venue">
+      {{markers.marker.venue.name | venueName}}
+    </div>
+
+    <a class="confirm" ng-click="setState('form')">V</a>
+  </div>
 </div>
 
-<div ng-show="center.zoom < 16">
-  You need to zoom.
+<div class="form-wrapper" ng-show="state == 'form'">
+  <a class="cancel" ng-click="setState('mark')">X</a>
+
+  <form>
+    <div>
+      <textarea rows="6" name="text" ng-model="text" placeholder="Write your command" required=""></textarea><br>
+    </div>
+
+    <div class="info-wrapper">
+      <div class="venue">
+        {{markers.marker.venue.name | venueName}}
+      </div>
+
+      <div class="char-count" ng-class="{error: 80 - text.length < 0}">
+        {{ 80 - text.length}}
+      </div>
+
+      <div>
+        <a ng-hide="80 - text.length < 0" ng-click="setState('record')">V</a>
+        <div ng-show="80 - text.length < 0" ng-click="setState('record')">^</div>
+      </div>
+    </div>
+  </form>
 </div>
 
-<leaflet center="center" markers="markers" defaults="defaults" height="200px"></leaflet>
+<div class="record-wrapper" ng-show="state == 'record'">
 
-<form>
+  <a class="cancel" ng-click="setState('form')">X</a>
   <div>
-    <textarea rows="6" name="text" ng-model="text" placeholder="Enter text" required=""></textarea><br>
-  </div>
-
-  <div class="venue">
-    {{markers.marker.venue.name | venueName}}
-  </div>
-
-  <div class="char-count" ng-class="{error: 100 - text.length < 0}">
-    {{ 100 - text.length}}
+    {{ text }}
   </div>
 
   <div>
-    <button ng-disabled="100 - text.length < 0">Submit</button>
+    <record-sound>Recording will be here</record-sound>
   </div>
-</form>
-
-<a href="#/">Home</a>
-
-<div>
-  {{ user }}
 </div>
