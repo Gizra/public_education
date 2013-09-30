@@ -1,6 +1,7 @@
 Public Education - Client side
 ================
 
+
 Installation and deployment for Phonegap.
 ----------------
 ```
