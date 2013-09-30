@@ -18,8 +18,8 @@ module.exports = function (grunt) {
 
   // configurable paths
   var yeomanConfig = {
-    app: 'www',
-    dist: 'dist'
+    app: 'app',
+    dist: 'www'
   };
 
   try {
@@ -274,7 +274,10 @@ module.exports = function (grunt) {
             '.htaccess',
             'bower_components/**/*',
             'images/{,*/}*.{gif,webp}',
-            'styles/fonts/*'
+            'styles/fonts/*',
+            'config.xml',
+            'cordova.js',
+            'cordova_plugins.js'
           ]
         }, {
           expand: true,
@@ -412,7 +415,8 @@ module.exports = function (grunt) {
     'autoprefixer',
     'concat',
     'copy:dist',
-    'cdnify',
+    // Remove "cdnify" as phonehap doesn't like the URL provided.
+    // 'cdnify',
     'ngmin',
     'cssmin',
     'uglify',

@@ -1,0 +1,7 @@
+<button ng-click="record()">Record sound</button>
+<div id="audio-position" ng-show="counter > 0">{{ counter + ' sec left' }}</div>
+
+<div ng-show="state == 'recorded'">
+  <button ng-click="upload()">Upload</button>
+</div>
+

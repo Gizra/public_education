@@ -8,7 +8,7 @@ angular.module('publicEducationApp')
       // zoom is equal or above 16.
       if ($scope.center.zoom >= 16) {
         var lat = $scope.center.lat,
-          lng = $scope.center.lng;
+            lng = $scope.center.lng;
 
         $scope.markers = {
           marker: {
@@ -69,7 +69,7 @@ angular.module('publicEducationApp')
     storage.bind($scope, 'center', {defaultValue: Leaflet.getCenter()});
     storage.bind($scope, 'text');
     storage.bind($scope, 'markers');
+    storage.bind($scope, 'state', {defaultValue: 'mark'});
     updateMarker();
-    $scope.setState('mark');
 
   });

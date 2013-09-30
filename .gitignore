@@ -3,8 +3,12 @@ dist
 .tmp
 .sass-cache
 app/bower_components
-www/bower_components
-www/scripts/config.js
+app/scripts/config.js
+www
 .idea
+.cordova
+merges
+platforms
+plugins
 Gruntfile.js
 .grunt

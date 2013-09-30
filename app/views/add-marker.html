@@ -47,14 +47,16 @@
   </form>
 </div>
 
-<div class="record-wrapper" ng-show="state == 'record'">
+<div class="record-wrapper" ng-show="state == 'record' || state == 'recording' || state == 'recorded'">
 
-  <a class="cancel" ng-click="setState('form')">X</a>
+  <a title="Back to writing the text" class="cancel" ng-click="setState('form')">X</a>
   <div>
     {{ text }}
   </div>
 
   <div>
-    <record-sound>Recording will be here</record-sound>
+    <sound-recorder file="file" state="state"></sound-recorder>
+    THIS IS the file: {{  file }}
   </div>
+
 </div>
