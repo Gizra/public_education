@@ -4,21 +4,14 @@ Public Education - Client side
 Installation and deployment on Android Emulator.
 ----------------
 ```
-# Create new phonegap project.
-cd ~
-phonegap create pg-public-education com.gizra.pubedu PubicEducation
-cd pg-public-education
-# Remove www folder. Folder will be generated again git clone.
-rm -r www
-cd ..
+# Create a phonegap project inside the Public education project.
+phonegap create . com.gizra.pubedu PubicEducation
 
-# Clone repo and move to phonegap project folder.
-git clone git@github.com:Gizra/public_education.git
-cd public_education
-cp -r . ~/pg-public-education
+# Remove some undeeded changes.
+git checkout .
+git clean -fd
 
 # Install Phonegap plugins.
-cd ../pg-public-education
 phonegap local plugin add https://git-wip-us.apache.org/repos/asf/cordova-plugin-media-capture.git
 phonegap local plugin add https://git-wip-us.apache.org/repos/asf/cordova-plugin-media.git
 phonegap local plugin add https://git-wip-us.apache.org/repos/asf/cordova-plugin-file.git
@@ -35,9 +28,9 @@ cp Gruntfile.example.js Gruntfile.js
 # todo: use the output of grunt build instead.
 grunt server
 
-# In some cases (e.g. Android) we need to remove "node_modules" folder as it
+# In some cases (e.g. Android) we need to move "node_modules" folder as it
 # breaks the building process.
-# rm -rf node_modules
+# mv node_modules __node_modules
 
 # Build android platform.
 phonegap local build android
