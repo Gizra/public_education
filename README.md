@@ -6,7 +6,7 @@ Installation and deployment for Phonegap.
 ----------------
 ```
 # Create a phonegap project inside the Public education project.
-phonegap create . com.gizra.pubedu PubicEducation
+phonegap create . com.gizra.publiceducation PublicEducation
 
 # Install Phonegap plugins.
 phonegap local plugin add https://git-wip-us.apache.org/repos/asf/cordova-plugin-media-capture.git
