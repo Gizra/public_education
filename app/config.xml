@@ -1,10 +1,10 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.gizra.pubedu" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
-  <name>PubicEducation</name>
+<widget id="com.gizra.publiceducation" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
+  <name>PublicEducation</name>
   <description>
     Public Education.
   </description>
-  <author email="support@gizra.com" href="http://gizra.com">
+  <author email="info@gizra.com" href="http://gizra.com">
     Gizra.com
   </author>
   <feature name="http://api.phonegap.com/1.0/device" />
