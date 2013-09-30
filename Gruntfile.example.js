@@ -415,7 +415,8 @@ module.exports = function (grunt) {
     'autoprefixer',
     'concat',
     'copy:dist',
-    'cdnify',
+    // Remove "cdnify" as phonehap doesn't like the URL provided.
+    // 'cdnify',
     'ngmin',
     'cssmin',
     'uglify',
