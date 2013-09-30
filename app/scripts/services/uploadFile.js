@@ -22,7 +22,7 @@ angular.module('publicEducationApp')
         options.headers = headers;
 
         var ft = new FileTransfer();
-        ft.upload(fileURI, BACKEND_URL + 'recordings/create', function onSuccess(result) {
+        ft.upload(fileURI, BACKEND_URL + '/recordings/create', function onSuccess(result) {
           console.log('Code = ' + result.responseCode);
           console.log('Response = ' + result.response);
           console.log('Sent = ' + result.bytesSent);
