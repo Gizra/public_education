@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('publicEducationApp')
-  .service('Foursquare', function Foursquare($http, $q, FOURDQUARE) {
+  .service('Foursquare', function Foursquare($http, $q, FOURSQUARE) {
 
     return {
 
@@ -14,8 +14,8 @@ angular.module('publicEducationApp')
           params: {
             ll: lat + ',' + lng,
             v: 20130917,
-            client_id: FOURDQUARE.id,
-            client_secret: FOURDQUARE.secret,
+            client_id: FOURSQUARE.id,
+            client_secret: FOURSQUARE.secret,
             limit: 1
           },
           // Cache the results.

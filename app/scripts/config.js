@@ -4,7 +4,7 @@
 
 .constant("ENV", "development")
 
-.constant("FOURDQUARE", {
+.constant("FOURSQUARE", {
   "id": "client_id",
   "secret": "client_secret"
 })

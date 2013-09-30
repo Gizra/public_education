@@ -357,7 +357,7 @@ module.exports = function (grunt) {
         name: 'config',
         constants: {
           ENV: 'development',
-          FOURDQUARE: {
+          FOURSQUARE: {
             id: 'client_id',
             secret: 'client_secret'
           },
@@ -371,7 +371,7 @@ module.exports = function (grunt) {
         name: 'config',
         constants: {
           ENV: 'production',
-          FOURDQUARE: {
+          FOURSQUARE: {
             id: 'client_id',
             secret: 'client_secret'
           },
