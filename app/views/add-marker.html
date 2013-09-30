@@ -40,14 +40,14 @@
       </div>
 
       <div>
-        <a ng-hide="80 - text.length < 0" ng-click="setState('record')">V</a>
-        <div ng-show="80 - text.length < 0" ng-click="setState('record')">^</div>
+        <a ng-hide="80 - text.length < 0" ng-click="setState('beforeRecord')">V</a>
+        <div ng-show="80 - text.length < 0" ng-click="setState('beforeRecord')">^</div>
       </div>
     </div>
   </form>
 </div>
 
-<div class="record-wrapper" ng-show="state == 'record' || state == 'recording' || state == 'recorded'">
+<div class="record-wrapper" ng-show="state == 'recording' || state == 'beforeRecord' || state == 'afterRecord' || state == 'afterPlay'">
 
   <a title="Back to writing the text" class="cancel" ng-click="setState('form')">X</a>
   <div>
@@ -55,8 +55,7 @@
   </div>
 
   <div>
-    <sound-recorder file="file" state="state"></sound-recorder>
-    THIS IS the file: {{  file }}
+    <sound-recorder file="file" state="state" set-state="setState({state: state})"></sound-recorder>
   </div>
 
 </div>

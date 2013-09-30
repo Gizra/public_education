@@ -1,7 +1,24 @@
-<button ng-click="record()">Record sound</button>
-<div id="audio-position" ng-show="counter > 0">{{ counter + ' sec left' }}</div>
-
-<div ng-show="state == 'recorded'">
-  <button ng-click="upload()">Upload</button>
+<div ng-show="state == 'beforeRecord'">
+  <button ng-click="record()">Record sound</button>
+  <div>{{ counter + ' sec left' }}</div>
 </div>
 
+<div ng-show="state == 'recording'">
+  Recording...
+  <br>
+  <button ng-click="pauseRecording()">Stop recording</button>
+  <div>{{ counter + ' sec left' }}</div>
+</div>
+<div ng-show="state == 'afterRecord'">
+  Done!
+  <br>
+  <button ng-click="play()">Play recording</button>
+</div>
+
+<div ng-show="state == 'afterPlay'">
+  After playing recording first time.
+  <br>
+  <button ng-click="upload()">V</button>
+  <button ng-click="play()">Play recording</button>
+  <button ng-click="setState('beforeRecord')">X</button>
+</div>
