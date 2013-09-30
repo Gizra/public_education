@@ -6,11 +6,6 @@ Installation and deployment on Android Emulator.
 ```
 # Create a phonegap project inside the Public education project.
 phonegap create . com.gizra.pubedu PubicEducation
-rm -rf www
-
-# Remove some undeeded changes.
-git checkout .
-git clean -fd
 
 # Install Phonegap plugins.
 phonegap local plugin add https://git-wip-us.apache.org/repos/asf/cordova-plugin-media-capture.git
@@ -28,15 +23,16 @@ cp Gruntfile.example.js Gruntfile.js
 # Make sure a config.js file is created.
 grunt build
 
-# In some cases (e.g. Android) we need to move "node_modules" folder as it
-# breaks the building process.
-# mv node_modules __node_modules
+# Run android platform.
+phonegap run android
 
-# Build android platform.
-phonegap local build android
+#
+# OR
+#
 
-# Install the application.
-phonegap local install android
+# Run ios platform.
+# You may need to install ios-sim by "brew install ios-sim"
+phonegap run ios
 
 ```
 
