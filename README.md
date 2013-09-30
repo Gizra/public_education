@@ -1,7 +1,7 @@
 Public Education - Client side
 ================
 
-Installation and deployment on Android Emulator.
+Installation and deployment for Phonegap.
 ----------------
 ```
 # Create a phonegap project inside the Public education project.
