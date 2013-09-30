@@ -274,7 +274,10 @@ module.exports = function (grunt) {
             '.htaccess',
             'bower_components/**/*',
             'images/{,*/}*.{gif,webp}',
-            'styles/fonts/*'
+            'styles/fonts/*',
+            'config.xml',
+            'cordova.js',
+            'cordova_plugins.js'
           ]
         }, {
           expand: true,

@@ -5,7 +5,6 @@ dist
 app/bower_components
 app/scripts/config.js
 www
-www/bower_components
 .idea
 .cordova
 merges

@@ -6,6 +6,7 @@ Installation and deployment on Android Emulator.
 ```
 # Create a phonegap project inside the Public education project.
 phonegap create . com.gizra.pubedu PubicEducation
+rm -rf www
 
 # Remove some undeeded changes.
 git checkout .
