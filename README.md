@@ -20,7 +20,11 @@ bower install
 # Copy Grunt file configuration.
 cp Gruntfile.example.js Gruntfile.js
 
-# Make sure a config.js file is created.
+# Create a FourSquare app in https://foursquare.com/developers/apps
+# And add the app's client ID and secret to your Gruntfile.js under the
+# "FOURSQUARE" constant.
+#
+# Build into www folder.
 grunt build
 
 # Run android platform.
