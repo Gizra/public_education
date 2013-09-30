@@ -25,8 +25,7 @@ bower install
 cp Gruntfile.example.js Gruntfile.js
 
 # Make sure a config.js file is created.
-# todo: use the output of grunt build instead.
-grunt server
+grunt build
 
 # In some cases (e.g. Android) we need to move "node_modules" folder as it
 # breaks the building process.

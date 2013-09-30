@@ -18,8 +18,8 @@ module.exports = function (grunt) {
 
   // configurable paths
   var yeomanConfig = {
-    app: 'www',
-    dist: 'dist'
+    app: 'app',
+    dist: 'www'
   };
 
   try {
