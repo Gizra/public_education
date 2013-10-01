@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('publicEducationApp')
-  .controller('AddMarkerCtrl', function ($scope, Leaflet, Foursquare, storage, User, Marker) {
+  .controller('AddMarkerCtrl', function ($scope, $location, Leaflet, Foursquare, storage, User, Marker) {
 
     /**
      * Update the map's center, and get the venue name from FourSquare.
@@ -19,9 +19,13 @@ angular.module('publicEducationApp')
             lat: lat,
             lng: lng,
             draggable: true,
-            venue: Foursquare.gettingVenue(lat, lng)
+            venue: null
           }
         };
+
+        Foursquare.gettingVenue(lat, lng).then(function(data) {
+          $scope.markers.marker.venue = data;
+        });
       }
       else {
         $scope.markers = {};
@@ -49,25 +53,6 @@ angular.module('publicEducationApp')
       $scope.user = data;
     });
 
-    $scope.$watch('state', function(oldVal, newVal) {
-      // @todo: value should be "completed" after recording is in place.
-      if (newVal === 'record') {
-        // Add the new marker.
-        var venue = {
-          id: $scope.markers.marker.venue.id,
-          name: $scope.markers.marker.venue.name,
-          lat: $scope.markers.marker.venue.location.lat,
-          lng: $scope.markers.marker.venue.location.lng
-        },
-        location = {
-          lng: $scope.markers.marker.lng,
-          lat: $scope.markers.marker.lat
-        };
-
-        Marker.addMarker(venue, $scope.text, $scope.file, location, $scope.user);
-      }
-    });
-
     /**
      * Set the state.
      *
@@ -82,6 +67,52 @@ angular.module('publicEducationApp')
       $scope.state = state;
     };
 
+    /**
+     * Helper function to indicate recording has completed.
+     */
+    $scope.onRecorded = function() {
+      $scope.setState('completed');
+    };
+
+    $scope.$watch('state', function(newVal, oldVal) {
+
+      if (oldVal === 'completed') {
+        return $scope.onComplete();
+      }
+
+      if (newVal === 'completed') {
+
+        // Add the new marker.
+        var venue = {
+            id: $scope.markers.marker.venue.id,
+            name: $scope.markers.marker.venue.name,
+            lat: $scope.markers.marker.venue.location.lat,
+            lng: $scope.markers.marker.venue.location.lng
+          },
+          location = {
+            lng: $scope.markers.marker.lng,
+            lat: $scope.markers.marker.lat
+          };
+
+        Marker.addMarker(venue, $scope.text, $scope.file, location, $scope.user).then(function() {
+          $scope.onComplete();
+        });
+      }
+    });
+
+    /**
+     * Clear local storage and redirect back to homepage.
+     */
+    $scope.onComplete = function() {
+      storage.unbind($scope, 'state');
+
+      storage.remove('text');
+      storage.remove('state');
+      storage.remove('markers');
+      storage.clearAll();
+
+      $location.path('/');
+    };
 
     // @todo: Move to init function?
     storage.bind($scope, 'center', {defaultValue: Leaflet.getCenter()});

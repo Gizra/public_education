@@ -10,7 +10,7 @@ angular.module('publicEducationApp')
       }
     });
 
-    Marker.getMarkers().then(function(data) {
+    Marker.gettingMarkers().then(function(data) {
       $scope.markers = data;
 
       if (!$scope.markers[$scope.venueId]) {

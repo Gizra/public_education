@@ -40,8 +40,8 @@
       </div>
 
       <div>
-        <a ng-hide="80 - text.length < 0" ng-click="setState('record')">V</a>
-        <div ng-show="80 - text.length < 0" ng-click="setState('record')">^</div>
+        <a ng-hide="80 - text.length < 0 || text.length == 0" ng-click="setState('record')">V</a>
+        <div ng-show="80 - text.length < 0">You must enter text below 80 chars</div>
       </div>
     </div>
   </form>
@@ -51,12 +51,15 @@
 
   <a title="Back to writing the text" class="cancel" ng-click="setState('form')">X</a>
   <div>
-    {{ text }}
+    Text: {{ text }}
   </div>
 
   <div>
-    <sound-recorder file="file" state="state"></sound-recorder>
-    THIS IS the file: {{  file }}
+    Venue: {{markers.marker.venue.name | venueName}}
+  </div>
+
+  <div ng-show="markers.marker.venue.name">
+    <sound-recorder file="file" on-recorded="onRecorded()"></sound-recorder>
   </div>
 
 </div>

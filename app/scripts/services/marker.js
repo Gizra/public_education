@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('publicEducationApp')
-  .service('Marker', function Marker($q, $http, $timeout, BACKEND_URL, $location) {
+  .service('Marker', function Marker($q, $http, $timeout, BACKEND_URL, Phonegap) {
 
     return {
 
@@ -30,6 +30,8 @@ angular.module('publicEducationApp')
        */
       addMarker: function(venue, text, file, location, user) {
         var id = venue.id;
+
+        this.data.markers = this.data.markers || {};
 
         if (!this.data.markers[id]) {
           // Add the venue data.
@@ -64,22 +66,18 @@ angular.module('publicEducationApp')
         };
         this.data.markers[id].playlist.unshift(newMarker);
 
-        return $http({
-          method: 'POST',
-          url: BACKEND_URL + '/recordings/create',
-          data: newMarker
-        }).
-        success(function() {
-          // @todo: Wait for socket.io for the request?
-          // Update the markers from the server.
-          this.getMarkers();
-        }).
-        error(function() {
-        });
-
+        return this.uploadingMarker(newMarker);
       },
 
-      getMarkers: function(cache) {
+      /**
+       * Get Leaflet markers.
+       *
+       * @param cache
+       *   Determine if a request to the server should be done. Defaults to
+       *   true.
+       * @returns {*}
+       */
+      gettingMarkers: function(cache) {
         var defer = $q.defer();
         cache = cache || true;
         var markers;
@@ -147,12 +145,49 @@ angular.module('publicEducationApp')
         }
 
 
-        // @todo: Simulating http, replace with actuall call to server.
+        // @todo: Simulating http, replace with actual call to server.
         var self = this;
         $timeout(function() {
           self.data.markers = markers;
           defer.resolve(markers);
         }, 500);
+
+        return defer.promise;
+      },
+
+      /**
+       * Upload the new marker with the recorded file to the server.
+       *
+       * @param marker
+       *   The marker object as prepared by Marker::addMarker().
+       *
+       * @returns {*}
+       */
+      uploadingMarker: function(marker) {
+        var defer = $q.defer();
+
+        // @todo: remove hardcoding of URI and file format.
+        var fileURI = marker.src;
+        var options = Phonegap.getFileUploadOptions();
+        options.fileKey = 'file';
+        options.fileName = fileURI.substr(fileURI.lastIndexOf('/')+1);
+
+        // @todo: Remove hardcoding.
+        options.mimeType = 'audio/amr';
+
+        // Request headers needs to be in the following format.
+        // @see https://github.com/superjoe30/node-multiparty/pull/15
+        var headers = {'Content-type': 'multipart/form-data; boundary=+++++'};
+        options.headers = headers;
+
+        var ft = Phonegap.getFileTransfer();
+        ft.upload(fileURI, BACKEND_URL + '/recordings/create', function onSuccess(result) {
+          console.log('Response = ' + result.response);
+          defer.resolve(result);
+        }, function onError(error) {
+          console.log('An error has occurred: Code = ' + error.code);
+          defer.reject(error);
+        }, options);
 
         return defer.promise;
       }
