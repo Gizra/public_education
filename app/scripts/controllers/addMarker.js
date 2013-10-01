@@ -81,8 +81,12 @@ angular.module('publicEducationApp')
      *   Possible options:
      *   - mark:
      *   - form:
-     *   - record:
-     *   - upload:
+     *   - beforeRecord:
+     *   - recording:
+     *   - afterRecord:
+     *   - afterPlay:
+     *   - uploading:
+     *   - uploaded:
      */
     $scope.setState = function(state) {
       $scope.state = state;
