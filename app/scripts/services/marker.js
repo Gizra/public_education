@@ -64,7 +64,9 @@ angular.module('publicEducationApp')
           // Pass the original 'lng' and 'lat' to the backend.
           location: location
         };
-        this.data.markers[id].playlist.unshift(newMarker);
+
+        this.data.markers[id].playList = this.data.markers[id].playList || [];
+        this.data.markers[id].playList.unshift(newMarker);
 
         return this.uploadingMarker(newMarker);
       },
