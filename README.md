@@ -1,58 +1,31 @@
 Public Education - Client side
 ================
 
+Copy Grunt file configuration:
 
-Installation and deployment for Phonegap.
-----------------
-```
-# Create a phonegap project inside the Public education project.
-phonegap create . com.gizra.publiceducation PublicEducation
+```cp Gruntfile.example.js Gruntfile.js```
 
-# Install Phonegap plugins.
-phonegap local plugin add https://git-wip-us.apache.org/repos/asf/cordova-plugin-media-capture.git
-phonegap local plugin add https://git-wip-us.apache.org/repos/asf/cordova-plugin-media.git
-phonegap local plugin add https://git-wip-us.apache.org/repos/asf/cordova-plugin-file.git
-phonegap local plugin add https://git-wip-us.apache.org/repos/asf/cordova-plugin-file-transfer.git
+To enable Foursquare functionality, replace ```client_id``` and ```client_secret``` in Gruntfile.js with your Foursquare client ID/secret.
 
-# Install dependencies.
-npm install
-bower install
+Run build script:
 
-# Copy Grunt file configuration.
-cp Gruntfile.example.js Gruntfile.js
+```sh build.sh```
 
-# Create a FourSquare app in https://foursquare.com/developers/apps
-# And add the app's client ID and secret to your Gruntfile.js under the
-# "FOURSQUARE" constant.
-#
-# Build into www folder.
-grunt build
+Once installed, there are several ways to run PE:
 
-# Run android platform.
-phonegap run android
+1. iPhone emulator (requires ios-sim - "brew install ios-sim" if not there):
 
-#
-# OR
-#
+```phonegap run ios```
 
-# Run ios platform.
-# You may need to install ios-sim by "brew install ios-sim"
-phonegap run ios
 
-```
+2. Android emulator (requires Android dev tools):
 
-Installation (without using the emulator).
-----------------
-```
-# Install packages
-npm install
-bower install
-# Copy Grunt file configuration.
-cp Gruntfile.example.js Gruntfile.js
-# Create a FourSquare app in https://foursquare.com/developers/apps
-# And add the app's client ID and secret to your Gruntfile.js under the
-# "FOURSQUARE" constant.
-grunt server
+```phonegap run android```
 
-```
+3. XCode (enables running on iPhone/iPad emulators as well as connected devices):
 
+```phonegap build ios```
+Start XCode, browse to the <src>/platforms/ios and open PublicEducation.xcodeproj
+
+4. Browser
+```grunt server```
