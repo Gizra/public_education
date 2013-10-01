@@ -22,4 +22,4 @@ bower install
 # Build into www folder.
 grunt build
 
-echo "use 'phonegap run ios' or 'phonegap run android'
+echo "Done. Use 'phonegap run ios' or 'phonegap run android' or 'grunt server'"
