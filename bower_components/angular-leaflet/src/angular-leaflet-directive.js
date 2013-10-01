@@ -8,19 +8,23 @@ leafletDirective.directive('leaflet', [
         minZoom: 1,
         doubleClickZoom: true,
         scrollWheelZoom: true,
+        zoomControl: true,
+        attributionControl: true,
+        zoomsliderControl: false,
+        controlLayersPosition: 'topright',
         tileLayer: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
         tileLayerOptions: {
             attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         },
         icon: {
-            url: 'http://cdn.leafletjs.com/leaflet-0.5.1/images/marker-icon.png',
-            retinaUrl: 'http://cdn.leafletjs.com/leaflet-0.5.1/images/marker-icon@2x.png',
+            url: 'http://cdn.leafletjs.com/leaflet-0.6.4/images/marker-icon.png',
+            retinaUrl: 'http://cdn.leafletjs.com/leaflet-0.6.4/images/marker-icon@2x.png',
             size: [25, 41],
             anchor: [12, 40],
             popup: [0, -40],
             shadow: {
-                url: 'http://cdn.leafletjs.com/leaflet-0.5.1/images/marker-shadow.png',
-                retinaUrl: 'http://cdn.leafletjs.com/leaflet-0.5.1/images/marker-shadow.png',
+                url: 'http://cdn.leafletjs.com/leaflet-0.6.4/images/marker-shadow.png',
+                retinaUrl: 'http://cdn.leafletjs.com/leaflet-0.6.4/images/marker-shadow.png',
                 size: [41, 41],
                 anchor: [12, 40]
             }
@@ -116,6 +120,18 @@ leafletDirective.directive('leaflet', [
                 }
             },
         },
+        BingLayerPlugin: {
+            isLoaded: function() {
+                return L.BingLayer !== undefined;
+            },
+            is: function(layer) {
+                if (this.isLoaded()) {
+                    return layer instanceof L.BingLayer;
+                } else {
+                    return false;
+                }
+            },
+        },
         Leaflet: {
             DivIcon: {
                 is: function(icon) {
@@ -181,7 +197,9 @@ leafletDirective.directive('leaflet', [
             tiles: '=tiles',
             events: '=events',
             layers: '=layers',
-            customControls: '=customControls'
+            customControls: '=customControls',
+            leafletMap: '=leafletmap',
+            eventBroadcast: '=eventBroadcast'
         },
         template: '<div class="angular-leaflet-map"></div>',
         link: function ($scope, element, attrs /*, ctrl */) {
@@ -200,20 +218,27 @@ leafletDirective.directive('leaflet', [
                 parseInt($scope.defaults.minZoom, 10) : defaults.minZoom;
             $scope.leaflet.doubleClickZoom = !!(attrs.defaults && $scope.defaults && (typeof($scope.defaults.doubleClickZoom) === "boolean") ) ? $scope.defaults.doubleClickZoom  : defaults.doubleClickZoom;
             $scope.leaflet.scrollWheelZoom = !!(attrs.defaults && $scope.defaults && (typeof($scope.defaults.scrollWheelZoom) === "boolean") ) ? $scope.defaults.scrollWheelZoom  : defaults.scrollWheelZoom;
+            $scope.leaflet.attributionControl = !!(attrs.defaults && $scope.defaults && (typeof($scope.defaults.attributionControl) === "boolean") ) ? $scope.defaults.attributionControl : defaults.attributionControl;
 
             var map = new L.Map(element[0], {
                 maxZoom: $scope.leaflet.maxZoom,
                 minZoom: $scope.leaflet.minZoom,
                 doubleClickZoom: $scope.leaflet.doubleClickZoom,
-                scrollWheelZoom: $scope.leaflet.scrollWheelZoom
+                scrollWheelZoom: $scope.leaflet.scrollWheelZoom,
+                attributionControl: $scope.leaflet.attributionControl
             });
             var layers = null;
 
             $scope.leaflet.map = !!attrs.testing ? map : str_inspect_hint;
 
+            if (!!attrs.leafletmap) {
+                $scope.leafletMap = !!attrs.leafletmap ? map : str_inspect_hint;
+            }
+
             setupMapEventCallbacks();
             setupMapEventBroadcasting();
             setupControls();
+            setupLegend();
             setupCustomControls();
             setupLayers();
             setupCenter();
@@ -222,7 +247,6 @@ leafletDirective.directive('leaflet', [
             setupMainMarker();
             setupMarkers();
             setupPaths();
-            setupLegend();
             setupGeojson();
 
             // use of leafletDirectiveSetMap event is not encouraged. only use
@@ -245,6 +269,7 @@ leafletDirective.directive('leaflet', [
                 }
             }
 
+
             /*
             * Set up broadcasting of map events to the rootScope
             *
@@ -254,21 +279,27 @@ leafletDirective.directive('leaflet', [
             */
             function setupMapEventBroadcasting() {
 
-              function genDispatchMapEvent(eventName) {
-                return function(e) {
-                  // Put together broadcast name for use in safeApply
-                  var broadcastName = 'leafletDirectiveMap.' + eventName;
+                function genDispatchMapEvent(eventName, logic) {
+                    return function(e) {
+                        // Put together broadcast name
+                        // for use in safeApply
+                        var broadcastName = 'leafletDirectiveMap.' + eventName;
+                        // Safely broadcast the event
+                        safeApply(function(scope) {
+                            if (logic === "emit") {
+                                scope.$emit(broadcastName, {
+                                    leafletEvent : e
+                                });
+                            } else if (logic === "broadcast") {
+                                $rootScope.$broadcast(broadcastName, {
+                                    leafletEvent : e
+                                });
+                            }
+                        });
+                    };
+                }
 
-                  // Safely broadcast the event
-                  safeApply(function(scope) {
-                    $rootScope.$broadcast(broadcastName, {
-                      leafletEvent: e
-                    });
-                  });
-                };
-              }
-
-              var mapEvents = [
+              var availableMapEvents = [
                 'click',
                 'dblclick',
                 'mousedown',
@@ -305,10 +336,98 @@ leafletDirective.directive('leaflet', [
                 'popupclose'
               ];
 
-              for (var i = 0; i < mapEvents.length; i++) {
-                var eventName = mapEvents[i];
+              var mapEvents = [];
+              var i;
+              var eventName;
+              var logic = "broadcast";
 
-                map.on(eventName, genDispatchMapEvent(eventName), {
+              if ($scope.eventBroadcast === undefined || $scope.eventBroadcast === null) {
+                  // Backward compatibility, if no event-broadcast attribute, all events are broadcasted
+                  mapEvents = availableMapEvents;
+              } else if (typeof $scope.eventBroadcast !== 'object') {
+                  // Not a valid object
+                  $log.warn("[AngularJS - Leaflet] event-broadcast must be an object check your model.");
+              } else {
+                  // We have a possible valid object
+                  if ($scope.eventBroadcast.map === undefined || $scope.eventBroadcast.map === null) {
+                      // We do not have events enable/disable do we do nothing (all enabled by default)
+                      mapEvents = availableMapEvents;
+                  } else if (typeof $scope.eventBroadcast.map !== 'object') {
+                      // Not a valid object
+                      $log.warn("[AngularJS - Leaflet] event-broadcast.map must be an object check your model.");
+                  } else {
+                      // We have a possible valid map object
+                      // Event propadation logic
+                      if ($scope.eventBroadcast.map.logic !== undefined && $scope.eventBroadcast.map.logic !== null) {
+                          // We take care of possible propagation logic
+                          if ($scope.eventBroadcast.map.logic !== "emit" && $scope.eventBroadcast.map.logic !== "broadcast") {
+                              // This is an error
+                              $log.warn("[AngularJS - Leaflet] Available event propagation logic are: 'emit' or 'broadcast'.");
+                          } else if ($scope.eventBroadcast.map.logic === "emit") {
+                              logic = "emit";
+                          }
+                      }
+                      // Enable / Disable
+                      var mapEventsEnable = false, mapEventsDisable = false;
+                      if ($scope.eventBroadcast.map.enable !== undefined && $scope.eventBroadcast.map.enable !== null) {
+                          if (typeof $scope.eventBroadcast.map.enable === 'object') {
+                              mapEventsEnable = true;
+                          }
+                      }
+                      if ($scope.eventBroadcast.map.disable !== undefined && $scope.eventBroadcast.map.disable !== null) {
+                          if (typeof $scope.eventBroadcast.map.disable === 'object') {
+                              mapEventsDisable = true;
+                          }
+                      }
+                      if (mapEventsEnable && mapEventsDisable) {
+                          // Both are active, this is an error
+                          $log.warn("[AngularJS - Leaflet] can not enable and disable events at the time");
+                      } else if (!mapEventsEnable && !mapEventsDisable) {
+                          // Both are inactive, this is an error
+                          $log.warn("[AngularJS - Leaflet] must enable or disable events");
+                      } else {
+                          // At this point the map object is OK, lets enable or disable events
+                          if (mapEventsEnable) {
+                              // Enable events
+                              for (i = 0; i < $scope.eventBroadcast.map.enable.length; i++) {
+                                  eventName = $scope.eventBroadcast.map.enable[i];
+                                  // Do we have already the event enabled?
+                                  if (mapEvents.indexOf(eventName) !== -1) {
+                                      // Repeated event, this is an error
+                                      $log.warn("[AngularJS - Leaflet] This event " + eventName + " is already enabled");
+                                  } else {
+                                      // Does the event exists?
+                                      if (availableMapEvents.indexOf(eventName) === -1) {
+                                          // The event does not exists, this is an error
+                                          $log.warn("[AngularJS - Leaflet] This event " + eventName + " does not exist");
+                                      } else {
+                                          // All ok enable the event
+                                          mapEvents.push(eventName);
+                                      }
+                                  }
+                              }
+                          } else {
+                              // Disable events
+                              mapEvents = availableMapEvents;
+                              for (i = 0; i < $scope.eventBroadcast.map.disable.length; i++) {
+                                  eventName = $scope.eventBroadcast.map.disable[i];
+                                  var index = mapEvents.indexOf(eventName);
+                                  if (index === -1) {
+                                      // The event does not exist
+                                      $log.warn("[AngularJS - Leaflet] This event " + eventName + " does not exist or has been already disabled");
+                                  } else {
+                                      mapEvents.splice(index, 1);
+                                  }
+                              }
+                          }
+                      }
+                  }
+              }
+
+              for (i = 0; i < mapEvents.length; i++) {
+                eventName = mapEvents[i];
+
+                map.on(eventName, genDispatchMapEvent(eventName, logic), {
                   eventName: eventName
                 });
               }
@@ -360,7 +479,11 @@ leafletDirective.directive('leaflet', [
                     layers = {};
                     layers.baselayers = {};
                     layers.controls = {};
-                    layers.controls.layers = new L.control.layers().addTo(map);
+                    layers.controls.layers = new L.control.layers();
+                    if ($scope.defaults && $scope.defaults.controlLayersPosition) {
+                        layers.controls.layers.setPosition($scope.defaults.controlLayersPosition);
+                    }
+                    layers.controls.layers.addTo(map);
                     // Setup all baselayers definitions
                     var top = false;
                     for (var layerName in $scope.layers.baselayers) {
@@ -398,7 +521,6 @@ leafletDirective.directive('leaflet', [
                     // Watch for the base layers
                     $scope.$watch('layers.baselayers', function(newBaseLayers) {
                         // Delete layers from the array
-                        var deleted = false;
                         for (var name in layers.baselayers) {
                             if (newBaseLayers[name] === undefined) {
                                 // Remove the layer from the control
@@ -408,7 +530,6 @@ leafletDirective.directive('leaflet', [
                                     map.removeLayer(layers.baselayers[name]);
                                 }
                                 delete layers.baselayers[name];
-                                deleted = true;
                             }
                         }
                         // add new layers
@@ -485,8 +606,8 @@ leafletDirective.directive('leaflet', [
                 if (layerDefinition.type === undefined || layerDefinition.type === null || typeof layerDefinition.type !== 'string') {
                     $log.error('[AngularJS - Leaflet] A base layer must have a type');
                     return null;
-                } else if (layerDefinition.type !== 'xyz' && layerDefinition.type !== 'wms' && layerDefinition.type !== 'group' && layerDefinition.type !== 'markercluster' && layerDefinition.type !== 'google') {
-                    $log.error('[AngularJS - Leaflet] A layer must have a valid type: "xyz, wms, group"');
+                } else if (layerDefinition.type !== 'xyz' && layerDefinition.type !== 'wms' && layerDefinition.type !== 'group' && layerDefinition.type !== 'markercluster' && layerDefinition.type !== 'google' && layerDefinition.type !== 'bing') {
+                    $log.error('[AngularJS - Leaflet] A layer must have a valid type: "xyz, wms, group, google"');
                     return null;
                 }
                 if (layerDefinition.type === 'xyz' || layerDefinition.type === 'wms') {
@@ -524,8 +645,11 @@ leafletDirective.directive('leaflet', [
                     layer = createMarkerClusterLayer(layerDefinition.layerOptions);
                     break;
                 case 'google':
-                    layer = createGoogleLayer(layerDefinition.layerOptions);
-                    break;
+					layer = createGoogleLayer(layerDefinition.layerType, layerDefinition.layerOptions);
+					break;
+                case 'bing':
+					layer = createBingLayer(layerDefinition.bingKey, layerDefinition.layerOptions);
+					break;
                 default:
                     layer = null;
                 }
@@ -559,9 +683,19 @@ leafletDirective.directive('leaflet', [
                 }
             }
 
-            function createGoogleLayer(options) {
-                if (Helpers.GoogleLayerPlugin.isLoaded()) {
-                    var layer = new L.Google(options);
+            function createGoogleLayer(type, options) {
+				type = type || 'SATELLITE';
+				if (Helpers.GoogleLayerPlugin.isLoaded()) {
+                    var layer = new L.Google(type, options);
+                    return layer;
+                } else {
+                    return null;
+                }
+            }
+
+            function createBingLayer(key, options) {
+				if (Helpers.BingLayerPlugin.isLoaded()) {
+                    var layer = new L.BingLayer(key, options);
                     return layer;
                 } else {
                     return null;
@@ -607,13 +741,14 @@ leafletDirective.directive('leaflet', [
                     if (!$scope.legend.colors || !$scope.legend.labels || $scope.legend.colors.length !== $scope.legend.labels.length) {
                          $log.warn("[AngularJS - Leaflet] legend.colors and legend.labels must be set.");
                     } else {
+                        var legendClass=$scope.legendClass ? $scope.legendClass : "legend";
                         var position = $scope.legend.position || 'bottomright';
                         var legend = L.control({position: position });
                         legend.onAdd = function (map) {
-                            var div = L.DomUtil.create('div', 'info legend');
+                            var div = L.DomUtil.create('div', legendClass);
                             for (var i = 0; i < $scope.legend.colors.length; i++) {
                                 div.innerHTML +=
-                                    '<i style="background:' + $scope.legend.colors[i] + '"></i> ' + $scope.legend.labels[i] + '<br />';
+                                    '<div><i style="background:' + $scope.legend.colors[i] + '"></i>' + $scope.legend.labels[i] + '</div>';
                             }
                             return div;
                         };
@@ -897,7 +1032,7 @@ leafletDirective.directive('leaflet', [
                     return null;
                 }
 
-                function genDispatchEventCB(eventName) {
+                function genDispatchEventCB(eventName, logic) {
                     return function(e) {
                         var broadcastName = 'leafletDirectiveMarker.' + eventName;
                         var markerName = scope_watch_name.replace('markers.', '');
@@ -919,17 +1054,24 @@ leafletDirective.directive('leaflet', [
                             }
                         }
 
-                        safeApply(function(){
-                            $rootScope.$broadcast(broadcastName, {
-                                markerName: markerName,
-                                leafletEvent: e
-                            });
+                        safeApply(function(scope){
+                            if (logic === "emit") {
+                                scope.$emit(broadcastName, {
+                                    markerName: markerName,
+                                    leafletEvent: e
+                                });
+                            } else {
+                                $rootScope.$broadcast(broadcastName, {
+                                    markerName: markerName,
+                                    leafletEvent: e
+                                });
+                            }
                         });
                     };
                 }
 
                 // Set up marker event broadcasting
-                var markerEvents = [
+                var availableMarkerEvents = [
                     'click',
                     'dblclick',
                     'mousedown',
@@ -945,9 +1087,98 @@ leafletDirective.directive('leaflet', [
                     'popupclose'
                 ];
 
-                for (var i = 0; i < markerEvents.length; i++) {
-                    var eventName = markerEvents[i];
-                    marker.on(eventName, genDispatchEventCB(eventName), {
+                var markerEvents = [];
+                var i;
+                var eventName;
+                var logic = "broadcast";
+
+                if ($scope.eventBroadcast === undefined || $scope.eventBroadcast === null) {
+                    // Backward compatibility, if no event-broadcast attribute, all events are broadcasted
+                    markerEvents = availableMarkerEvents;
+                } else if (typeof $scope.eventBroadcast !== 'object') {
+                    // Not a valid object
+                    $log.warn("[AngularJS - Leaflet] event-broadcast must be an object check your model.");
+                } else {
+                    // We have a possible valid object
+                    if ($scope.eventBroadcast.marker === undefined || $scope.eventBroadcast.marker === null) {
+                        // We do not have events enable/disable do we do nothing (all enabled by default)
+                        markerEvents = availableMarkerEvents;
+                    } else if (typeof $scope.eventBroadcast.marker !== 'object') {
+                        // Not a valid object
+                        $log.warn("[AngularJS - Leaflet] event-broadcast.marker must be an object check your model.");
+                    } else {
+                        // We have a possible valid map object
+                        // Event propadation logic
+                        if ($scope.eventBroadcast.marker.logic !== undefined && $scope.eventBroadcast.marker.logic !== null) {
+                            // We take care of possible propagation logic
+                            if ($scope.eventBroadcast.marker.logic !== "emit" && $scope.eventBroadcast.marker.logic !== "broadcast") {
+                                // This is an error
+                                $log.warn("[AngularJS - Leaflet] Available event propagation logic are: 'emit' or 'broadcast'.");
+                            } else if ($scope.eventBroadcast.marker.logic === "emit") {
+                                logic = "emit";
+                            }
+                        }
+                        // Enable / Disable
+                        var markerEventsEnable = false, markerEventsDisable = false;
+                        if ($scope.eventBroadcast.marker.enable !== undefined && $scope.eventBroadcast.marker.enable !== null) {
+                            if (typeof $scope.eventBroadcast.marker.enable === 'object') {
+                                markerEventsEnable = true;
+                            }
+                        }
+                        if ($scope.eventBroadcast.marker.disable !== undefined && $scope.eventBroadcast.marker.disable !== null) {
+                            if (typeof $scope.eventBroadcast.marker.disable === 'object') {
+                                markerEventsDisable = true;
+                            }
+                        }
+                        if (markerEventsEnable && markerEventsDisable) {
+                            // Both are active, this is an error
+                            $log.warn("[AngularJS - Leaflet] can not enable and disable events at the same time");
+                        } else if (!markerEventsEnable && !markerEventsDisable) {
+                            // Both are inactive, this is an error
+                            $log.warn("[AngularJS - Leaflet] must enable or disable events");
+                        } else {
+                            // At this point the marker object is OK, lets enable or disable events
+                            if (markerEventsEnable) {
+                                // Enable events
+                                for (i = 0; i < $scope.eventBroadcast.marker.enable.length; i++) {
+                                    eventName = $scope.eventBroadcast.marker.enable[i];
+                                    // Do we have already the event enabled?
+                                    if (markerEvents.indexOf(eventName) !== -1) {
+                                        // Repeated event, this is an error
+                                        $log.warn("[AngularJS - Leaflet] This event " + eventName + " is already enabled");
+                                    } else {
+                                        // Does the event exists?
+                                        if (availableMarkerEvents.indexOf(eventName) === -1) {
+                                            // The event does not exists, this is an error
+                                            $log.warn("[AngularJS - Leaflet] This event " + eventName + " does not exist");
+                                        } else {
+                                            // All ok enable the event
+                                            markerEvents.push(eventName);
+                                        }
+                                    }
+                                }
+                            } else {
+                                // Disable events
+                                markerEvents = availableMarkerEvents;
+                                for (i = 0; i < $scope.eventBroadcast.marker.disable.length; i++) {
+                                    eventName = $scope.eventBroadcast.marker.disable[i];
+                                    var index = markerEvents.indexOf(eventName);
+                                    if (index === -1) {
+                                        // The event does not exist
+                                        $log.warn("[AngularJS - Leaflet] This event " + eventName + " does not exist or has been already disabled");
+                                    } else {
+                                        markerEvents.splice(index, 1);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+
+                for (i = 0; i < markerEvents.length; i++) {
+                    eventName = markerEvents[i];
+                    marker.on(eventName, genDispatchEventCB(eventName, logic), {
                         eventName: eventName,
                         scope_watch_name: scope_watch_name
                     });
@@ -1290,76 +1521,146 @@ leafletDirective.directive('leaflet', [
 
                 }, true);
             }
-
-            function createPath(name, scopePath, map) {
-                var polyline = new L.Polyline([], {
+			
+			function createPath(name, scopePath, map) {
+				var path;
+				
+				var options = {
                     weight: defaults.path.weight,
                     color: defaults.path.color,
                     opacity: defaults.path.opacity
-                });
-
-                if (scopePath.latlngs !== undefined) {
-                    var latlngs = convertToLeafletLatLngs(scopePath.latlngs);
-                    polyline.setLatLngs(latlngs);
-                }
-
-                if (scopePath.weight !== undefined) {
-                    polyline.setStyle({ weight: scopePath.weight });
-                }
-
-                if (scopePath.color !== undefined) {
-                    polyline.setStyle({ color: scopePath.color });
-                }
-
-                if (scopePath.opacity !== undefined) {
-                    polyline.setStyle({ opacity: scopePath.opacity });
-                }
-
-                map.addLayer(polyline);
+				};
+				if(scopePath.stroke !== undefined) {
+					options.stroke = scopePath.stroke;
+				}
+				if(scopePath.fill !== undefined) {
+					options.fill = scopePath.fill;
+				}
+				if(scopePath.fillColor !== undefined) {
+					options.fillColor = scopePath.fillColor;
+				}
+				if(scopePath.fillOpacity !== undefined) {
+					options.fillOpacity = scopePath.fillOpacity;
+				}
+				if(scopePath.smoothFactor !== undefined) {
+					options.smoothFactor = scopePath.smoothFactor;
+				}
+				if(scopePath.noClip !== undefined) {
+					options.noClip = scopePath.noClip;
+				}
+				
+				if(scopePath.type === undefined) {
+					scopePath.type = "polyline";
+				}
+				
+				function setPathOptions(data, oldData) {
+					if (data.latlngs !== undefined && (oldData === undefined || data.latlngs !== oldData.latlngs)) {
+						switch(data.type) {
+							default:
+							case "polyline":
+							case "polygon":
+								path.setLatLngs(convertToLeafletLatLngs(data.latlngs));
+								break;
+							case "multiPolyline":
+							case "multiPolygon":
+								path.setLatLngs(convertToLeafletMultiLatLngs(data.latlngs));
+								break;
+							case "rectangle":
+								path.setBounds(new L.LatLngBounds(convertToLeafletLatLngs(data.latlngs)));
+								break;
+							case "circle":
+							case "circleMarker":
+								path.setLatLng(convertToLeafletLatLng(data.latlngs));
+								if(data.radius !== undefined && (oldData === undefined || data.radius !== oldData.radius)) {
+									path.setRadius(data.radius);
+								}
+								break;
+						}
+					}
+	
+					if (data.weight !== undefined && (oldData === undefined || data.weight !== oldData.weight)) {
+						path.setStyle({ weight: data.weight });
+					}
+	
+					if (data.color !== undefined && (oldData === undefined || data.color !== oldData.color)) {
+						path.setStyle({ color: data.color });
+					}
+	
+					if (data.opacity !== undefined && (oldData === undefined || data.opacity !== oldData.opacity)) {
+						path.setStyle({ opacity: data.opacity });
+					}
+				}
+				
+				switch(scopePath.type) {
+					default:
+					case "polyline":
+						path = new L.Polyline([], options); 
+						break;
+					case "multiPolyline":
+						path = new L.multiPolyline([[[0,0],[1,1]]], options); 
+						break;
+					case "polygon":
+						path = new L.Polygon([], options); 
+						break;
+					case "multiPolygon":
+						path = new L.MultiPolygon([[[0,0],[1,1],[0,1]]], options); 
+						break;
+					case "rectangle":
+						path = new L.Rectangle([[0,0],[1,1]], options); 
+						break;
+					case "circle":
+						path = new L.Circle([0,0], 1, options); 
+						break;
+					case "circleMarker":
+						path = new L.CircleMarker([0,0], options); 
+						break;
+				}
+				
+				setPathOptions(scopePath);
+                map.addLayer(path);
 
                 var clearWatch = $scope.$watch('paths.' + name, function(data, oldData) {
                     if (!data) {
-                        map.removeLayer(polyline);
+                        map.removeLayer(path);
                         clearWatch();
                         return;
                     }
-
-                    if (oldData) {
-                        if (data.latlngs !== undefined && data.latlngs !== oldData.latlngs) {
-                            var latlngs = convertToLeafletLatLngs(data.latlngs);
-                            polyline.setLatLngs(latlngs);
-                        }
-
-                        if (data.weight !== undefined && data.weight !== oldData.weight) {
-                            polyline.setStyle({ weight: data.weight });
-                        }
-
-                        if (data.color !== undefined && data.color !== oldData.color) {
-                            polyline.setStyle({ color: data.color });
-                        }
-
-                        if (data.opacity !== undefined && data.opacity !== oldData.opacity) {
-                            polyline.setStyle({ opacity: data.opacity });
-                        }
-                    }
+					setPathOptions(data,oldData);
                 }, true);
-                return polyline;
-            }
+				
+                return path;
+			}
+			
+			function convertToLeafletLatLng(latlng) {
+				return new L.LatLng(latlng.lat, latlng.lng);
+			}
 
             function convertToLeafletLatLngs(latlngs) {
-                var leafletLatLngs = latlngs.filter(function(latlng) {
+                return latlngs.filter(function(latlng) {
                     return !!latlng.lat && !!latlng.lng;
                 }).map(function (latlng) {
                     return new L.LatLng(latlng.lat, latlng.lng);
                 });
-
-                return leafletLatLngs;
             }
+			
+			function convertToLeafletMultiLatLngs(paths) {
+				return paths.map(function(latlngs) {
+					return convertToLeafletLatLngs(latlngs);
+				});
+			}
 
             function setupControls() {
                 //@TODO add document for this option  11.08 2013 (houqp)
-                if ($scope.defaults && $scope.defaults.zoomControlPosition) {
+                if (map.zoomControl && $scope.defaults && $scope.defaults.zoomControlPosition) {
                     map.zoomControl.setPosition($scope.defaults.zoomControlPosition);
+                }
+
+                if(map.zoomControl && $scope.defaults && $scope.defaults.zoomControl===false) {
+					map.zoomControl.removeFrom(map);
+                }
+
+                if(map.zoomsliderControl && $scope.defaults && !$scope.defaults.zoomsliderControl) {
+					map.zoomsliderControl.removeFrom(map);
                 }
             }
 
@@ -1369,7 +1670,7 @@ leafletDirective.directive('leaflet', [
                 }
 
                 for(var i = 0, count = $scope.customControls.length; i < count; i++) {
-                    map.addControl(new $scope.customControls[i]());
+                    map.addControl($scope.customControls[i]);
                 }
             }
         }

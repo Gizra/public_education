@@ -1,0 +1,16 @@
+<div ng-show="state == 'beforeRecord'">
+  <button ng-click="startRecord()">Start record</button>
+</div>
+
+<div ng-show="state == 'recording'">
+  <button ng-click="stopRecord()">Stop record</button>
+  <div class="remaining-time" ng-show="counter > 0">{{ counter + ' sec left' }}</div>
+</div>
+
+<div ng-show="state == 'afterRecord'">
+  <button ng-click="state = 'beforeRecord'">Discard</button>
+
+  <button ng-click="playRecord()">Play</button>
+
+  <button ng-click="onRecorded()">Confirm</button>
+</div>

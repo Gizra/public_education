@@ -18,7 +18,7 @@
       {{markers.marker.venue.name | venueName}}
     </div>
 
-    <a class="confirm" ng-click="setState('form')">V</a>
+    <a class="confirm" ng-show="markers.marker.venue.name.length" ng-click="setState('form')">V</a>
   </div>
 </div>
 
@@ -40,21 +40,26 @@
       </div>
 
       <div>
-        <a ng-hide="80 - text.length < 0" ng-click="setState('record')">V</a>
-        <div ng-show="80 - text.length < 0" ng-click="setState('record')">^</div>
+        <a ng-hide="80 - text.length < 0 || text.length == 0" ng-click="setState('record')">V</a>
+        <div ng-show="80 - text.length < 0">You must enter text below 80 chars</div>
       </div>
     </div>
   </form>
 </div>
 
-<div class="record-wrapper" ng-show="state == 'record'">
+<div class="record-wrapper" ng-show="state == 'record' || state == 'recording' || state == 'recorded'">
 
-  <a class="cancel" ng-click="setState('form')">X</a>
+  <a title="Back to writing the text" class="cancel" ng-click="setState('form')">X</a>
   <div>
-    {{ text }}
+    Text: {{ text }}
   </div>
 
   <div>
-    <record-sound>Recording will be here</record-sound>
+    Venue: {{markers.marker.venue.name | venueName}}
   </div>
+
+  <div ng-show="markers.marker.venue.name">
+    <sound-recorder file="file" on-recorded="onRecorded()"></sound-recorder>
+  </div>
+
 </div>
