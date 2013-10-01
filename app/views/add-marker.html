@@ -58,5 +58,12 @@
     <sound-recorder file="file" state="state"></sound-recorder>
     THIS IS the file: {{  file }}
   </div>
+</div>
 
+<div ng-show="state == 'uploading'">
+  <a class="cancel" ng-click="setState('mark')">Cancel upload</a>
+</div>
+
+<div ng-show="state == 'uploaded'">
+  <a class="success" href="#/">Saved! click to return</a>
 </div>

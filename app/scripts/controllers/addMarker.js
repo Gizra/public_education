@@ -72,6 +72,11 @@ angular.module('publicEducationApp')
 
         Marker.addMarker(venue, $scope.text, $scope.file, location, $scope.user);
       }
+      if (newVal == 'uploaded') {
+        // Remove all local data.
+        $scope.markers.marker = {};
+        $scope.state = 'mark';
+      }
     });
 
     /**
