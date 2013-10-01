@@ -5,7 +5,7 @@ angular.module('publicEducationApp')
 
     return {
 
-      getVenue: function(lat, lng) {
+      gettingVenue: function(lat, lng) {
         var defer = $q.defer();
 
         $http({
