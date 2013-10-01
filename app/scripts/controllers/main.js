@@ -1,35 +1,25 @@
 'use strict';
 
 angular.module('publicEducationApp')
-  .controller('ListMarkersCtrl', function ($scope, Leaflet, storage) {
+  .controller('ListMarkersCtrl', function ($scope, Leaflet, storage, Marker, $location) {
 
     angular.extend($scope, Leaflet.getDefaults());
     storage.bind($scope,'center', {defaultValue: Leaflet.getCenter()});
 
-    angular.extend($scope, {
-      markers: {
-        '513ee460e4b06c84bc3599d1': {
-          lat: 41.0383,
-          lng: 28.9869,
-          // @todo: Remove hardcoding.
-          message: 'This is Gezi Parki',
-          focus: false,
-          draggable: false
-        },
-        marker2: {
-          lat: 41.0383,
-          lng: 28.96,
-          message: 'This is Barcelona. You can not drag me',
-          focus: false,
-          draggable: false
-        }
-      }
+    $scope.markers = {};
+    Marker.getMarkers().then(function(data) {
+      $scope.markers = data;
     });
 
     angular.forEach(['zoomend','moveend'], function(value) {
       $scope.$on('leafletDirectiveMap.' + value, function() {
         Leaflet.setCenter($scope.center);
       });
+    });
+
+    $scope.$on('leafletDirectiveMarker.click', function (event, args) {
+      // Redirect to play-marker, when user clicks a marker.
+      $location.path('/play-marker/' + args.markerName);
     });
 
   });

@@ -1,11 +1,15 @@
 'use strict';
 
 angular.module('publicEducationApp')
-  .controller('AddMarkerCtrl', function ($scope, Leaflet, Foursquare, storage, User) {
+  .controller('AddMarkerCtrl', function ($scope, Leaflet, Foursquare, storage, User, Marker) {
 
+    /**
+     * Update the map's center, and get the venue name from FourSquare.
+     *
+     * The marker is always in the center of the map, and visible only if the
+     * zoom is equal or above 16.
+     */
     var updateMarker = function () {
-      // The marker is always in the center of the map, and visible only if the
-      // zoom is equal or above 16.
       if ($scope.center.zoom >= 16) {
         var lat = $scope.center.lat,
             lng = $scope.center.lng;
@@ -30,6 +34,7 @@ angular.module('publicEducationApp')
       }
     };
 
+    // Get default values.
     angular.extend($scope, Leaflet.getDefaults());
 
 
@@ -48,6 +53,25 @@ angular.module('publicEducationApp')
 
     User.getUser().then(function(data) {
       $scope.user = data;
+    });
+
+    $scope.$watch('state', function(oldVal, newVal) {
+      // @todo: value should be "completed" after recording is in place.
+      if (newVal === 'record') {
+        // Add the new marker.
+        var venue = {
+          id: $scope.markers.marker.venue.id,
+          name: $scope.markers.marker.venue.name,
+          lat: $scope.markers.marker.venue.location.lat,
+          lng: $scope.markers.marker.venue.location.lng
+        },
+        location = {
+          lng: $scope.markers.marker.lng,
+          lat: $scope.markers.marker.lat
+        };
+
+        Marker.addMarker(venue, $scope.text, $scope.file, location, $scope.user);
+      }
     });
 
     /**
@@ -71,5 +95,4 @@ angular.module('publicEducationApp')
     storage.bind($scope, 'markers');
     storage.bind($scope, 'state', {defaultValue: 'mark'});
     updateMarker();
-
   });
