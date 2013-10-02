@@ -9,18 +9,11 @@ angular.module('publicEducationApp')
     $scope.markers = {};
     Marker.gettingMarkers().then(function(data) {
 
-      // Set the icon according to the playlist count.
-      var counter;
       angular.forEach(data, function(marker, key) {
-        counter = 0;
-        angular.forEach(marker.playList, function(item) {
-          if (!item.unprocessed) {
-            ++counter;
-          }
-        });
         marker.icon = L.divIcon({
           iconSize: [10, 10],
-          html: counter,
+          // Set the icon according to the playlist count.
+          html: '<div class="marker-icon">' + marker.playList.length + '</div>',
           // @todo: angular-leaflet fails without this one.
           iconAnchor:   [0, 0]
         });
