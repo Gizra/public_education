@@ -45,7 +45,6 @@ angular.module('publicEducationApp')
           var interval = $timeout(scope.onTimeout,1000);
         };
 
-
         /**
          * Stop recording.
          */
@@ -59,6 +58,17 @@ angular.module('publicEducationApp')
          */
         scope.playRecord = function() {
           scope.state = 'playRecord';
+
+          var mediaPlayer = new Media(scope.file, function onSuccess() {
+            console.log('playAudio(): Audio Success');
+            // If play was successful, update marker state.
+            scope.state = 'afterPlay';
+
+          }, function onError(error) {
+            console.log('code: '    + error.code    + '\n' + 'message: ' + error.message + '\n');
+          });
+
+          mediaPlayer.play();
         };
       }
     };
