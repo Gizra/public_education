@@ -72,10 +72,6 @@ angular.module('publicEducationApp')
 
           play: function() {
             return true;
-          },
-
-          playRecord: function() {
-            return true;
           }
 
         };
