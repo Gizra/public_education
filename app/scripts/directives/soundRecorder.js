@@ -65,7 +65,7 @@ angular.module('publicEducationApp')
             scope.state = 'afterPlay';
 
           }, function onError(error) {
-            console.log('code: '    + error.code    + '\n' + 'message: ' + error.message + '\n');
+            console.log('code: ' + error.code    + '\n' + 'message: ' + error.message + '\n');
           });
 
           mediaPlayer.play();

@@ -47,7 +47,7 @@
   </form>
 </div>
 
-<div class="record-wrapper" ng-show="state == 'record' || state == 'recording' || state == 'recorded'">
+<div class="record-wrapper" ng-show="['record', 'recording', 'recorded', 'playRecord', 'afterPlay'].indexOf(state) != -1">
 
   <a title="Back to writing the text" class="cancel" ng-click="setState('form')">X</a>
   <div>

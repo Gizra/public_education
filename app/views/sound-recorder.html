@@ -7,11 +7,10 @@
   <div class="remaining-time" ng-show="counter > 0">{{ counter + ' sec left' }}</div>
 </div>
 
-<div ng-show="state == 'afterRecord'">
+<div ng-show="['afterRecord', 'playRecord', 'afterPlay'].indexOf(state) != -1">
   <button ng-click="state = 'beforeRecord'">Discard</button>
 
   <button ng-click="playRecord()">Play</button>
 
   <button ng-click="onRecorded()">Confirm</button>
 </div>
-
