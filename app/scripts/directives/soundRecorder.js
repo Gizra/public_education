@@ -59,7 +59,7 @@ angular.module('publicEducationApp')
         scope.playRecord = function() {
           scope.state = 'playRecord';
 
-          var mediaPlayer = new Media(scope.file, function onSuccess() {
+          var mediaPlayer = Phonegap.getMedia(scope.file, function onSuccess() {
             console.log('playAudio(): Audio Success');
             // If play was successful, update marker state.
             scope.state = 'afterPlay';
