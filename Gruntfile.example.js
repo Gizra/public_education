@@ -345,6 +345,12 @@ module.exports = function (grunt) {
         }
       }
     },
+    'gh-pages': {
+      options: {
+        base: 'www'
+      },
+      src: ['**']
+    },
     ngconstant: {
       options: {
         space: '  '
