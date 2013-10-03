@@ -1,4 +1,4 @@
-Public Education - Client side
+Public Education (PE) - Client side
 ================
 
 Copy Grunt file configuration:
@@ -13,7 +13,7 @@ Run build script:
 
 Once installed, there are several ways to run PE:
 
-1. iPhone emulator (requires ios-sim - "brew install ios-sim" if not there):
+1. iPhone emulator (requires ios-sim - ``brew install ios-sim`` if not there):
 
 ```phonegap run ios```
 
