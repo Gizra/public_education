@@ -12,7 +12,7 @@ angular.module('publicEducationApp')
        * @returns {*}
        */
       getFileUploadOptions: function() {
-        if (typeof cordova === undefined) {
+        if (typeof cordova !== 'undefined') {
           return new FileUploadOptions();
         }
 
@@ -28,7 +28,7 @@ angular.module('publicEducationApp')
        * @returns {*}
        */
       getFileTransfer: function() {
-        if (typeof cordova === undefined) {
+        if (typeof cordova !== 'undefined') {
           return new FileTransfer();
         }
 
@@ -55,7 +55,7 @@ angular.module('publicEducationApp')
        * @returns {*}
        */
       getMedia: function(file, onSuccess, onError) {
-        if (typeof cordova === undefined) {
+        if (typeof cordova !== 'undefined') {
           return new Media(file, onSuccess, onError);
         }
 
@@ -67,6 +67,10 @@ angular.module('publicEducationApp')
           },
 
           stopRecord: function() {
+            return true;
+          },
+
+          play: function() {
             return true;
           }
 

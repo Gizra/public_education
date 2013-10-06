@@ -6,7 +6,7 @@ angular.module('publicEducationApp')
       templateUrl:'views/sound-recorder.html',
       restrict: 'E',
       scope: {
-        // Pass the file name to the controller.
+        // Pass the file name and path to the controller.
         file: '=file',
         // The callback function that will be invoked when a recording is
         // approved by the user.
@@ -17,7 +17,7 @@ angular.module('publicEducationApp')
         scope.state = 'beforeRecord';
 
         // Record audio
-        scope.file = 'myrecording.amr';
+        scope.file = '/mnt/sdcard/myrecording.amr';
         var mediaRec = Phonegap.getMedia(scope.file, function onSuccess() {
           console.log('recordAudio():Audio Success');
         }, function onError(error) {
@@ -45,7 +45,6 @@ angular.module('publicEducationApp')
           var interval = $timeout(scope.onTimeout,1000);
         };
 
-
         /**
          * Stop recording.
          */
@@ -59,6 +58,17 @@ angular.module('publicEducationApp')
          */
         scope.playRecord = function() {
           scope.state = 'playRecord';
+
+          var mediaPlayer = Phonegap.getMedia(scope.file, function onSuccess() {
+            console.log('playAudio(): Audio Success');
+            // If play was successful, update marker state.
+            scope.state = 'afterPlay';
+
+          }, function onError(error) {
+            console.log('code: ' + error.code    + '\n' + 'message: ' + error.message + '\n');
+          });
+
+          mediaPlayer.play();
         };
       }
     };
