@@ -68,17 +68,6 @@ angular.module('publicEducationApp')
       $scope.state = state;
     };
 
-    $scope.isUserLogin = function() {
-        if (storage.get('user') === null) {
-            return false;
-        } else {
-            $scope.setState('mark');
-        }
-
-        console.log($scope.state);
-
-    };
-
     /**
      * Helper function to indicate recording has completed.
      */
@@ -130,8 +119,6 @@ angular.module('publicEducationApp')
     storage.bind($scope, 'center', {defaultValue: Leaflet.getCenter()});
     storage.bind($scope, 'text');
     storage.bind($scope, 'markers');
-    //storage.bind($scope, 'user');
-    storage.bind($scope, 'state', {defaultValue: 'credentials'});
-    $scope.setState('credentials');
+    storage.bind($scope, 'state', {defaultValue: 'mark'});
     updateMarker();
   });
