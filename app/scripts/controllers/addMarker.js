@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('publicEducationApp')
-  .controller('AddMarkerCtrl', function ($scope, $location, Leaflet, Foursquare, storage, User, Marker) {
+  .controller('AddMarkerCtrl', function ($scope, $location, Leaflet, Foursquare, storage, User, Marker, BACKEND_URL) {
 
     /**
      * Update the map's center, and get the venue name from FourSquare.
@@ -127,5 +127,6 @@ angular.module('publicEducationApp')
     storage.bind($scope, 'text');
     storage.bind($scope, 'markers');
     storage.bind($scope, 'state', {defaultValue: 'mark'});
+    $scope.backendUrl = BACKEND_URL;
     updateMarker();
   });
