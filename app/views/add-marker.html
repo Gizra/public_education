@@ -65,7 +65,7 @@
 
 </div>
 
-<div class="map-wrapper" ng-show="state == 'credentials'">
+<div class="credentials-wrapper" ng-show="state == 'credentials'">
     <div>
       <a href="{{ backendUrl }}/auth/facebook">Facebook</a>
     </div>
@@ -77,5 +77,23 @@
     <div>
       <a href="{{ backendUrl }}/">Post anonymously</a>
     </div>
+</div>
 
+<div class="share-wrapper" ng-show="state == 'share'">
+  <div>
+    <h1>Thanks</h1>
+    <p>
+      Your command has been recorded.
+    </p>
+    <p>
+      now, go tall your friends!
+    </p>
+    <ul>
+      <li><a href="">Twitter</a></li>
+      <li><a href="">Facebook</a></li>
+      <li><a href="">Google+</a></li>
+      <li><a href="">Email</a></li>
+    </ul>
+  </div>
+  <div><a href="">Close</a></div>
 </div>

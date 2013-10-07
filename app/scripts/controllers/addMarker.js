@@ -72,11 +72,18 @@ angular.module('publicEducationApp')
      * Helper function to indicate recording has completed.
      */
     $scope.onRecorded = function() {
-      $scope.setState('completed');
+      $scope.setState('credentials');
     };
 
-    $scope.$watch('state', function(newVal, oldVal) {
+    /**
+     * Helper function to indicate file was uploaded succesful to server.
+     */
+    $scope.onRecordUploaded= function() {
+      $scope.setState('completed');
+    }
 
+    $scope.$watch('state', function(newVal, oldVal) {
+      console.log(oldVal, ', ', newVal);
       if (oldVal === 'completed') {
         return $scope.onComplete();
       }
