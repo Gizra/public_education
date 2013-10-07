@@ -25,7 +25,7 @@
 <div class="form-wrapper" ng-show="state == 'form'">
   <a class="cancel" ng-click="setState('mark')">X</a>
 
-  <form>
+  <form ng-class="{error: 80 - text.length < 0}">
     <div>
       <textarea rows="6" name="text" ng-model="text" placeholder="Write your command" required></textarea><br>
     </div>
@@ -35,7 +35,7 @@
         {{markers.marker.venue.name | venueName}}
       </div>
 
-      <div class="char-count" ng-class="{error: 80 - text.length < 0}">
+      <div class="char-count">
         {{ 80 - text.length}}
       </div>
 
