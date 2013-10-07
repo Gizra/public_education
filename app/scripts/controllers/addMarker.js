@@ -62,7 +62,8 @@ angular.module('publicEducationApp')
      *   - form:
      *   - record:
      *   - upload:
-     *   - credentials
+     *   - credentials: Ask for twitter, facebook credentials before posting or permits anonymously posting
+     *
      */
     $scope.setState = function(state) {
       $scope.state = state;
@@ -72,11 +73,11 @@ angular.module('publicEducationApp')
      * Helper function to indicate recording has completed.
      */
     $scope.onRecorded = function() {
-      $scope.setState('credentials');
+      ($scope.user === null) ? $scope.setState('credentials') : $scope.setState('upload');
     };
 
     /**
-     * Helper function to indicate file was uploaded succesful to server.
+     * Helper function to indicate file was uploaded successfully to the server.
      */
     $scope.onRecordUploaded= function() {
       $scope.setState('completed');
@@ -106,6 +107,19 @@ angular.module('publicEducationApp')
           $scope.onComplete();
         });
       }
+
+      //Upload marker
+      if (newVal === 'upload') {
+        $scope.result = Marker.uploadingMarker($scope.markers.marker);
+        console.log('After uploading', $scope.result);
+        $scope.setState('share');
+      }
+
+
+      if (newVal === 'credentials') {
+        //Check if the user is already login
+
+      }
     });
 
     /**
@@ -128,5 +142,7 @@ angular.module('publicEducationApp')
     storage.bind($scope, 'markers');
     storage.bind($scope, 'state', {defaultValue: 'mark'});
     $scope.backendUrl = BACKEND_URL;
+
     updateMarker();
+
   });

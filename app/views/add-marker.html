@@ -81,6 +81,7 @@
 
 <div class="share-wrapper" ng-show="state == 'share'">
   <div>
+    {{user.data.name}}
     <h1>Thanks</h1>
     <p>
       Your command has been recorded.
@@ -95,5 +96,5 @@
       <li><a href="">Email</a></li>
     </ul>
   </div>
-  <div><a href="">Close</a></div>
+  <div><a ng-click="onComplete()">X Close</a></div>
 </div>
