@@ -45,7 +45,7 @@
         <div ng-show="80 - text.length < 0">You must enter text below 80 chars</div>
       </div>
     </div>
-  </form>
+
 </div>
 
 <div class="record-wrapper" ng-show="['record', 'recording', 'recorded', 'playRecord', 'afterPlay'].indexOf(state) != -1">
@@ -77,6 +77,15 @@
     <div>
       <a href="{{ backendUrl }}/">Post anonymously</a>
     </div>
+</div>
+
+<div class="credentials-upload" ng-show="state == 'upload'">
+  <form enctype="multipart/form-data" method="post" action="{{ backendUrl }}/recordings/create/">
+
+    Please select a file
+    <input type="file" name="file"/>
+    <input type="submit">Upload</button>
+  </form>
 </div>
 
 <div class="share-wrapper" ng-show="state == 'share'">
