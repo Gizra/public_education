@@ -11,7 +11,7 @@ angular.module('publicEducationApp')
 
       angular.forEach(data, function(marker, key) {
         marker.icon = L.divIcon({
-          iconSize: [10, 10],
+          iconSize: [63, 71],
           // Set the icon according to the playlist count.
           html: '<div class="marker-icon">' + marker.playList.length + '</div>',
           // @todo: angular-leaflet fails without this one.
