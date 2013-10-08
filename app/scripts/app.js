@@ -23,6 +23,10 @@ angular.module('publicEducationApp', ['config', 'angular-audio-player', 'angular
         templateUrl: 'views/play-mode.html',
         controller: 'PlayMarkerCtrl'
       })
+      .when('/play-market/:venueId', {
+        templateUrl: 'views/play-mode.html',
+        controller: 'PlayMarkerCtrl'
+      })
       .otherwise({
         redirectTo: '/'
       });

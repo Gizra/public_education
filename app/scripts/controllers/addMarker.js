@@ -59,7 +59,7 @@ angular.module('publicEducationApp')
      *   - form:
      *   - record:
      *   - upload:
-     *   - credentials: Ask for twitter, facebook credentials before posting or permits anonymously posting
+     *   - credentials: Ask for twitter, facebook credentials before posting or permits anonymously posting.
      *
      */
     $scope.setState = function(state) {
@@ -70,16 +70,15 @@ angular.module('publicEducationApp')
      * Helper function to indicate recording has completed.
      */
     $scope.onRecorded = function(form) {
-      //$scope.file = $scope.file;
       User.getUser().then(function(data) {
         if (data === null) {
           $scope.setState('credentials')
-        } else {
+        }
+        else {
           $scope.user = data;
           $scope.setState('upload');
         }
       });
-
     };
 
     /**
@@ -90,7 +89,6 @@ angular.module('publicEducationApp')
     }
 
     $scope.$watch('state', function(newVal, oldVal) {
-      console.log(oldVal, ', ', newVal);
       if (oldVal === 'completed') {
         return $scope.onComplete();
       }
@@ -99,7 +97,7 @@ angular.module('publicEducationApp')
 
       }
 
-      //Upload marker
+      // Upload marker.
       if (newVal === 'upload') {
         // Add the new marker.
         var venue = {
@@ -114,17 +112,12 @@ angular.module('publicEducationApp')
           };
 
         Marker.addMarker(venue, $scope.text, $scope.file, location, $scope.user).then(function() {
-          console.log('After uploading', $scope.file);
-          //$scope.setState('share');
-
-          // @todo: waiting to identify where relocate the onComplete() if need it.
-          // $scope.onComplete();
+          // After resolve promises Marker.addMarker.
         });
       }
 
       if (newVal === 'credentials') {
-        //Check if the user is already login
-
+        // Check if the user is already login.
       }
     });
 
