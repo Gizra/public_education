@@ -1,0 +1,31 @@
+<div class="container">
+  <div>
+    <div>
+      <a ng-href="#/add-marker">Add marker</a>
+    </div>
+    <div>
+      <a ng-href="#/">Close</a>
+    </div>
+  </div>
+  <div>
+    <img src="http://placehold.it/71x59" alt=""/>
+    <audio data-player-control="player" playlist="playList" audio-player  autoplay="true"></audio>
+
+  </div>
+  <div>
+    <div class="photo">
+      <img ng-show="selectedMarker.playList[player.currentTrack - 1].user.photo" ng-src="{{ selectedMarker.playList[player.currentTrack - 1].user.photo }}" />
+    </div>
+    <div>
+      <h4>
+        Name - Current Track: {{ player.currentTrack }}
+      </h4>
+      <h5>
+        @Twitter
+      </h5>
+    </div>
+    <div>
+      Options
+    </div>
+  </div>
+</div>
