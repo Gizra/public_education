@@ -15,7 +15,7 @@ angular.module('publicEducationApp')
           // Set the icon according to the playlist count.
           html: '<div class="marker-icon">' + marker.playList.length + '</div>',
           // @todo: angular-leaflet fails without this one.
-          iconAnchor:   [0, 0]
+          iconAnchor:   [31, 71]
         });
 
         console.log(key);
