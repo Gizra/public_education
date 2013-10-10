@@ -19,6 +19,14 @@ angular.module('publicEducationApp', ['config', 'angular-audio-player', 'angular
         templateUrl: 'views/login.html',
         controller: 'loginCtrl'
       })
+      .when('/play-mode/:venueId', {
+        templateUrl: 'views/play-mode.html',
+        controller: 'PlayMarkerCtrl'
+      })
+      .when('/play-market/:venueId', {
+        templateUrl: 'views/play-mode.html',
+        controller: 'PlayMarkerCtrl'
+      })
       .otherwise({
         redirectTo: '/'
       });

@@ -1,0 +1,35 @@
+<div class="map-wrapper">
+  <div class="actions-icons">
+    <div>
+      <a ng-href="#/add-marker">Add marker</a>
+    </div>
+    <div>
+      <a ng-href="#/">Close</a>
+    </div>
+  </div>
+  <div class="record">
+    <leaflet center="center" markers="markers" defaults="defaults"  height="480px" width="640px">
+
+    </leaflet>
+    <!-- Placeholder audio marker to float above the map -->
+    <img class="marker-icon" src="http://placehold.it/71x59" alt=""/>
+    <audio data-player-control="player" playlist="playList" audio-player  autoplay="true"></audio>
+
+  </div>
+  <div class="record-info">
+    <div class="photo">
+      <img ng-show="selectedMarker.playList[player.currentTrack - 1].user.photo" ng-src="{{ selectedMarker.playList[player.currentTrack - 1].user.photo }}" />
+    </div>
+    <div>
+      <div>
+        Name - Current Track: {{ player.currentTrack }}
+      </div>
+      <div>
+        @twitter
+      </div>
+    </div>
+    <div>
+      Options icon
+    </div>
+  </div>
+</div>

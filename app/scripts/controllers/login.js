@@ -5,6 +5,7 @@ angular.module('publicEducationApp')
 
     User.getUser().then(function(data) {
       // @todo: Redirect is user already logged in.
+        console.log(data);
       $scope.user = data;
     });
 

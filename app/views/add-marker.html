@@ -1,3 +1,4 @@
+
 <div class="map-wrapper" ng-show="state == 'mark'">
   <div class="instructions-wrapper">
     <div ng-show="center.zoom >= 16">
@@ -44,7 +45,7 @@
         <div ng-show="80 - text.length < 0">You must enter text below 80 chars</div>
       </div>
     </div>
-  </form>
+
 </div>
 
 <div class="record-wrapper" ng-show="['record', 'recording', 'recorded', 'playRecord', 'afterPlay'].indexOf(state) != -1">
@@ -62,4 +63,47 @@
     <sound-recorder file="file" on-recorded="onRecorded()"></sound-recorder>
   </div>
 
+</div>
+
+<div class="credentials-wrapper" ng-show="state == 'credentials'">
+    <div>
+      <a href="{{ backendUrl }}/auth/facebook">Facebook</a>
+    </div>
+
+    <div>
+      <a href="{{ backendUrl }}/auth/twitter">Twitter</a>
+    </div>
+    or
+    <div>
+      <a href="{{ backendUrl }}/">Post anonymously</a>
+    </div>
+</div>
+
+<div class="credentials-upload" ng-show="state == 'upload'">
+  <form enctype="multipart/form-data" method="post" action="{{ backendUrl }}/recordings/create/">
+
+    Please select a file
+    <input type="file" name="file"/>
+    <input type="submit">Upload</button>
+  </form>
+</div>
+
+<div class="share-wrapper" ng-show="state == 'share'">
+  <div>
+    {{user.data.name}}
+    <h1>Thanks</h1>
+    <p>
+      Your command has been recorded.
+    </p>
+    <p>
+      now, go tell your friends!
+    </p>
+    <ul>
+      <li><a href="">Twitter</a></li>
+      <li><a href="">Facebook</a></li>
+      <li><a href="">Google+</a></li>
+      <li><a href="">Email</a></li>
+    </ul>
+  </div>
+  <div><a ng-click="onComplete()">X Close</a></div>
 </div>
