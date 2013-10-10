@@ -1,10 +1,11 @@
 'use strict';
 
 angular.module('publicEducationApp')
-  .service('Foursquare', function Foursquare($http, $q, FOURSQUARE) {
+  .service('Foursquare', function Foursquare($http, $q, FOURSQUARE, $rootScope) {
+
+    var _error;
 
     return {
-
       gettingVenue: function(lat, lng) {
         var defer = $q.defer();
 
@@ -23,10 +24,12 @@ angular.module('publicEducationApp')
         })
           .success(function (data) {
             defer.resolve(data.response.venues[0]);
+          })
+          .error(function (data, status, headers, config) {
+            console.error(headers);
           });
 
         return defer.promise;
       }
     };
-
   });

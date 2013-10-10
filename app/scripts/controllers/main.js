@@ -35,5 +35,4 @@ angular.module('publicEducationApp')
       // Redirect to play-marker, when user clicks a marker.
       $location.path('/play-marker/' + args.markerName);
     });
-
   });

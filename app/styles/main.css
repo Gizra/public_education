@@ -1,0 +1,62 @@
+html, body, .leaflet-container, .container {
+  height: 100%; }
+
+.container {
+  margin: 0;
+  width: 100%; }
+
+.add-marker-wrapper {
+  position: absolute;
+  top: 40px;
+  right: 40px;
+  z-index: 99;
+  padding: 20px 10px;
+  background: black;
+  color: white; }
+
+.leaflet-div-icon {
+  padding: 20px; }
+
+.map-wrapper {
+  height: 100%; }
+
+.instructions-wrapper {
+  position: absolute;
+  top: 0;
+  z-index: 99;
+  padding: 20px 10px;
+  width: 100%;
+  background: black;
+  color: white; }
+
+.leaflet-control-container .leaflet-top {
+  top: 80px; }
+
+.location-wrapper {
+  position: absolute;
+  bottom: 0;
+  z-index: 99;
+  background: black;
+  padding: 20px 10px;
+  width: 100%;
+  color: white; }
+
+body {
+  background: #fafafa;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: #333; }
+
+.hero-unit {
+  margin: 50px auto 0 auto;
+  width: 300px;
+  font-size: 18px;
+  font-weight: 200;
+  line-height: 30px;
+  background-color: #eee;
+  border-radius: 6px;
+  padding: 60px; }
+
+.hero-unit h1 {
+  font-size: 60px;
+  line-height: 1;
+  letter-spacing: -1px; }

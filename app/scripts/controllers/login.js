@@ -11,6 +11,4 @@ angular.module('publicEducationApp')
 
     // Get the backend URL.
     $scope.backendUrl = BACKEND_URL;
-
-
   });
