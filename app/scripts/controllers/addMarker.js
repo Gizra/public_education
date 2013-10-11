@@ -111,6 +111,8 @@ angular.module('publicEducationApp')
       storage.remove('markers');
       storage.clearAll();
 
+      console.log('onComplete');
+
       $location.path('/');
     };
 

@@ -24,8 +24,6 @@ angular.module('publicEducationApp')
           scope.file = 'pe.amr';
         }
 
-        console.log(scope.file);
-
         var mediaRec = Phonegap.getMedia(scope.file, function onSuccess() {
           console.log('recordAudio():Audio Success');
         }, function onError(error) {

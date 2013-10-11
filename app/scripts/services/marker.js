@@ -184,6 +184,10 @@ angular.module('publicEducationApp')
           fileURI = '/mnt/sdcard/pe.amr';
           options.mimeType = 'audio/amr';
         }
+        else {
+          // Development.
+          fileURI = '/tmp/pe.mp3';
+        }
 
         options.fileKey = 'file';
         options.fileName = fileURI.substr(fileURI.lastIndexOf('/')+1);
