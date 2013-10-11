@@ -176,7 +176,7 @@ angular.module('publicEducationApp')
 
         var fileURI;
         if (Phonegap.isMobile.iOS()) {
-          fileURI = ft.LocalFileSystem.TEMPORARY + '/pe.wav';
+          fileURI = LocalFileSystem.TEMPORARY + '/pe.wav';
           // @todo: get from file name.
           options.mimeType = 'audio/wav';
         }
@@ -187,16 +187,18 @@ angular.module('publicEducationApp')
         else {
           // Development.
           fileURI = '/tmp/pe.mp3';
+          options.mimeType = 'audio/mp3';
         }
 
         options.fileKey = 'file';
         options.fileName = fileURI.substr(fileURI.lastIndexOf('/')+1);
-        options.marker = marker;
 
+        options.marker = marker;
 
         // Request headers needs to be in the following format.
         // @see https://github.com/superjoe30/node-multiparty/pull/15
         var headers = {'Content-type': 'multipart/form-data; boundary=+++++'};
+
         options.headers = headers;
 
         ft.upload(fileURI, BACKEND_URL + '/recordings/create', function onSuccess(result) {
