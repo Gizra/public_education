@@ -191,6 +191,7 @@ angular.module('publicEducationApp')
 
         options.fileKey = 'file';
         options.fileName = fileURI.substr(fileURI.lastIndexOf('/')+1);
+        options.marker = marker;
 
 
         // Request headers needs to be in the following format.
