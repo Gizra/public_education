@@ -16,8 +16,16 @@ angular.module('publicEducationApp')
         // Internal state of the recording.
         scope.state = 'beforeRecord';
 
-        // Record audio
-        scope.file = '/mnt/sdcard/myrecording.amr';
+        // Record audio.
+        if (Phonegap.isMobile.iOS()) {
+          scope.file = 'pe.wav';
+        }
+        else if (Phonegap.isMobile.Android()) {
+          scope.file = 'pe.amr';
+        }
+
+        console.log(scope.file);
+
         var mediaRec = Phonegap.getMedia(scope.file, function onSuccess() {
           console.log('recordAudio():Audio Success');
         }, function onError(error) {
