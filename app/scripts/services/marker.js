@@ -176,7 +176,7 @@ angular.module('publicEducationApp')
 
         var fileURI;
         if (Phonegap.isMobile.iOS()) {
-          fileURI = LocalFileSystem.TEMPORARY + '/pe.wav';
+          fileURI = window.appRootDir.fullPath + '/pe.wav';
           // @todo: get from file name.
           options.mimeType = 'audio/wav';
         }
@@ -206,6 +206,7 @@ angular.module('publicEducationApp')
           defer.resolve(result);
         }, function onError(error) {
           console.log('An error has occurred: Code = ' + error.code);
+          console.log(error);
           defer.reject(error);
         }, options);
 
