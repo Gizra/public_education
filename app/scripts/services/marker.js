@@ -195,12 +195,6 @@ angular.module('publicEducationApp')
 
         options.marker = marker;
 
-        // Request headers needs to be in the following format.
-        // @see https://github.com/superjoe30/node-multiparty/pull/15
-        var headers = {'Content-type': 'multipart/form-data; boundary=+++++'};
-
-        options.headers = headers;
-
         ft.upload(fileURI, BACKEND_URL + '/recordings/create', function onSuccess(result) {
           console.log('Response = ' + result.response);
           defer.resolve(result);
