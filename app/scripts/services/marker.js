@@ -176,7 +176,7 @@ angular.module('publicEducationApp')
 
         var fileURI;
         if (Phonegap.isMobile.iOS()) {
-          fileURI = window.appRootDir.fullPath + 'tmp/pe.wav';
+          fileURI = window.appRootDir.fullPath + '/pe.wav';
 
           // @todo: get from file name.
           options.mimeType = 'audio/wav';
