@@ -190,12 +190,12 @@ angular.module('publicEducationApp')
           options.mimeType = 'audio/mp3';
         }
 
-        options.fileKey = 'file';
         options.fileName = fileURI.substr(fileURI.lastIndexOf('/')+1);
+        // We need to stringfy the marker.
+        options.params = {marker: JSON.stringify(marker)};
 
-        options.marker = marker;
 
-        ft.upload(fileURI, BACKEND_URL + '/recordings/create', function onSuccess(result) {
+        ft.upload(fileURI, BACKEND_URL + '/add-marker', function onSuccess(result) {
           console.log('Response = ' + result.response);
           defer.resolve(result);
         }, function onError(error) {
