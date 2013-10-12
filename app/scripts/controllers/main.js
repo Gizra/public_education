@@ -18,8 +18,6 @@ angular.module('publicEducationApp')
           iconAnchor:   [31, 71]
         });
 
-        console.log(key);
-
         $scope.markers[key] = marker;
       });
       // $scope.markers = data;
