@@ -70,46 +70,28 @@ angular.module('publicEducationApp')
      * Helper function to indicate recording has completed.
      */
     $scope.onRecorded = function() {
+      // Add the new marker.
+      var venue = {
+          id: $scope.markers.marker.venue.id,
+          name: $scope.markers.marker.venue.name,
+          lat: $scope.markers.marker.venue.location.lat,
+          lng: $scope.markers.marker.venue.location.lng
+        },
+        location = {
+          lng: $scope.markers.marker.lng,
+          lat: $scope.markers.marker.lat
+        };
+
+      Marker.addMarker(venue, $scope.text, $scope.file, location, $scope.user).then(function() {
+        // After resolve promises Marker.addMarker.
+      });
+
       $scope.setState('completed');
     };
-
-    /**
-     * Helper function to indicate file was uploaded successfully to the server.
-     */
-    $scope.onRecordUploaded= function() {
-      $scope.setState('completed');
-    }
 
     $scope.$watch('state', function(newVal, oldVal) {
       if (oldVal === 'completed') {
         return $scope.onComplete();
-      }
-
-      if (newVal === 'completed') {
-
-      }
-
-      // Upload marker.
-      if (newVal === 'upload') {
-        // Add the new marker.
-        var venue = {
-            id: $scope.markers.marker.venue.id,
-            name: $scope.markers.marker.venue.name,
-            lat: $scope.markers.marker.venue.location.lat,
-            lng: $scope.markers.marker.venue.location.lng
-          },
-          location = {
-            lng: $scope.markers.marker.lng,
-            lat: $scope.markers.marker.lat
-          };
-
-        Marker.addMarker(venue, $scope.text, $scope.file, location, $scope.user).then(function() {
-          // After resolve promises Marker.addMarker.
-        });
-      }
-
-      if (newVal === 'credentials') {
-        // Check if the user is already login.
       }
     });
 
