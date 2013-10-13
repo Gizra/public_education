@@ -171,26 +171,37 @@ angular.module('publicEducationApp')
       uploadingMarker: function(marker) {
         var defer = $q.defer();
 
-        // @todo: remove hardcoding of URI and file format.
-        var fileURI = marker.src;
-        var options = Phonegap.getFileUploadOptions();
-        options.fileKey = 'file';
-        options.fileName = fileURI.substr(fileURI.lastIndexOf('/')+1);
-
-        // @todo: Remove hardcoding.
-        options.mimeType = 'audio/amr';
-
-        // Request headers needs to be in the following format.
-        // @see https://github.com/superjoe30/node-multiparty/pull/15
-        var headers = {'Content-type': 'multipart/form-data; boundary=+++++'};
-        options.headers = headers;
-
         var ft = Phonegap.getFileTransfer();
-        ft.upload(fileURI, BACKEND_URL + '/recordings/create', function onSuccess(result) {
+        var options = Phonegap.getFileUploadOptions();
+
+        var fileURI;
+        if (Phonegap.isMobile.iOS()) {
+          fileURI = window.appRootDir.fullPath + '/pe.wav';
+
+          // @todo: get from file name.
+          options.mimeType = 'audio/wav';
+        }
+        else if (Phonegap.isMobile.Android()) {
+          fileURI = '/mnt/sdcard/pe.amr';
+          options.mimeType = 'audio/amr';
+        }
+        else {
+          // Development.
+          fileURI = '/tmp/pe.mp3';
+          options.mimeType = 'audio/mp3';
+        }
+
+        options.fileName = fileURI.substr(fileURI.lastIndexOf('/')+1);
+        // We need to stringfy the marker.
+        options.params = {marker: JSON.stringify(marker)};
+
+
+        ft.upload(fileURI, BACKEND_URL + '/add-marker', function onSuccess(result) {
           console.log('Response = ' + result.response);
           defer.resolve(result);
         }, function onError(error) {
           console.log('An error has occurred: Code = ' + error.code);
+          console.log(error);
           defer.reject(error);
         }, options);
 

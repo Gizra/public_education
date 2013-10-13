@@ -21,6 +21,7 @@ angular.module('publicEducationApp')
       getDefaults: function() {
         return {
           defaults: {
+            tileLayer: 'http://{s}.tiles.mapbox.com/v3/mushon.map-wjhkqj4n/{z}/{x}/{y}.png',
             maxZoom: 20,
             minZoom: 14
           }

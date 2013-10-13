@@ -1,8 +1,14 @@
+@import "compass/css3";
+
 $iconSpritePath: "../images/glyphicons-halflings.png";
 $iconWhiteSpritePath: "../images/glyphicons-halflings-white.png";
 
 html, body, .leaflet-container, .container {
   height: 100%;
+}
+
+body{
+  margin: 0;
 }
 
 .container {
@@ -14,16 +20,36 @@ html, body, .leaflet-container, .container {
 // Home page
 .add-marker-wrapper {
   position: absolute;
-  top: 40px;
-  right: 40px;
   z-index: 99;
-  padding: 20px 10px;
-  background: black;
-  color: white;
+
+  a {
+    background: url(../images/Add_btn@2x.png) no-repeat;
+    text-indent: -99999px;
+    display: block;
+    height: 117px;
+    width: 128px;
+  }
 }
 
-.leaflet-div-icon {
-  padding: 20px;
+div.leaflet-div-icon {
+  border: 0;
+  background: url(../images/marker@2x.png) no-repeat;
+  display: block;
+  height: 59px;
+  width: 71px;
+
+  .marker-icon {
+    background: red;
+    color: #fff;
+    width:7px;
+    height: 16px;
+    padding: 6px 10px;
+    position: absolute;
+    top: -2px;
+    right: -2px;
+    @include border-radius(18px, 18px);
+  }
+
 }
 
 // Add marker page
@@ -42,7 +68,7 @@ html, body, .leaflet-container, .container {
 }
 
 .leaflet-control-container .leaflet-top {
-  top: 80px;
+  top: 140px;
 }
 
 .location-wrapper {
@@ -53,6 +79,10 @@ html, body, .leaflet-container, .container {
   padding: 20px 10px;
   width: 100%;
   color: white;
+}
+
+.completed-wrapper {
+  padding: 20px;
 }
 
 

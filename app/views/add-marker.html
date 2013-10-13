@@ -26,7 +26,7 @@
 <div class="form-wrapper" ng-show="state == 'form'">
   <a class="cancel" ng-click="setState('mark')">X</a>
 
-  <form>
+  <form ng-class="{error: 80 - text.length < 0}">
     <div>
       <textarea rows="6" name="text" ng-model="text" placeholder="Write your command" required></textarea><br>
     </div>
@@ -36,7 +36,7 @@
         {{markers.marker.venue.name | venueName}}
       </div>
 
-      <div class="char-count" ng-class="{error: 80 - text.length < 0}">
+      <div class="char-count">
         {{ 80 - text.length}}
       </div>
 
@@ -45,7 +45,7 @@
         <div ng-show="80 - text.length < 0">You must enter text below 80 chars</div>
       </div>
     </div>
-
+  </form>
 </div>
 
 <div class="record-wrapper" ng-show="['record', 'recording', 'recorded', 'playRecord', 'afterPlay'].indexOf(state) != -1">
@@ -79,31 +79,22 @@
     </div>
 </div>
 
-<div class="credentials-upload" ng-show="state == 'upload'">
-  <form enctype="multipart/form-data" method="post" action="{{ backendUrl }}/recordings/create/">
+<div class="completed-wrapper" ng-show="state == 'completed'">
+  <div>Thanks</div>
+  <p>
+    Your command has been recorded.
+  </p>
+  <p>
+    now, go tell your friends!
+  </p>
+  <ul>
+    <li><a href="">Twitter</a></li>
+    <li><a href="">Facebook</a></li>
+    <li><a href="">Google+</a></li>
+    <li><a href="">Email</a></li>
+  </ul>
 
-    Please select a file
-    <input type="file" name="file"/>
-    <input type="submit">Upload</button>
-  </form>
-</div>
-
-<div class="share-wrapper" ng-show="state == 'share'">
   <div>
-    {{user.data.name}}
-    <h1>Thanks</h1>
-    <p>
-      Your command has been recorded.
-    </p>
-    <p>
-      now, go tell your friends!
-    </p>
-    <ul>
-      <li><a href="">Twitter</a></li>
-      <li><a href="">Facebook</a></li>
-      <li><a href="">Google+</a></li>
-      <li><a href="">Email</a></li>
-    </ul>
+    <a href="#/">X Close</a>
   </div>
-  <div><a ng-click="onComplete()">X Close</a></div>
 </div>
