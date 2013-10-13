@@ -16,12 +16,16 @@ angular.module('publicEducationApp')
         // Internal state of the recording.
         scope.state = 'beforeRecord';
 
+        var now = new Date();
+
+        scope.file = 'pe' + now.getTime();
+
         // Record audio.
         if (Phonegap.isMobile.iOS()) {
-          scope.file = 'pe.wav';
+          scope.file = scope.file + '.wav';
         }
         else if (Phonegap.isMobile.Android()) {
-          scope.file = 'pe.amr';
+          scope.file = scope.file + '.amr';
         }
 
         var mediaRec = Phonegap.getMedia(scope.file);
@@ -34,7 +38,7 @@ angular.module('publicEducationApp')
 
 	        // Record audio for up 6 seconds.
 	        mediaRec.startRecord();
-          scope.counter = 1;
+          scope.counter = 6;
           scope.onTimeout = function(){
             scope.counter--;
             if (scope.counter > 0) {

@@ -176,19 +176,19 @@ angular.module('publicEducationApp')
 
         var fileURI;
         if (Phonegap.isMobile.iOS()) {
-          fileURI = window.appRootDir.fullPath + '/pe.wav';
+          fileURI = window.appRootDir.fullPath + '/' + marker.src;
 
           // @todo: get from file name.
           options.mimeType = 'audio/wav';
         }
         else if (Phonegap.isMobile.Android()) {
-          fileURI = '/mnt/sdcard/pe.amr';
+          fileURI = '/mnt/sdcard/' + marker.src;
           options.mimeType = 'audio/amr';
         }
         else {
           // Development.
-          fileURI = '/tmp/pe.mp3';
-          options.mimeType = 'audio/mp3';
+          fileURI = '/tmp/' + marker.src;
+          options.mimeType = 'audio/amr';
         }
 
         options.fileName = fileURI.substr(fileURI.lastIndexOf('/')+1);
