@@ -16,12 +16,16 @@ angular.module('publicEducationApp')
         // Internal state of the recording.
         scope.state = 'beforeRecord';
 
+        var now = Date();
+
+        scope.file = now.getTime();
+
         // Record audio.
         if (Phonegap.isMobile.iOS()) {
-          scope.file = 'pe.wav';
+          scope.file = scope.file + '.wav';
         }
         else if (Phonegap.isMobile.Android()) {
-          scope.file = 'pe.amr';
+          scope.file = scope.file + '.amr';
         }
 
         var mediaRec = Phonegap.getMedia(scope.file);
