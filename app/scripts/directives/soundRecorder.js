@@ -34,7 +34,7 @@ angular.module('publicEducationApp')
 
 	        // Record audio for up 6 seconds.
 	        mediaRec.startRecord();
-          scope.counter = 1;
+          scope.counter = 6;
           scope.onTimeout = function(){
             scope.counter--;
             if (scope.counter > 0) {
