@@ -69,16 +69,8 @@ angular.module('publicEducationApp')
     /**
      * Helper function to indicate recording has completed.
      */
-    $scope.onRecorded = function(form) {
-      User.getUser().then(function(data) {
-        if (data === null) {
-          $scope.setState('credentials')
-        }
-        else {
-          $scope.user = data;
-          $scope.setState('upload');
-        }
-      });
+    $scope.onRecorded = function() {
+      $scope.setState('completed');
     };
 
     /**
