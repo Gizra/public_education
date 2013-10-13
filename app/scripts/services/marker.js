@@ -94,8 +94,8 @@ angular.module('publicEducationApp')
               lng: 28.9869,
               playList: [
                 {
-                  src: 'http://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3',
-                  type: 'audio/mp3',
+                  src: 'https://s3.amazonaws.com/PE-dev/1381662698655.wav',
+                  type: 'audio/wav',
                   text: '1st text',
                   user: {
                     name: 'amitaibu',
