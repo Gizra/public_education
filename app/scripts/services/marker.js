@@ -94,8 +94,8 @@ angular.module('publicEducationApp')
               lng: 28.9869,
               playList: [
                 {
-                  src: 'http://upload.wikimedia.org/wikipedia/en/7/79/Korn_-_Predictable_%28demo%29.ogg',
-                  type: 'audio/ogg',
+                  src: 'http://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3',
+                  type: 'audio/mp3',
                   text: '1st text',
                   user: {
                     name: 'amitaibu',
