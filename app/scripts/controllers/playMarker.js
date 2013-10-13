@@ -53,6 +53,7 @@ angular.module('publicEducationApp')
         // If play was successful, update marker state.
         ++$scope.currentTrack;
       });
+      mediaPlayer.play();
     }
 
     angular.extend($scope, Leaflet.getDefaults());
