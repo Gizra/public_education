@@ -18,7 +18,7 @@ angular.module('publicEducationApp')
 
         var now = Date();
 
-        scope.file = now.getTime();
+        scope.file = 'pe' + now.getTime();
 
         // Record audio.
         if (Phonegap.isMobile.iOS()) {
