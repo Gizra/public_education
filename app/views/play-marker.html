@@ -13,10 +13,10 @@
   <leaflet center="center" markers="markers" defaults="defaults" ></leaflet>
   <!-- Placeholder audio marker to float above the map -->
   <div class="big-icon"></div>
-  <audio data-player-control="player" playlist="playList" audio-player  autoplay="true"></audio>
 </div>
 
 <div class="playlist-info">
+  <audio data-player-control="player" playlist="playList" audio-player  autoplay="true" controls></audio>
   <div class="photo">
     <img ng-show="selectedMarker.playList[player.currentTrack - 1].user.photo" ng-src="{{ selectedMarker.playList[player.currentTrack - 1].user.photo }}" />
   </div>
