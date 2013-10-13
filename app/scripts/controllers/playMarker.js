@@ -53,8 +53,10 @@ angular.module('publicEducationApp')
     $scope.playItem = function(src) {
       console.log('src: ' + src);
       var mediaPlayer = Phonegap.getMedia(src, function onSuccess() {
-        // If play was successful, update marker state.
-        ++$scope.currentTrack;
+        // If play was successful, skip to the next track.
+        $scope.$apply(function () {
+          ++$scope.currentTrack;
+        });
       });
       mediaPlayer.play();
     }
