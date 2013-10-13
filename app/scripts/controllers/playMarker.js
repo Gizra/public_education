@@ -37,8 +37,10 @@ angular.module('publicEducationApp')
       }
 
       $scope.$watch('currentTrack', function(track) {
+        console.log('Track: ' + track);
+        console.log('Length: ' + $scope.selectedMarker.playList.length);
         if (track <= $scope.selectedMarker.playList.length) {
-          $scope.playItem($scope.selectedMarker.playList[track]);
+          $scope.playItem($scope.selectedMarker.playList[track].src);
         }
       });
     });
@@ -49,6 +51,7 @@ angular.module('publicEducationApp')
      * @param src
      */
     $scope.playItem = function(src) {
+      console.log('src: ' + src);
       var mediaPlayer = Phonegap.getMedia(src, function onSuccess() {
         // If play was successful, update marker state.
         ++$scope.currentTrack;
