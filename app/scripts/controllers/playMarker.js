@@ -10,6 +10,8 @@ angular.module('publicEducationApp')
         }
     });
 
+    // Default values, that will be populated once the markers are fetched.
+    $scope.center = Leaflet.getCenter();
     $scope.selectedMarker = {};
     $scope.playList = [];
 
@@ -26,14 +28,16 @@ angular.module('publicEducationApp')
         // Push the new items to the play list.
         $scope.playList.push(value);
       });
+
+      $scope.center = {
+        lat: $scope.selectedMarker.lat,
+        lng: $scope.selectedMarker.lng,
+        zoom: 16
+      }
     });
 
-
-    /**
-     * Set configuration of the map zoomed
-     */
     angular.extend($scope, Leaflet.getDefaults());
-    storage.bind($scope,'center', {defaultValue: Leaflet.getCenter()});
+
 
     /**
      * Intercept Drag Map Event
