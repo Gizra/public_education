@@ -103,7 +103,7 @@ angular.module('publicEducationApp')
                   }
                 },
                 {
-                  src: 'http://download.wavetlan.com/SVV/Media/HTTP/WAV/QuickTime/QuickTime_test1_LPCM_Mono_CBR_8SS_12000Hz.wav',
+                  src: 'https://s3.amazonaws.com/PE-dev/1381662698655.wav',
                   type: 'audio/wav',
                   text: '2nd  text',
                   user: {
@@ -112,8 +112,8 @@ angular.module('publicEducationApp')
                   }
                 },
                 {
-                  src: 'http://upload.wikimedia.org/wikipedia/en/7/79/Korn_-_Predictable_%28demo%29.ogg',
-                  type: 'audio/ogg',
+                  src: 'https://s3.amazonaws.com/PE-dev/1381662698655.wav',
+                  type: 'audio/wav',
                   text: '3rd text',
                   user: {}
                 }
