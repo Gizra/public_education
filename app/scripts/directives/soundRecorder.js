@@ -28,6 +28,8 @@ angular.module('publicEducationApp')
           scope.file = scope.file + '.amr';
         }
 
+        console.log(scope.file);
+
         var mediaRec = Phonegap.getMedia(scope.file);
 
         /**
