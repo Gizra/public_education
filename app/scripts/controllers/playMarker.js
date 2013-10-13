@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('publicEducationApp')
-  .controller('PlayMarkerCtrl', function ($scope, $routeParams, $location, storage, Marker, Leaflet, Foursquare, $log) {
+  .controller('PlayMarkerCtrl', function ($scope, $routeParams, $location, storage, Marker, Leaflet, Phonegap) {
 
     $scope.venueId = $routeParams.venueId;
       angular.extend($scope, {
@@ -14,6 +14,7 @@ angular.module('publicEducationApp')
     $scope.center = Leaflet.getCenter();
     $scope.selectedMarker = {};
     $scope.playList = [];
+    $scope.currentTrack = 0;
 
     Marker.gettingMarkers().then(function(data) {
       $scope.markers = data;
@@ -34,7 +35,31 @@ angular.module('publicEducationApp')
         lng: $scope.selectedMarker.lng,
         zoom: 16
       }
+
+      $scope.$watch('currentTrack', function(track) {
+        console.log('Track: ' + track);
+        console.log('Length: ' + $scope.selectedMarker.playList.length);
+        if (track <= $scope.selectedMarker.playList.length) {
+          $scope.playItem($scope.selectedMarker.playList[track].src);
+        }
+      });
     });
+
+    /**
+     * Play an item.
+     *
+     * @param src
+     */
+    $scope.playItem = function(src) {
+      console.log('src: ' + src);
+      var mediaPlayer = Phonegap.getMedia(src, function onSuccess() {
+        // If play was successful, skip to the next track.
+        $scope.$apply(function () {
+          ++$scope.currentTrack;
+        });
+      });
+      mediaPlayer.play();
+    }
 
     angular.extend($scope, Leaflet.getDefaults());
 
