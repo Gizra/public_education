@@ -85,6 +85,24 @@ div.leaflet-div-icon {
   padding: 20px;
 }
 
+// Play mode page.
+.actions-wrapper,
+.playlist-info {
+  position: absolute;
+  z-index: 99;
+  padding: 20px 10px;
+  width: 100%;
+  background: black;
+  color: white;
+}
+
+.actions-wrapper {
+  top: 0;
+}
+
+.playlist-info {
+  bottom: 0;
+}
 
 body {
     background: #fafafa;

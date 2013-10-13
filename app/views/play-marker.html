@@ -1,26 +1,32 @@
-<audio data-player-control="player" playlist="playList" audio-player controls></audio>
-
-<div class="btn" ng-click="player.play()">
-  <span>Simple Play</span>
-  <i class="icon-play"></i>
+<div class="actions-wrapper">
+  <div class="actions-icons">
+    <div>
+      <a ng-href="#/add-marker">Add marker</a>
+    </div>
+    <div>
+      <a ng-href="#/">Close</a>
+    </div>
+  </div>
 </div>
 
-<div class="btn" ng-click="player.next()">
-  <span>Next</span>
-  <i class="icon-step-forward"></i>
+<div class="map-wrapper">
+  <leaflet center="center" markers="markers" defaults="defaults" ></leaflet>
+  <!-- Placeholder audio marker to float above the map -->
+  <div class="big-icon"></div>
+  <audio data-player-control="player" playlist="playList" audio-player  autoplay="true"></audio>
 </div>
 
-Current Track: {{ player.currentTrack }}
-
-<div>
+<div class="playlist-info">
   <div class="photo">
     <img ng-show="selectedMarker.playList[player.currentTrack - 1].user.photo" ng-src="{{ selectedMarker.playList[player.currentTrack - 1].user.photo }}" />
   </div>
-  Text of track: {{ selectedMarker.playList[player.currentTrack - 1].text }}
+  <div class="user-wrapper">
+    <div class="venue-name">
+      @{{ selectedMarker.name }}
+    </div>
+    <div>
+      V
+    </div>
+  </div>
+
 </div>
-
-<span ng-show="player.playing">Player status: Playing</span>
-<span ng-show="!player.playing">Player status: Paused</span>
-
-<a href="#/">Home</a>
-

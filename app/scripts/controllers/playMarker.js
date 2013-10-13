@@ -1,15 +1,17 @@
 'use strict';
 
 angular.module('publicEducationApp')
-  .controller('PlayMarkerCtrl', function ($scope, $routeParams, $location, Marker) {
+  .controller('PlayMarkerCtrl', function ($scope, $routeParams, $location, storage, Marker, Leaflet, Foursquare, $log) {
 
     $scope.venueId = $routeParams.venueId;
-    angular.extend($scope, {
-      selectedMarker: {
-        playList: []
-      }
+      angular.extend($scope, {
+        selectedMarker: {
+          playList: []
+        }
     });
 
+    // Default values, that will be populated once the markers are fetched.
+    $scope.center = Leaflet.getCenter();
     $scope.selectedMarker = {};
     $scope.playList = [];
 
@@ -26,6 +28,28 @@ angular.module('publicEducationApp')
         // Push the new items to the play list.
         $scope.playList.push(value);
       });
+
+      $scope.center = {
+        lat: $scope.selectedMarker.lat,
+        lng: $scope.selectedMarker.lng,
+        zoom: 16
+      }
+    });
+
+    angular.extend($scope, Leaflet.getDefaults());
+
+
+    /**
+     * Intercept Drag Map Event
+     */
+    $scope.$on('leafletDirectiveMap.drag', function(event, args) {
+
+      // TODO:Implement disable draggble onclick (Verify if the directive implemented)
+      args.leafletEvent.target.options.dragging = false;
+      args.leafletEvent.target.dragging._enabled = false;
+      args.leafletEvent.target.dragging._draggable._enabled = false;
+      args.leafletEvent.target.keyboard._enabled = false;
+
     });
 
   });

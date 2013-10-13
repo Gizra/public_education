@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('publicEducationApp')
-  .controller('AddMarkerCtrl', function ($scope, $location, Leaflet, Foursquare, storage, User, Marker) {
+  .controller('AddMarkerCtrl', function ($scope, $location, Leaflet, Foursquare, storage, User, Marker, BACKEND_URL) {
 
     /**
      * Update the map's center, and get the venue name from FourSquare.
@@ -49,9 +49,6 @@ angular.module('publicEducationApp')
       });
     });
 
-    User.getUser().then(function(data) {
-      $scope.user = data;
-    });
 
     /**
      * Set the state.
@@ -62,6 +59,8 @@ angular.module('publicEducationApp')
      *   - form:
      *   - record:
      *   - upload:
+     *   - credentials: Ask for twitter, facebook credentials before posting or permits anonymously posting.
+     *
      */
     $scope.setState = function(state) {
       $scope.state = state;
@@ -70,18 +69,36 @@ angular.module('publicEducationApp')
     /**
      * Helper function to indicate recording has completed.
      */
-    $scope.onRecorded = function() {
-      $scope.setState('completed');
+    $scope.onRecorded = function(form) {
+      User.getUser().then(function(data) {
+        if (data === null) {
+          $scope.setState('credentials')
+        }
+        else {
+          $scope.user = data;
+          $scope.setState('upload');
+        }
+      });
     };
 
-    $scope.$watch('state', function(newVal, oldVal) {
+    /**
+     * Helper function to indicate file was uploaded successfully to the server.
+     */
+    $scope.onRecordUploaded= function() {
+      $scope.setState('completed');
+    }
 
+    $scope.$watch('state', function(newVal, oldVal) {
       if (oldVal === 'completed') {
         return $scope.onComplete();
       }
 
       if (newVal === 'completed') {
 
+      }
+
+      // Upload marker.
+      if (newVal === 'upload') {
         // Add the new marker.
         var venue = {
             id: $scope.markers.marker.venue.id,
@@ -95,8 +112,12 @@ angular.module('publicEducationApp')
           };
 
         Marker.addMarker(venue, $scope.text, $scope.file, location, $scope.user).then(function() {
-          $scope.onComplete();
+          // After resolve promises Marker.addMarker.
         });
+      }
+
+      if (newVal === 'credentials') {
+        // Check if the user is already login.
       }
     });
 
@@ -119,5 +140,8 @@ angular.module('publicEducationApp')
     storage.bind($scope, 'text');
     storage.bind($scope, 'markers');
     storage.bind($scope, 'state', {defaultValue: 'mark'});
+    $scope.backendUrl = BACKEND_URL;
+
     updateMarker();
+
   });
