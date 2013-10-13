@@ -33,15 +33,17 @@ angular.module('publicEducationApp')
 
         this.data.markers = this.data.markers || {};
 
+        console.log(!this.data.markers[id], id);
         if (!this.data.markers[id]) {
           // Add the venue data.
           this.data.markers[id] = {
+            id: id,
             name: venue.name,
             lat: venue.lat,
-            lng: venue.lng,
-            playlist: []
+            lng: venue.lng
           };
         }
+        console.log(this.data.markers[id])
 
         var userInfo = {};
 
@@ -68,7 +70,7 @@ angular.module('publicEducationApp')
         this.data.markers[id].playList = this.data.markers[id].playList || [];
         this.data.markers[id].playList.unshift(newMarker);
 
-        return this.uploadingMarker(newMarker);
+        return this.uploadingMarker(this.data.markers[id]);
       },
 
       /**

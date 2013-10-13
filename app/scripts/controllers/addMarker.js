@@ -75,13 +75,13 @@ angular.module('publicEducationApp')
     };
 
     $scope.$watch('state', function(newVal, oldVal) {
-
+    console.log(newVal, ',', oldVal);
       if (oldVal === 'completed') {
         return $scope.onComplete();
       }
 
       if (newVal === 'completed') {
-
+        console.log('new complete');
         // Add the new marker.
         var venue = {
             id: $scope.markers.marker.venue.id,
