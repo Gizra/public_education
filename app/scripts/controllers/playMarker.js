@@ -35,14 +35,13 @@ angular.module('publicEducationApp')
         lng: $scope.selectedMarker.lng,
         zoom: 16
       }
-    });
 
-    $scope.$watch('currentTrack', function(track) {
-      if (track <= $scope.selectedMarker.playList.length) {
-        $scope.playItem($scope.selectedMarker.playList[track]);
-      }
+      $scope.$watch('currentTrack', function(track) {
+        if (track <= $scope.selectedMarker.playList.length) {
+          $scope.playItem($scope.selectedMarker.playList[track]);
+        }
+      });
     });
-
 
     /**
      * Play an item.
