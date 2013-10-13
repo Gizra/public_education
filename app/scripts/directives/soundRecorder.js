@@ -16,7 +16,7 @@ angular.module('publicEducationApp')
         // Internal state of the recording.
         scope.state = 'beforeRecord';
 
-        var now = Date();
+        var now = new Date();
 
         scope.file = 'pe' + now.getTime();
 
