@@ -103,8 +103,8 @@ angular.module('publicEducationApp')
                   }
                 },
                 {
-                  src: 'http://www.metadecks.org/software/sweep/audio/demos/vocal2.ogg',
-                  type: 'audio/ogg',
+                  src: 'http://download.wavetlan.com/SVV/Media/HTTP/WAV/QuickTime/QuickTime_test1_LPCM_Mono_CBR_8SS_12000Hz.wav',
+                  type: 'audio/wav',
                   text: '2nd  text',
                   user: {
                     name: 'Bruce',
