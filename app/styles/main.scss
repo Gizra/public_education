@@ -1,5 +1,6 @@
 @import "compass/css3";
 
+$instructions: #C5222D;
 $iconSpritePath: "../images/glyphicons-halflings.png";
 $iconWhiteSpritePath: "../images/glyphicons-halflings-white.png";
 
@@ -9,6 +10,8 @@ html, body, .leaflet-container, .container {
 
 body{
   margin: 0;
+  font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+  font-size: 2em;
 }
 
 .container {
@@ -61,10 +64,23 @@ div.leaflet-div-icon {
   position: absolute;
   top: 0;
   z-index: 99;
-  padding: 20px 10px;
   width: 100%;
-  background: black;
-  color: white;
+  background: rgba(0,0,0,0.7);
+  color: $instructions;
+  font-weight: bold;
+
+  div {
+    padding: 20px;
+  }
+
+  .close {
+    float: right;
+    display: block;
+    background: url(../images/close@2x.png);
+    height: 64px;
+    width: 64px;
+    text-indent: -999999px;
+  }
 }
 
 .leaflet-control-container .leaflet-top {
@@ -75,10 +91,38 @@ div.leaflet-div-icon {
   position: absolute;
   bottom: 0;
   z-index: 99;
-  background: black;
-  padding: 20px 10px;
+  background: rgba(0,0,0,0.7);
   width: 100%;
   color: white;
+  height: 110px;
+
+  .confirm {
+    position: absolute;
+    bottom: 17px;
+    right: 17px;
+    display: block;
+    background: url(../images/confirm@2x.png);
+    height: 70px;
+    width: 70px;
+    text-indent: -999999px;
+  }
+
+  .venue {
+    padding: 40px 80px 0 106px;
+    overflow: hidden;
+    height: 1em;
+  }
+
+  .edit-place {
+    position: absolute;
+    bottom: 17px;
+    left: 17px;
+    display: block;
+    background: url(../images/edit-place@2x.png);
+    height: 70px;
+    width: 70px;
+    text-indent: -999999px;
+  }
 }
 
 .completed-wrapper {
@@ -105,24 +149,7 @@ div.leaflet-div-icon {
 }
 
 body {
-    background: #fafafa;
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    color: #333;
-}
-
-.hero-unit {
-    margin: 50px auto 0 auto;
-    width: 300px;
-    font-size: 18px;
-    font-weight: 200;
-    line-height: 30px;
-    background-color: #eee;
-    border-radius: 6px;
-    padding: 60px;
-}
-
-.hero-unit h1 {
-    font-size: 60px;
-    line-height: 1;
-    letter-spacing: -1px;
+  background: #fafafa;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: #333;
 }

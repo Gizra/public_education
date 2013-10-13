@@ -1,20 +1,24 @@
 
 <div class="map-wrapper" ng-show="state == 'mark'">
   <div class="instructions-wrapper">
+
+    <a href="/#" class="close">X</a>
+
     <div ng-show="center.zoom >= 16">
-      Select place.
+      Move the map under the marker to pin your command elsewhere
     </div>
 
     <div ng-show="center.zoom < 16">
       You need to zoom.
     </div>
-
-    <a href="/#">X</a>
   </div>
 
   <leaflet center="center" markers="markers" defaults="defaults"></leaflet>
 
   <div class="location-wrapper" ng-show="center.zoom >= 16">
+    
+    <a class="edit-place">Edit Place</a>
+
     <div class="venue">
       {{markers.marker.venue.name | venueName}}
     </div>
