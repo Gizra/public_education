@@ -68,6 +68,16 @@ angular.module('publicEducationApp')
         this.data.markers[id].playList = this.data.markers[id].playList || [];
         this.data.markers[id].playList.unshift(newMarker);
 
+        // Add the venue information to the uploded marker, so we can create
+        // a Venue record if it doesn't exist yet, without re-calling
+        // FourSquare.
+        newMarker.venue = {
+          venueId: venue.id,
+          name: venue.name,
+          lat: venue.lat,
+          lng: venue.lng
+        }
+
         return this.uploadingMarker(newMarker);
       },
 
