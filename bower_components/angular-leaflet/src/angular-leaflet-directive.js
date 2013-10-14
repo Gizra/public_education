@@ -1521,10 +1521,10 @@ leafletDirective.directive('leaflet', [
 
                 }, true);
             }
-			
+
 			function createPath(name, scopePath, map) {
 				var path;
-				
+
 				var options = {
                     weight: defaults.path.weight,
                     color: defaults.path.color,
@@ -1548,11 +1548,11 @@ leafletDirective.directive('leaflet', [
 				if(scopePath.noClip !== undefined) {
 					options.noClip = scopePath.noClip;
 				}
-				
+
 				if(scopePath.type === undefined) {
 					scopePath.type = "polyline";
 				}
-				
+
 				function setPathOptions(data, oldData) {
 					if (data.latlngs !== undefined && (oldData === undefined || data.latlngs !== oldData.latlngs)) {
 						switch(data.type) {
@@ -1577,45 +1577,45 @@ leafletDirective.directive('leaflet', [
 								break;
 						}
 					}
-	
+
 					if (data.weight !== undefined && (oldData === undefined || data.weight !== oldData.weight)) {
 						path.setStyle({ weight: data.weight });
 					}
-	
+
 					if (data.color !== undefined && (oldData === undefined || data.color !== oldData.color)) {
 						path.setStyle({ color: data.color });
 					}
-	
+
 					if (data.opacity !== undefined && (oldData === undefined || data.opacity !== oldData.opacity)) {
 						path.setStyle({ opacity: data.opacity });
 					}
 				}
-				
+
 				switch(scopePath.type) {
 					default:
 					case "polyline":
-						path = new L.Polyline([], options); 
+						path = new L.Polyline([], options);
 						break;
 					case "multiPolyline":
-						path = new L.multiPolyline([[[0,0],[1,1]]], options); 
+						path = new L.multiPolyline([[[0,0],[1,1]]], options);
 						break;
 					case "polygon":
-						path = new L.Polygon([], options); 
+						path = new L.Polygon([], options);
 						break;
 					case "multiPolygon":
-						path = new L.MultiPolygon([[[0,0],[1,1],[0,1]]], options); 
+						path = new L.MultiPolygon([[[0,0],[1,1],[0,1]]], options);
 						break;
 					case "rectangle":
-						path = new L.Rectangle([[0,0],[1,1]], options); 
+						path = new L.Rectangle([[0,0],[1,1]], options);
 						break;
 					case "circle":
-						path = new L.Circle([0,0], 1, options); 
+						path = new L.Circle([0,0], 1, options);
 						break;
 					case "circleMarker":
-						path = new L.CircleMarker([0,0], options); 
+						path = new L.CircleMarker([0,0], options);
 						break;
 				}
-				
+
 				setPathOptions(scopePath);
                 map.addLayer(path);
 
@@ -1627,10 +1627,10 @@ leafletDirective.directive('leaflet', [
                     }
 					setPathOptions(data,oldData);
                 }, true);
-				
+
                 return path;
 			}
-			
+
 			function convertToLeafletLatLng(latlng) {
 				return new L.LatLng(latlng.lat, latlng.lng);
 			}
@@ -1642,7 +1642,7 @@ leafletDirective.directive('leaflet', [
                     return new L.LatLng(latlng.lat, latlng.lng);
                 });
             }
-			
+
 			function convertToLeafletMultiLatLngs(paths) {
 				return paths.map(function(latlngs) {
 					return convertToLeafletLatLngs(latlngs);
