@@ -15,8 +15,8 @@
 
   <leaflet center="center" markers="markers" defaults="defaults"></leaflet>
 
-  <div class="location-wrapper" ng-show="center.zoom >= 16">
-    
+  <div class="location-wrapper" ng-show="center.zoom >= 16 && !mapIsMoving">
+
     <a class="edit-place">Edit Place</a>
 
     <div class="venue">

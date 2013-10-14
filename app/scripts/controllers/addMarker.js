@@ -9,23 +9,29 @@ angular.module('publicEducationApp')
      * The marker is always in the center of the map, and visible only if the
      * zoom is equal or above 16.
      */
-    var updateMarker = function () {
+
+    $scope.$watch('center', function (center) {
+      $scope.updateMarker(center.lat, center.lng);
+    });
+
+
+    $scope.updateMarker = function(lat, lng) {
       if ($scope.center.zoom >= 16) {
-        var lat = $scope.center.lat,
-            lng = $scope.center.lng;
 
         $scope.markers = {
           marker: {
             lat: lat,
             lng: lng,
-            draggable: true,
             venue: null
           }
         };
 
-        Foursquare.gettingVenue(lat, lng).then(function(data) {
-          $scope.markers.marker.venue = data;
-        });
+
+        if (!$scope.mapIsMoving) {
+          Foursquare.gettingVenue(lat, lng).then(function(data) {
+            $scope.markers.marker.venue = data;
+          });
+        }
       }
       else {
         $scope.markers = {};
@@ -34,20 +40,32 @@ angular.module('publicEducationApp')
 
     // Get default values.
     angular.extend($scope, Leaflet.getDefaults());
+    $scope.mapIsMoving = false;
 
 
-    angular.forEach(['leafletDirectiveMap.zoomend', 'leafletDirectiveMap.moveend', 'leafletDirectiveMarker.dragend'], function (value) {
-      $scope.$on(value, function (event, args) {
-        if (event.name === 'leafletDirectiveMarker.dragend') {
-          // Marker was dragged, so center the map accordingly.
-          $scope.center.lat = args.leafletEvent.target._latlng.lat;
-          $scope.center.lng = args.leafletEvent.target._latlng.lng;
-        }
-
-        updateMarker();
-        Leaflet.setCenter($scope.center);
+    angular.forEach(['zoomend', 'moveend'], function (value) {
+      $scope.$on('leafletDirectiveMap.' + value, function (event, args) {
+        $scope.mapIsMoving = false;
+        $scope.updateMarker($scope.center.lat, $scope.center.lng);
       });
     });
+
+    angular.forEach(['zoomstart', 'movestart'], function (value) {
+      $scope.$on('leafletDirectiveMap.' + value, function (event, args) {
+        $scope.mapIsMoving = true;
+      });
+    });
+
+    $scope.$on('leafletDirectiveMap.move', function(event, args) {
+      // Get the Leaflet map from the triggered event.
+      var map = args.leafletEvent.target;
+      var center = map.getCenter();
+
+      // Update the marker.
+      $scope.updateMarker(center.lat, center.lng);
+    });
+
+
 
 
     /**
@@ -115,7 +133,5 @@ angular.module('publicEducationApp')
     storage.bind($scope, 'markers');
     storage.bind($scope, 'state', {defaultValue: 'mark'});
     $scope.backendUrl = BACKEND_URL;
-
-    updateMarker();
 
   });
