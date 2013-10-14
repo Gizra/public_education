@@ -115,13 +115,6 @@ angular.module('publicEducationApp')
 
     // @todo: Move to init function?
     storage.bind($scope, 'center', {defaultValue: Leaflet.getCenter()});
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(function(position) {
-        $scope.center.lat = position.coords.latitude;
-        $scope.center.lng = position.coords.longitude;
-      });
-    }
-
     storage.bind($scope, 'text');
     storage.bind($scope, 'markers');
     storage.bind($scope, 'state', {defaultValue: 'mark'});
