@@ -44,14 +44,14 @@ angular.module('publicEducationApp')
 
 
     angular.forEach(['zoomend', 'moveend'], function (value) {
-      $scope.$on('leafletDirectiveMap.' + value, function (event, args) {
+      $scope.$on('leafletDirectiveMap.' + value, function () {
         $scope.mapIsMoving = false;
         $scope.updateMarker($scope.center.lat, $scope.center.lng);
       });
     });
 
     angular.forEach(['zoomstart', 'movestart'], function (value) {
-      $scope.$on('leafletDirectiveMap.' + value, function (event, args) {
+      $scope.$on('leafletDirectiveMap.' + value, function () {
         $scope.mapIsMoving = true;
       });
     });
@@ -66,12 +66,9 @@ angular.module('publicEducationApp')
     });
 
     // Click on the marker should advance to next step.
-    $scope.$on('leafletDirectiveMarker.click', function(event, args) {
+    $scope.$on('leafletDirectiveMarker.click', function() {
       $scope.setState('form');
     });
-
-
-
 
     /**
      * Set the state.
@@ -134,6 +131,13 @@ angular.module('publicEducationApp')
 
     // @todo: Move to init function?
     storage.bind($scope, 'center', {defaultValue: Leaflet.getCenter()});
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(function(position) {
+        $scope.center.lat = position.coords.latitude;
+        $scope.center.lng = position.coords.longitude;
+      });
+    }
+
     storage.bind($scope, 'text');
     storage.bind($scope, 'markers');
     storage.bind($scope, 'state', {defaultValue: 'mark'});
