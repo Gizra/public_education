@@ -65,6 +65,11 @@ angular.module('publicEducationApp')
       $scope.updateMarker(center.lat, center.lng);
     });
 
+    // Click on the marker should advance to next step.
+    $scope.$on('leafletDirectiveMarker.click', function(event, args) {
+      $scope.setState('form');
+    });
+
 
 
 
