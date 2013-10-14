@@ -107,27 +107,11 @@ angular.module('publicEducationApp')
       });
 
       $scope.setState('completed');
-    };
 
-    $scope.$watch('state', function(newVal, oldVal) {
-      if (oldVal === 'completed') {
-        return $scope.onComplete();
-      }
-    });
-
-    /**
-     * Clear local storage and redirect back to homepage.
-     */
-    $scope.onComplete = function() {
-      storage.unbind($scope, 'state');
-
+      // Clear local storage.
       storage.remove('text');
-      storage.remove('state');
-      storage.remove('markers');
-      storage.clearAll();
-
-      $location.path('/');
     };
+
 
     // @todo: Move to init function?
     storage.bind($scope, 'center', {defaultValue: Leaflet.getCenter()});
