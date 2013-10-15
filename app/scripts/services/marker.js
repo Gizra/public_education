@@ -123,6 +123,12 @@ angular.module('publicEducationApp')
         else if (Phonegap.isMobile.Android()) {
           fileURI = '/mnt/sdcard/' + marker.src;
           options.mimeType = 'audio/amr';
+
+          // Request headers needs to be in the following format.
+          // @see https://github.com/superjoe30/node-multiparty/pull/15
+//          var headers = {'Content-type': 'multipart/form-data; boundary=+++++'};
+//          options.headers = headers;
+//          options.fileKey = 'file';
         }
         else {
           // Development.
@@ -134,7 +140,7 @@ angular.module('publicEducationApp')
         // We need to stringfy the marker.
         options.params = {marker: JSON.stringify(marker)};
 
-
+        console.log('options: ', options);
         ft.upload(fileURI, BACKEND_URL + '/add-marker', function onSuccess(result) {
           console.log('Response = ' + result.response);
           defer.resolve(result);
