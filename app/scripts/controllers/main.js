@@ -15,11 +15,11 @@ angular.module('publicEducationApp')
     $scope.markers = {};
 
     // Get markers.
-    var getMarkers = function getMarkers() {
+    var getMarkers = function() {
       Marker.gettingMarkers().then(function(data) {
 
         data = data.data;
-
+        console.log(data);
         angular.forEach(data, function(marker, key) {
           marker.icon = L.divIcon({
             iconSize: [63, 71],
@@ -28,21 +28,15 @@ angular.module('publicEducationApp')
             // @todo: angular-leaflet fails without this one.
             iconAnchor:   [31, 71]
           });
-
           $scope.markers[key] = marker;
         });
-        // $scope.markers = data;
-      });
-    }
-
-    // Refresh markers each minute.
-    var refreshMarker = function lopp() {
-      getMarkers();
-      $timeout(refreshMarker, 60000)
+      })
+        // Refresh markers each minute, after data was received.
+        .then($timeout(getMarkers, 60000).resolve);
     };
 
-    // Start request
-    refreshMarker();
+    // Start request markers.
+    getMarkers();
 
     angular.forEach(['zoomend','moveend'], function(value) {
       $scope.$on('leafletDirectiveMap.' + value, function() {
