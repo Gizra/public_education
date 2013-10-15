@@ -89,85 +89,11 @@ angular.module('publicEducationApp')
        *   true.
        * @returns {*}
        */
-      gettingMarkers: function(cache) {
-        var defer = $q.defer();
-        cache = cache || true;
-        var markers;
-
-        if (!this.data.markers || !cache) {
-          // @todo: Get as response from server.
-          markers = {
-            // Object keyed by FourSquare's Venue ID.
-            '513ee460e4b06c84bc3599d1': {
-              name: 'Topçular Semt Polikliniği',
-              lat: 41.0383,
-              lng: 28.9869,
-              playList: [
-                {
-                  src: 'https://s3.amazonaws.com/PE-dev/1381662698655.wav',
-                  type: 'audio/wav',
-                  text: '1st text',
-                  user: {
-                    name: 'amitaibu',
-                    photo: 'https://graph.facebook.com/amitai.burstein/picture'
-                  }
-                },
-                {
-                  src: 'https://s3.amazonaws.com/PE-dev/1381662698655.wav',
-                  type: 'audio/wav',
-                  text: '2nd  text',
-                  user: {
-                    name: 'Bruce',
-                    photo: 'https://graph.facebook.com/brice.lenfant/picture'
-                  }
-                },
-                {
-                  src: 'https://s3.amazonaws.com/PE-dev/1381662698655.wav',
-                  type: 'audio/wav',
-                  text: '3rd text',
-                  user: {}
-                }
-              ]
-            },
-            '513ee460e4b06c84bc359988': {
-              name: 'Another place',
-              lat: 41.0396,
-              lng: 28.9842,
-              playList: [
-                {
-                  src: 'http://upload.wikimedia.org/wikipedia/en/7/79/Korn_-_Predictable_%28demo%29.ogg',
-                  text: '1st text',
-                  user: {
-                    name: 'amitaibu',
-                    photo: 'https://graph.facebook.com/amitai.burstein/picture'
-                  }
-                },
-                {
-                  src: 'http://www.metadecks.org/software/sweep/audio/demos/vocal2.ogg',
-                  text: '2nd  text',
-                  user: {
-                    name: 'Bruce',
-                    photo: 'https://graph.facebook.com/brice.lenfant/picture'
-                  }
-                }
-              ]
-            }
-          };
-        }
-        else {
-          // Get markers from cache.
-          markers = this.data.markers;
-        }
-
-
-        // @todo: Simulating http, replace with actual call to server.
-        var self = this;
-        $timeout(function() {
-          self.data.markers = markers;
-          defer.resolve(markers);
-        }, 500);
-
-        return defer.promise;
+      gettingMarkers: function() {
+        return $http({
+          method: 'GET',
+          url: BACKEND_URL + '/get-markers'
+        });
       },
 
       /**
