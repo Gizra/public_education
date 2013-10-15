@@ -90,9 +90,12 @@ angular.module('publicEducationApp')
        * @returns {*}
        */
       gettingMarkers: function() {
+        var self = this;
         return $http({
           method: 'GET',
           url: BACKEND_URL + '/get-markers'
+        }).success(function (data) {
+          self.data.markers = data;
         });
       },
 
