@@ -17,7 +17,7 @@ angular.module('publicEducationApp')
     $scope.currentTrack = 0;
 
     Marker.gettingMarkers().then(function(data) {
-      $scope.markers = data;
+      $scope.markers = data.data;
 
       if (!$scope.markers[$scope.venueId]) {
         // Redirect to homepage on wrong venue ID.
@@ -38,7 +38,6 @@ angular.module('publicEducationApp')
 
       $scope.$watch('currentTrack', function(track) {
         console.log('Track: ' + track);
-        console.log('Length: ' + $scope.selectedMarker.playList.length);
         if (track <= $scope.selectedMarker.playList.length) {
           $scope.playItem($scope.selectedMarker.playList[track].src);
         }
