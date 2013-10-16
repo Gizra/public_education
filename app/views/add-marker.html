@@ -53,17 +53,19 @@
 
 <div class="record-wrapper" ng-show="['record', 'recording', 'recorded', 'playRecord', 'afterPlay'].indexOf(state) != -1">
 
-  <a title="Back to writing the text" class="cancel" ng-click="setState('form')">X</a>
-  <div>
-    Text: {{ text }}
+  <a title="Back to writing the text" class="close" ng-click="setState('form')">X</a>
+  <div class="command-form" ng-click="setState('form')">
+    {{ text }}
   </div>
 
-  <div>
-    Venue: {{markers.marker.venue.name | venueName}}
+  <div class="info-wrapper">
+    <div class="venue">
+      {{markers.marker.venue.name | venueName}}
+    </div>
   </div>
 
-  <div ng-show="markers.marker.venue.name">
-    <sound-recorder file="file" on-recorded="onRecorded()"></sound-recorder>
+  <div class="recorder" ng-show="markers.marker.venue.name">
+    <sound-recorder class="rec" file="file" on-recorded="onRecorded()"></sound-recorder>
   </div>
 
 </div>
