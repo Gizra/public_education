@@ -16,6 +16,7 @@ angular.module('publicEducationApp')
     $scope.playList = [];
     $scope.currentTrack = 0;
 
+    console.log('PlayMakerCtrl');
     Marker.gettingMarkers().then(function(data) {
       $scope.markers = data.data;
 
@@ -27,7 +28,7 @@ angular.module('publicEducationApp')
       $scope.selectedMarker = $scope.markers[$scope.venueId];
       angular.forEach($scope.selectedMarker.playList, function(value) {
         // Push the new items to the play list.
-        $scope.playList.push(value);
+          $scope.playList.push(value);
       });
 
       $scope.center = {

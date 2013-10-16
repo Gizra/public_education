@@ -1,13 +1,14 @@
 'use strict';
 
 angular.module('publicEducationApp')
-  .service('Marker', function Marker($q, $http, $timeout, BACKEND_URL, Phonegap) {
+  .service('Marker', function Marker($q, $http, $timeout, BACKEND_URL, Phonegap, $filter) {
 
     return {
 
       // Private variable to hold the state.
       data: {
-        markers: null
+        markers: null,
+        lastProcesingHash: null
       },
 
       /**
@@ -39,7 +40,7 @@ angular.module('publicEducationApp')
             name: venue.name,
             lat: venue.lat,
             lng: venue.lng,
-            playlist: []
+            playList: []
           };
         }
 
@@ -65,6 +66,11 @@ angular.module('publicEducationApp')
           location: location
         };
 
+
+        // var hash = Crypto.md5(newMarker);
+        newMarker.hash = new Date().getTime();
+        this.setProcessing(newMarker.hash);
+
         this.data.markers[id].playList = this.data.markers[id].playList || [];
         this.data.markers[id].playList.unshift(newMarker);
 
@@ -77,6 +83,7 @@ angular.module('publicEducationApp')
           lat: venue.lat,
           lng: venue.lng
         }
+
 
         return this.uploadingMarker(newMarker);
       },
@@ -95,7 +102,12 @@ angular.module('publicEducationApp')
           method: 'GET',
           url: BACKEND_URL + '/get-markers'
         }).success(function (data) {
+
+          self.markerUpdated(self.data.markers);
+
           self.data.markers = data;
+
+
         });
       },
 
@@ -139,7 +151,7 @@ angular.module('publicEducationApp')
         options.params = {marker: JSON.stringify(marker)};
 
         ft.upload(fileURI, BACKEND_URL + '/add-marker', function onSuccess(result) {
-          console.log('Response = ' + result.response);
+          // console.log('Response = ', result);
           defer.resolve(result);
         }, function onError(error) {
           console.log('An error has occurred: Code = ' + error.code);
@@ -148,6 +160,26 @@ angular.module('publicEducationApp')
         }, options);
 
         return defer.promise;
+      },
+      isProcessing: function() {
+
+        // Commented until resolve this.markerUpdated()
+        /*
+        if (!this.data.lastProcesingHash) {
+          return false;
+        }
+        else {
+          return true;
+        }
+        */
+      },
+      setProcessing: function(newMarker) {
+        this.data.lastProcesingHash = newMarker;
+      },
+      markerUpdated: function(markers){
+        if (markers) {
+          console.log(markers.playList);
+        }
       }
     };
   });

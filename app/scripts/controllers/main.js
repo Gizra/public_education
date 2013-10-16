@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('publicEducationApp')
-  .controller('ListMarkersCtrl', function ($scope, Leaflet, storage, Marker, $location, $timeout) {
+  .controller('ListMarkersCtrl', function ($scope, Leaflet, storage, Marker, $location, $timeout, $rootScope) {
 
     angular.extend($scope, Leaflet.getDefaults());
     storage.bind($scope,'center', {defaultValue: Leaflet.getCenter()});
@@ -14,6 +14,7 @@ angular.module('publicEducationApp')
 
     $scope.markers = {};
 
+
     // Get markers.
     var getMarkers = function() {
       Marker.gettingMarkers().then(function(data) {
@@ -21,6 +22,9 @@ angular.module('publicEducationApp')
         data = data.data;
 
         angular.forEach(data, function(marker, key) {
+          if (!marker.playList.length) {
+            console.log(marker);
+          }
           marker.icon = L.divIcon({
             iconSize: [63, 71],
             // Set the icon according to the playlist count.
@@ -30,13 +34,24 @@ angular.module('publicEducationApp')
           });
           $scope.markers[key] = marker;
         });
-      })
-        // Refresh markers each minute, after data was received.
-        .then($timeout(getMarkers, 60000).resolve);
+      });
+      // Refresh markers each minute, after data was received.
+      // .then($timeout(getMarkers, 60000).resolve);
     };
 
-    // Start request markers.
-    getMarkers();
+    if (!Marker.isProcessing()) {
+      // Start request markers.
+      getMarkers();
+      console.log('data refreshed');
+    }
+    else {
+      //Marker.setProcessing(false);
+      //$timeout(1000, getMarkers)
+      console.log('use cache');
+    }
+
+
+
 
     angular.forEach(['zoomend','moveend'], function(value) {
       $scope.$on('leafletDirectiveMap.' + value, function() {
@@ -48,5 +63,7 @@ angular.module('publicEducationApp')
       // Redirect to play-marker, when user clicks a marker.
       $location.path('/play-marker/' + args.markerName);
     });
+
+
 
   });
