@@ -116,19 +116,11 @@ angular.module('publicEducationApp')
         var fileURI;
         if (Phonegap.isMobile.iOS()) {
           fileURI = window.appRootDir.fullPath + '/' + marker.src;
-
-          // @todo: get from file name.
           options.mimeType = 'audio/wav';
         }
         else if (Phonegap.isMobile.Android()) {
           fileURI = '/mnt/sdcard/' + marker.src;
           options.mimeType = 'audio/amr';
-
-          // Request headers needs to be in the following format.
-          // @see https://github.com/superjoe30/node-multiparty/pull/15
-//          var headers = {'Content-type': 'multipart/form-data; boundary=+++++'};
-//          options.headers = headers;
-//          options.fileKey = 'file';
         }
         else {
           // Development.
@@ -136,8 +128,14 @@ angular.module('publicEducationApp')
           options.mimeType = 'audio/amr';
         }
 
+        // Request headers needs to be in the following format.
+        // @see https://github.com/superjoe30/node-multiparty/pull/15
+        var headers = {'Content-type': 'multipart/form-data; boundary=+++++'};
+        options.headers = headers;
+
         options.fileName = fileURI.substr(fileURI.lastIndexOf('/')+1);
-        // We need to stringfy the marker.
+
+        // We need to stringify the marker.
         options.params = {marker: JSON.stringify(marker)};
 
         console.log('options: ', options);
