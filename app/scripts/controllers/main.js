@@ -19,7 +19,7 @@ angular.module('publicEducationApp')
       Marker.gettingMarkers().then(function(data) {
 
         data = data.data;
-        
+
         angular.forEach(data, function(marker, key) {
           marker.icon = L.divIcon({
             iconSize: [63, 71],
