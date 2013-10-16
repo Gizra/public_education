@@ -138,7 +138,6 @@ angular.module('publicEducationApp')
         // We need to stringify the marker.
         options.params = {marker: JSON.stringify(marker)};
 
-        console.log('options: ', options);
         ft.upload(fileURI, BACKEND_URL + '/add-marker', function onSuccess(result) {
           console.log('Response = ' + result.response);
           defer.resolve(result);
