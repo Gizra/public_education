@@ -5,13 +5,15 @@ $instructions: #C5222D;
 $iconSpritePath: "../images/glyphicons-halflings.png";
 $iconWhiteSpritePath: "../images/glyphicons-halflings-white.png";
 
+$sans: "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+
 html, body, .leaflet-container, .container {
   height: 100%;
 }
 
 body{
   margin: 0;
-  font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+  font-family: $sans;
   font-size: 2em;
 }
 
@@ -73,15 +75,17 @@ div.leaflet-div-icon {
   div {
     padding: 20px;
   }
+}
 
-  .close {
-    float: right;
-    display: block;
-    background: url(../images/close@2x.png);
-    height: 64px;
-    width: 64px;
-    text-indent: -999999px;
-  }
+.close {
+  position: absolute;
+  right: 0;
+  display: block;
+  background: url(../images/close@2x.png);
+  height: 64px;
+  width: 64px;
+  text-indent: -999999px;
+  z-index: 999999;
 }
 
 .leaflet-control-container .leaflet-top {
@@ -126,10 +130,74 @@ div.leaflet-div-icon {
   }
 }
 
+/*  Form  */
+
+.command-form {
+  font-size: 48px;
+  line-height: 90px;
+  color: #1C299A;
+  font-family: $sans;
+  position: absolute;
+  width: 90%;
+  height: 100%;
+  padding: 4.2% 5%;
+  border: 0;
+  background: #FFFDF7;
+  background-image: -o-radial-gradient(50% 89%, rgba(255,255,255,0.00) 21%, rgba(0,0,0,0.07) 89%), url(../images/grid-paper-lines@2x.png);
+  background-image: -moz-radial-gradient(50% 89%, rgba(255,255,255,0.00) 21%, rgba(0,0,0,0.07) 89%), url(../images/grid-paper-lines@2x.png);
+  background-image: -webkit-radial-gradient(50% 89%, rgba(255,255,255,0.00) 21%, rgba(0,0,0,0.07) 89%), url(../images/grid-paper-lines@2x.png);
+  background-image: -ms-radial-gradient(50% 89%, rgba(255,255,255,0.00) 21%, rgba(0,0,0,0.07) 89%), url(../images/grid-paper-lines@2x.png);
+  background-image: radial-gradient(50% 89%, rgba(255,255,255,0.00) 21%, rgba(0,0,0,0.07) 89%), url(../images/grid-paper-lines@2x.png);
+}
+
+.info-wrapper {
+  position: absolute;
+  bottom: 0;
+  padding: 0 5%;
+  width: 90%;
+  z-index: 10;
+  color: #9B9B9B;
+  height: 2.5em;
+  line-height: 2em;
+
+  .venue {
+    left: 0.5em;
+    bottom: 0.5em;
+    padding-left: 2em;
+    background: url(../images/placemark@2x.png) no-repeat;
+    position: absolute;
+  }
+
+  .char-count {
+    right: 2.5em;
+    bottom: 0.5em;
+    position: absolute;
+
+    // class added if count < 10
+    &.a-lot {
+      color: #FF0000;
+    }
+  }
+
+  .confirm {
+    right: 0.5em;
+    bottom: 0.5em;
+    position: absolute;
+    background: url(../images/confirm@2x.png) no-repeat 0 -5px;
+    width: 2em;
+    display: block;
+    text-indent: -9999999px;
+
+    // class added if count < 0
+    &.too-much {
+      background-image: url(../images/confirm-grayed@2x.png);
+    }
+  }
+}
 
 body {
     background: #fafafa;
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: $sans;
     color: #333;
 }
 
