@@ -16,13 +16,19 @@ angular.module('publicEducationApp')
         // Internal state of the recording.
         scope.state = 'beforeRecord';
 
-        // Record audio
-        scope.file = '/mnt/sdcard/myrecording.amr';
-        var mediaRec = Phonegap.getMedia(scope.file, function onSuccess() {
-          console.log('recordAudio():Audio Success');
-        }, function onError(error) {
-          console.log('code: '    + error.code    + '\n' + 'message: ' + error.message + '\n');
-        });
+        var now = new Date();
+
+        scope.file = 'pe' + now.getTime();
+
+        // Record audio.
+        if (Phonegap.isMobile.iOS()) {
+          scope.file = scope.file + '.wav';
+        }
+        else if (Phonegap.isMobile.Android()) {
+          scope.file = scope.file + '.amr';
+        }
+
+        var mediaRec = Phonegap.getMedia(scope.file);
 
         /**
          * Start recording.
@@ -32,7 +38,7 @@ angular.module('publicEducationApp')
 
 	        // Record audio for up 6 seconds.
 	        mediaRec.startRecord();
-          scope.counter = 1;
+          scope.counter = 6;
           scope.onTimeout = function(){
             scope.counter--;
             if (scope.counter > 0) {
@@ -60,12 +66,8 @@ angular.module('publicEducationApp')
           scope.state = 'playRecord';
 
           var mediaPlayer = Phonegap.getMedia(scope.file, function onSuccess() {
-            console.log('playAudio(): Audio Success');
             // If play was successful, update marker state.
             scope.state = 'afterPlay';
-
-          }, function onError(error) {
-            console.log('code: ' + error.code    + '\n' + 'message: ' + error.message + '\n');
           });
 
           mediaPlayer.play();

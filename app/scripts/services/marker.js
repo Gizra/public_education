@@ -68,6 +68,16 @@ angular.module('publicEducationApp')
         this.data.markers[id].playList = this.data.markers[id].playList || [];
         this.data.markers[id].playList.unshift(newMarker);
 
+        // Add the venue information to the uploded marker, so we can create
+        // a Venue record if it doesn't exist yet, without re-calling
+        // FourSquare.
+        newMarker.venue = {
+          venueId: venue.id,
+          name: venue.name,
+          lat: venue.lat,
+          lng: venue.lng
+        }
+
         return this.uploadingMarker(newMarker);
       },
 
@@ -79,85 +89,14 @@ angular.module('publicEducationApp')
        *   true.
        * @returns {*}
        */
-      gettingMarkers: function(cache) {
-        var defer = $q.defer();
-        cache = cache || true;
-        var markers;
-
-        if (!this.data.markers || !cache) {
-          // @todo: Get as response from server.
-          markers = {
-            // Object keyed by FourSquare's Venue ID.
-            '513ee460e4b06c84bc3599d1': {
-              name: 'Topçular Semt Polikliniği',
-              lat: 41.0383,
-              lng: 28.9869,
-              playList: [
-                {
-                  src: 'http://upload.wikimedia.org/wikipedia/en/7/79/Korn_-_Predictable_%28demo%29.ogg',
-                  type: 'audio/ogg',
-                  text: '1st text',
-                  user: {
-                    name: 'amitaibu',
-                    photo: 'https://graph.facebook.com/amitai.burstein/picture'
-                  }
-                },
-                {
-                  src: 'http://www.metadecks.org/software/sweep/audio/demos/vocal2.ogg',
-                  type: 'audio/ogg',
-                  text: '2nd  text',
-                  user: {
-                    name: 'Bruce',
-                    photo: 'https://graph.facebook.com/brice.lenfant/picture'
-                  }
-                },
-                {
-                  src: 'http://upload.wikimedia.org/wikipedia/en/7/79/Korn_-_Predictable_%28demo%29.ogg',
-                  type: 'audio/ogg',
-                  text: '3rd text',
-                  user: {}
-                }
-              ]
-            },
-            '513ee460e4b06c84bc359988': {
-              name: 'Another place',
-              lat: 41.0396,
-              lng: 28.9842,
-              playList: [
-                {
-                  src: 'http://upload.wikimedia.org/wikipedia/en/7/79/Korn_-_Predictable_%28demo%29.ogg',
-                  text: '1st text',
-                  user: {
-                    name: 'amitaibu',
-                    photo: 'https://graph.facebook.com/amitai.burstein/picture'
-                  }
-                },
-                {
-                  src: 'http://www.metadecks.org/software/sweep/audio/demos/vocal2.ogg',
-                  text: '2nd  text',
-                  user: {
-                    name: 'Bruce',
-                    photo: 'https://graph.facebook.com/brice.lenfant/picture'
-                  }
-                }
-              ]
-            }
-          };
-        }
-        else {
-          // Get markers from cache.
-          markers = this.data.markers;
-        }
-
-
-        // @todo: Simulating http, replace with actual call to server.
+      gettingMarkers: function() {
         var self = this;
-        $timeout(function() {
-          self.data.markers = markers;
-          defer.resolve(markers);
-        }, 500);
-
-        return defer.promise;
+        return $http({
+          method: 'GET',
+          url: BACKEND_URL + '/get-markers'
+        }).success(function (data) {
+          self.data.markers = data;
+        });
       },
 
       /**
@@ -171,26 +110,40 @@ angular.module('publicEducationApp')
       uploadingMarker: function(marker) {
         var defer = $q.defer();
 
-        // @todo: remove hardcoding of URI and file format.
-        var fileURI = marker.src;
+        var ft = Phonegap.getFileTransfer();
         var options = Phonegap.getFileUploadOptions();
-        options.fileKey = 'file';
-        options.fileName = fileURI.substr(fileURI.lastIndexOf('/')+1);
 
-        // @todo: Remove hardcoding.
-        options.mimeType = 'audio/amr';
+        var fileURI;
+        if (Phonegap.isMobile.iOS()) {
+          fileURI = window.appRootDir.fullPath + '/' + marker.src;
+          options.mimeType = 'audio/wav';
+        }
+        else if (Phonegap.isMobile.Android()) {
+          fileURI = '/mnt/sdcard/' + marker.src;
+          options.mimeType = 'audio/amr';
+        }
+        else {
+          // Development.
+          fileURI = '/tmp/' + marker.src;
+          options.mimeType = 'audio/amr';
+        }
 
         // Request headers needs to be in the following format.
         // @see https://github.com/superjoe30/node-multiparty/pull/15
         var headers = {'Content-type': 'multipart/form-data; boundary=+++++'};
         options.headers = headers;
 
-        var ft = Phonegap.getFileTransfer();
-        ft.upload(fileURI, BACKEND_URL + '/recordings/create', function onSuccess(result) {
+        options.fileName = fileURI.substr(fileURI.lastIndexOf('/')+1);
+
+        // We need to stringify the marker.
+        options.params = {marker: JSON.stringify(marker)};
+
+        ft.upload(fileURI, BACKEND_URL + '/add-marker', function onSuccess(result) {
           console.log('Response = ' + result.response);
           defer.resolve(result);
         }, function onError(error) {
           console.log('An error has occurred: Code = ' + error.code);
+          console.log(error);
           defer.reject(error);
         }, options);
 

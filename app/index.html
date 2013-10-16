@@ -72,6 +72,35 @@
         js.src = "cordova.js";
 
         head.appendChild(js);
+
+        (function(){
+          // @todo: Remove appRootDirName?
+          window.appRootDirName = "";
+          document.addEventListener("deviceready", onDeviceReady, false);
+
+          function onDeviceReady() {
+            console.log("device is ready");
+            window.requestFileSystem  = window.requestFileSystem || window.webkitRequestFileSystem;
+            window.requestFileSystem(LocalFileSystem.TEMPORARY, 0, gotFS, fail);
+          }
+
+          function fail() {
+            console.log("failed to get filesystem");
+          }
+
+          function gotFS(fileSystem) {
+            console.log("filesystem got");
+            fileSystem.root.getDirectory(window.appRootDirName, {
+              create : true,
+              exclusive : false
+            }, dirReady, fail);
+          }
+
+          function dirReady(entry) {
+            window.appRootDir = entry;
+            console.log(JSON.stringify(window.appRootDir));
+          }
+        })();
       }
     </script>
 
