@@ -219,8 +219,8 @@ div.leaflet-div-icon {
   }
 
   .rec{
-    background: url(../images/record-btn@2x.png) center center no-repeat;
-    display: block;
+      background: url(../images/record-btn@2x.png) center center no-repeat;
+      display: block;
 
     button {
       border: 0;
@@ -234,6 +234,7 @@ div.leaflet-div-icon {
     }
 
     div { 
+
       button.start-rec,
       &:nth-child(1) button {
         background-image: url(../images/start-rec@2x.png);
@@ -245,14 +246,37 @@ div.leaflet-div-icon {
       }
 
       &:last-child {
+        margin: 0 70px;
+        min-height: 432px;
+
         button{
           float: left;
-          height: 200px;
-          width: 200px;
-          margin: 120px auto 0;
+          height: 90px;
+          width: 90px;
+          margin: 175px auto 0;
+          margin-right: 60px;
 
-          &:nth-child(2){
+          &:nth-child(1),
+          &.cancel-rec{
+            background-image: url(../images/cancel-rec@2x.png);
+          }
+
+          &:nth-child(2),
+          &.play-rec{
             background-image: url(../images/play-rec@2x.png);
+            height: 200px;
+            width: 200px;
+            margin-top: 120px;
+          }
+
+          &:nth-child(3),
+          &.confirm-rec{
+            background-image: url(../images/confirm-rec@2x.png);
+            margin-right: 0;
+
+            &.disabled {
+              background-image: url(../images/confirm-rec-grayed@2x.png);
+            }
           }
         }
         
