@@ -71,21 +71,26 @@
 </div>
 
 <div class="completed-wrapper" ng-show="state == 'completed'">
-  <div>Thanks</div>
-  <p>
-    Your command has been recorded.
-  </p>
-  <p>
-    now, go tell your friends!
-  </p>
-  <ul>
-    <li><a href="">Twitter</a></li>
-    <li><a href="">Facebook</a></li>
-    <li><a href="">Google+</a></li>
-    <li><a href="">Email</a></li>
-  </ul>
 
   <div>
-    <a href="#/" ng-click="setState('mark')">X Close</a>
+    <a href="#/" ng-click="setState('mark')" class="close">X Close</a>
   </div>
+  
+  <div class="confirmation-message">
+    <p>
+      <strong>Thanks!</strong>
+    </p>
+    <p>
+      Your command has been recorded.
+    </p>
+    <p>
+      now, go tell your friends!
+    </p>
+  </div>
+  <ul class="share-btns">
+    <li><a href="#" class="share-tw">Share on Twitter</a></li>
+    <li><a href="#" class="share-fb">Share on Facebook</a></li>
+    <li><a href="#" class="share-email">Send as in an email</a></li>
+    <li><a href="#" class="share-link">Link to this command</a></li>
+  </ul>
 </div>

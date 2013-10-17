@@ -6,6 +6,8 @@ $disabled: #9B9B9B;
 $warning: #C5222D;
 $command-text: #1C299A;
 $gray-text: #9B9B9B;
+$dark-pane: rgba(0,0,0,0.7);
+$success: #429620;
 
 $iconSpritePath: "../images/glyphicons-halflings.png";
 $iconWhiteSpritePath: "../images/glyphicons-halflings-white.png";
@@ -87,7 +89,7 @@ div.leaflet-div-icon {
   top: 0;
   z-index: 99;
   width: 100%;
-  background: rgba(0,0,0,0.7);
+  background: $dark-pane;
   color: $instructions;
   font-weight: bold;
 
@@ -137,7 +139,7 @@ div.leaflet-div-icon {
   .venue {
     padding: 40px 80px 0 106px;
     overflow: hidden;
-    height: 1.5em;
+    height: 1.2em;
     overflow: hidden;
   }
 
@@ -324,6 +326,26 @@ div.leaflet-div-icon {
           }
         }
       }
+    }
+  }
+}
+
+.completed-wrapper {
+  border-radius: 10px;
+  background: $dark-pane;
+  margin: 10%;
+  height: 80%;
+  width: 80%;
+  position: relative;
+
+  .confirmation-message {
+    padding: 50% 5% 0;
+    background: url(../images/confirmation@2x.png) center 40% no-repeat;
+    text-align: center;
+    color: $gray-text;
+
+    strong {
+      color: $success;
     }
   }
 }
