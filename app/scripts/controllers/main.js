@@ -19,13 +19,7 @@ angular.module('publicEducationApp')
     var getMarkers = function() {
       Marker.gettingMarkers().then(function(data) {
 
-        data = data.data;
-
-        var markersFromServer = {};
-
         angular.forEach(data, function(marker, key) {
-          //console.log('Redraw. ', !Marker.isProcessing());
-            // Redraw.
           marker.icon = L.divIcon({
             iconSize: [63, 71],
             // Set the icon according to the playlist count.
@@ -34,19 +28,14 @@ angular.module('publicEducationApp')
             iconAnchor:   [31, 71]
           });
 
-          markersFromServer[key] = marker;
+          $scope.markers[key] = marker;
         });
-
-        if (!Marker.isProcessing()) {
-          $scope.markers = markersFromServer;
-        }
-
       })
       // Refresh markers each minute, after data was received.
-        .then($timeout(getMarkers, 5000).resolve);
+        .then($timeout(getMarkers, 60000).resolve);
     };
 
-    //
+    // Initial request get markers.
     getMarkers();
 
     angular.forEach(['zoomend','moveend'], function(value) {

@@ -96,18 +96,45 @@ angular.module('publicEducationApp')
        *   true.
        * @returns {*}
        */
-      gettingMarkers: function() {
+      gettingMarkers: function(cache) {
         var self = this;
-        return $http({
+
+        var defer = $q.defer();
+        cache = cache || true;
+        var markers;
+
+        /*
+        if (!this.data.markers || !cache) {
+
+        } else {
+          // Get markers from cache.
+          markers = this.data.markers;
+        }
+        */
+
+
+        $http({
           method: 'GET',
           url: BACKEND_URL + '/get-markers'
         }).success(function (data) {
-
+          // Check if server get the new marker in the response.
           self.markerUpdated(data);
-          // Check if isProcessing to selecting data to repain
-          self.data.markers = data;
 
+          // Still processing?.
+          if (self.isProcessing()) {
+            console.log('cache');
+            defer.resolve(self.data.markers);
+          }
+          else {
+            console.log('server');
+            // Update cache
+            self.data.markers = data;
+            defer.resolve(data);
+
+          }
         });
+
+        return defer.promise
       },
 
       /**
@@ -163,6 +190,9 @@ angular.module('publicEducationApp')
 
       isProcessing: function() {
         var last = this.data.lastProcessingHash;
+
+
+
         return (last) ? true : false;
       },
 
@@ -173,21 +203,19 @@ angular.module('publicEducationApp')
       },
 
       /**
+       * Validate if
        *
        * @param markers
+       *  marker for the server
        */
       markerUpdated: function(markers) {
         var last = this.data.lastProcessingHash;
-        // console.log(markers);
+
         if (markers) {
           angular.forEach(markers, function(marker, key) {
             angular.forEach(marker.playList, function(record, key) {
-
-
               if (last !== null && record.hash == last) {
-                // console.log(record.hash, last);
                 last = null;
-
               }
             });
           });
