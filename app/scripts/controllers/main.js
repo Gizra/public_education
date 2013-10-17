@@ -22,36 +22,28 @@ angular.module('publicEducationApp')
         data = data.data;
 
         angular.forEach(data, function(marker, key) {
-          if (!marker.playList.length) {
-            console.log(marker);
+          //console.log('Redraw. ', !Marker.isProcessing());
+          if (!Marker.isProcessing()) {
+            // Redraw.
+            marker.icon = L.divIcon({
+              iconSize: [63, 71],
+              // Set the icon according to the playlist count.
+              html: '<div class="marker-icon">' + marker.playList.length + '</div>',
+              // @todo: angular-leaflet fails without this one.
+              iconAnchor:   [31, 71]
+            });
+            $scope.markers[key] = marker;
           }
-          marker.icon = L.divIcon({
-            iconSize: [63, 71],
-            // Set the icon according to the playlist count.
-            html: '<div class="marker-icon">' + marker.playList.length + '</div>',
-            // @todo: angular-leaflet fails without this one.
-            iconAnchor:   [31, 71]
-          });
-          $scope.markers[key] = marker;
+
+
         });
-      });
+      })
       // Refresh markers each minute, after data was received.
-      // .then($timeout(getMarkers, 60000).resolve);
+        .then($timeout(getMarkers, 5000).resolve);
     };
 
-    if (!Marker.isProcessing()) {
-      // Start request markers.
-      getMarkers();
-      console.log('data refreshed');
-    }
-    else {
-      //Marker.setProcessing(false);
-      //$timeout(1000, getMarkers)
-      console.log('use cache');
-    }
-
-
-
+    //
+    getMarkers();
 
     angular.forEach(['zoomend','moveend'], function(value) {
       $scope.$on('leafletDirectiveMap.' + value, function() {

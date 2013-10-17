@@ -8,7 +8,7 @@ angular.module('publicEducationApp')
       // Private variable to hold the state.
       data: {
         markers: null,
-        lastProcesingHash: null
+        lastProcessingHash: null
       },
 
       /**
@@ -103,10 +103,12 @@ angular.module('publicEducationApp')
           url: BACKEND_URL + '/get-markers'
         }).success(function (data) {
 
-          self.markerUpdated(self.data.markers);
-
-          self.data.markers = data;
-
+          self.markerUpdated(data);
+          // Check if isProcessing to selecting data to repain
+          // Processing
+          //if (!self.isProcessing()) {
+            self.data.markers = data;
+          //}
 
         });
       },
@@ -161,25 +163,41 @@ angular.module('publicEducationApp')
 
         return defer.promise;
       },
-      isProcessing: function() {
 
-        // Commented until resolve this.markerUpdated()
-        /*
-        if (!this.data.lastProcesingHash) {
-          return false;
-        }
-        else {
-          return true;
-        }
-        */
+      isProcessing: function() {
+        var last = this.data.lastProcessingHash;
+        return (last) ? true : false;
       },
-      setProcessing: function(newMarker) {
-        this.data.lastProcesingHash = newMarker;
+
+      setProcessing: function(hash) {
+        if (hash) {
+          this.data.lastProcessingHash = hash;
+        }
+
       },
-      markerUpdated: function(markers){
+
+      /**
+       *
+       * @param markers
+       */
+      markerUpdated: function(markers) {
+        var last = this.data.lastProcessingHash;
+        console.log(markers);
         if (markers) {
-          console.log(markers.playList);
+          angular.forEach(markers, function(marker, key) {
+            angular.forEach(marker.playList, function(record, key) {
+
+
+              if (last !== null && record.hash == last) {
+                // console.log(record.hash, last);
+                last = null;
+
+              }
+            });
+          });
         }
+
+        this.data.lastProcessingHash = last;
       }
     };
   });
