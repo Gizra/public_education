@@ -1,6 +1,12 @@
 'use strict';
 
-angular.module('publicEducationApp', ['config', 'angular-audio-player', 'angularLocalStorage', 'leaflet-directive'])
+angular.module('publicEducationApp', [
+    'config',
+    'angular-audio-player',
+    'angularLocalStorage',
+    'leaflet-directive',
+    'angular-md5'
+  ])
   .config(function ($routeProvider, $httpProvider) {
     $routeProvider
       .when('/', {

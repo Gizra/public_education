@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('publicEducationApp')
-  .service('Marker', function Marker($q, $http, $timeout, BACKEND_URL, Phonegap) {
+  .service('Marker', function Marker($q, $http, $timeout, BACKEND_URL, Phonegap, md5) {
 
     return {
 
@@ -72,9 +72,9 @@ angular.module('publicEducationApp')
           location: location
         };
 
-        // @todo Crossbrowser md5 version, require research.
-        // var hash = Crypto.md5(newMarker);
-        newMarker.hash = new Date().getTime();
+        // Creting hash.
+        newMarker.hash = md5.createHash(id);
+        console.log(newMarker.hash);
         this.setProcessing(newMarker.hash);
 
         this.data.markers[id].playList = this.data.markers[id].playList || [];
@@ -114,9 +114,11 @@ angular.module('publicEducationApp')
 
           // Check if resolve cache or server data.
           if (self.isProcessing(data)) {
+            console.log('cache');
             defer.resolve(self.data.markers);
           }
           else {
+            console.log('server');
             // Update cache.
             self.data.markers = data;
             defer.resolve(data);
