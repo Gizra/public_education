@@ -29,12 +29,12 @@
 <div class="form-wrapper" ng-show="state == 'form'">
   <a class="close" ng-click="setState('mark')">X</a>
 
-  <form ng-class="{error: 80 - text.length < 0}">
+  <form>
     <div>
       <textarea class="command-form" rows="6" name="text" ng-model="text" placeholder="Write your command" required></textarea><br>
     </div>
 
-    <div class="info-wrapper">
+    <div class="info-wrapper" ng-class="{disabled: 80 - text.length < 0 , warning: 70 - text.length < 0}">
       <div class="venue">
         {{markers.marker.venue.name | venueName}}
       </div>
@@ -44,8 +44,7 @@
       </div>
 
       <div>
-        <a class="confirm" ng-hide="80 - text.length < 0 || text.length == 0" ng-click="setState('record')">V</a>
-        <div ng-show="80 - text.length < 0">You must enter text below 80 chars</div>
+        <a class="confirm" ng-click="setState('record')">V</a>
       </div>
     </div>
   </form>

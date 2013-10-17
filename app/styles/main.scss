@@ -1,6 +1,9 @@
 @import "compass/css3";
 
 $instructions: #C5222D;
+$recorder: #218AFC;
+$disabled: #9B9B9B;
+$warning: #FF0000;
 
 $iconSpritePath: "../images/glyphicons-halflings.png";
 $iconWhiteSpritePath: "../images/glyphicons-halflings-white.png";
@@ -14,7 +17,14 @@ html, body, .leaflet-container, .container {
 body{
   margin: 0;
   font-family: $sans;
-  font-size: 2em;
+  font-size: 1em;
+
+  @media 
+  (-webkit-min-device-pixel-ratio: 1), 
+  (max-resolution: 192dpi) { 
+    /* Retina-specific stuff here */
+    font-size: 2em;
+  }
 }
 
 .container {
@@ -32,7 +42,8 @@ body{
     background: url(../images/Add_btn@2x.png) no-repeat;
     text-indent: -99999px;
     display: block;
-    height: 117px; width: 128px;
+    height: 117px; 
+    width: 128px;
   }
   
 }
@@ -174,9 +185,10 @@ div.leaflet-div-icon {
     position: absolute;
 
     // class added if count < 10
-    &.a-lot {
-      color: #FF0000;
-    }
+  }
+
+  &.warning .char-count {
+    color: $warning;
   }
 
   .confirm {
@@ -187,11 +199,10 @@ div.leaflet-div-icon {
     width: 2em;
     display: block;
     text-indent: -9999999px;
+  }
 
-    // class added if count < 0
-    &.too-much {
-      background-image: url(../images/confirm-grayed@2x.png);
-    }
+  &.disabled .confirm {
+    background-image: url(../images/confirm-grayed@2x.png);
   }
 }
 
@@ -218,9 +229,25 @@ div.leaflet-div-icon {
     box-shadow:         0px -4px 0px 0px rgba(0,0,0,0.11);
   }
 
-  .rec{
+  .rec {
       background: url(../images/record-btn@2x.png) center center no-repeat;
       display: block;
+
+    .remaining-time {
+      color: $recorder;
+      position: absolute;
+      width: 100%;
+      text-align: center;
+      margin-top: -1.5em;
+
+      &.disabled {
+        color: $disabled;
+      }
+
+      &.warning {
+        color: $warning
+      }
+    }
 
     button {
       border: 0;
@@ -235,42 +262,42 @@ div.leaflet-div-icon {
 
     div { 
 
-      button.start-rec,
-      &:nth-child(1) button {
+      button.start-rec {
         background-image: url(../images/start-rec@2x.png);
       }
 
-      button.pause-rec,
-      &:nth-child(2) button {
-        background-image: url(../images/pause-rec@2x.png);
+      button.stop-rec {
+        background-image: url(../images/stop-rec@2x.png);
       }
 
-      &:last-child {
-        margin: 0 70px;
+      &.after-rec {
+        margin: 4px 70px;
         min-height: 432px;
+        position: relative;
 
-        button{
+        .remaining-time{
+          margin-top: 2.15em;
+        }
+
+        button {
           float: left;
           height: 90px;
           width: 90px;
           margin: 175px auto 0;
           margin-right: 60px;
 
-          &:nth-child(1),
-          &.cancel-rec{
-            background-image: url(../images/cancel-rec@2x.png);
+          &.discard-rec {
+            background-image: url(../images/discard-rec@2x.png);
           }
 
-          &:nth-child(2),
-          &.play-rec{
+          &.play-rec {
             background-image: url(../images/play-rec@2x.png);
             height: 200px;
             width: 200px;
             margin-top: 120px;
           }
 
-          &:nth-child(3),
-          &.confirm-rec{
+          &.confirm-rec {
             background-image: url(../images/confirm-rec@2x.png);
             margin-right: 0;
 
@@ -285,27 +312,4 @@ div.leaflet-div-icon {
     
   }
 
-}
-
-body {
-    background: #fafafa;
-    font-family: $sans;
-    color: #333;
-}
-
-.hero-unit {
-    margin: 50px auto 0 auto;
-    width: 300px;
-    font-size: 18px;
-    font-weight: 200;
-    line-height: 30px;
-    background-color: #eee;
-    border-radius: 6px;
-    padding: 60px;
-}
-
-.hero-unit h1 {
-    font-size: 60px;
-    line-height: 1;
-    letter-spacing: -1px;
 }
