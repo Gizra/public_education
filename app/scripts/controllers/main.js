@@ -18,8 +18,6 @@ angular.module('publicEducationApp')
     var getMarkers = function() {
       Marker.gettingMarkers().then(function(data) {
 
-        data = data.data;
-
         angular.forEach(data, function(marker, key) {
           marker.icon = L.divIcon({
             iconSize: [63, 71],
@@ -28,6 +26,7 @@ angular.module('publicEducationApp')
             // @todo: angular-leaflet fails without this one.
             iconAnchor:   [31, 71]
           });
+
           $scope.markers[key] = marker;
         });
       })
@@ -35,7 +34,7 @@ angular.module('publicEducationApp')
         .then($timeout(getMarkers, 60000).resolve);
     };
 
-    // Start request markers.
+    // Initial request get markers.
     getMarkers();
 
     angular.forEach(['zoomend','moveend'], function(value) {
@@ -48,5 +47,7 @@ angular.module('publicEducationApp')
       // Redirect to play-marker, when user clicks a marker.
       $location.path('/play-marker/' + args.markerName);
     });
+
+
 
   });

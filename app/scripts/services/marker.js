@@ -5,9 +5,16 @@ angular.module('publicEducationApp')
 
     return {
 
-      // Private variable to hold the state.
+      /**
+       * Private variable to hold the state.
+       *
+       * data.marker: List of markers in cache
+       * data.lastProcessing: A hash of the last marker added, during server
+       *                      processing set a valid hash md5 otherwise null.
+       */
       data: {
-        markers: null
+        markers: null,
+        lastProcessingHash: null
       },
 
       /**
@@ -39,7 +46,7 @@ angular.module('publicEducationApp')
             name: venue.name,
             lat: venue.lat,
             lng: venue.lng,
-            playlist: []
+            playList: []
           };
         }
 
@@ -64,6 +71,11 @@ angular.module('publicEducationApp')
           // Pass the original 'lng' and 'lat' to the backend.
           location: location
         };
+
+        // @todo Crossbrowser md5 version, require research.
+        // var hash = Crypto.md5(newMarker);
+        newMarker.hash = new Date().getTime();
+        this.setProcessing(newMarker.hash);
 
         this.data.markers[id].playList = this.data.markers[id].playList || [];
         this.data.markers[id].playList.unshift(newMarker);
@@ -91,12 +103,28 @@ angular.module('publicEducationApp')
        */
       gettingMarkers: function() {
         var self = this;
-        return $http({
+
+        var defer = $q.defer();
+        var markers;
+
+        $http({
           method: 'GET',
           url: BACKEND_URL + '/get-markers'
         }).success(function (data) {
-          self.data.markers = data;
+
+          // Check if resolve cache or server data.
+          if (self.isProcessing(data)) {
+            defer.resolve(self.data.markers);
+          }
+          else {
+            // Update cache.
+            self.data.markers = data;
+            defer.resolve(data);
+          }
+
         });
+
+        return defer.promise
       },
 
       /**
@@ -139,7 +167,6 @@ angular.module('publicEducationApp')
         options.params = {marker: JSON.stringify(marker)};
 
         ft.upload(fileURI, BACKEND_URL + '/add-marker', function onSuccess(result) {
-          console.log('Response = ' + result.response);
           defer.resolve(result);
         }, function onError(error) {
           console.log('An error has occurred: Code = ' + error.code);
@@ -148,6 +175,46 @@ angular.module('publicEducationApp')
         }, options);
 
         return defer.promise;
+      },
+
+      /**
+       * Validate if the server still processing the last marker inserted;
+       * return true when last marker was processed by the server, but false.
+       *
+       * @param markers
+       *   marker for the server
+       * @returns true|false
+       *
+       */
+      isProcessing: function(markers) {
+        var self = this;
+
+        // Set timeout to abort cache in case of server issues.
+        $timeout(function() {
+          self.data.lastProcessingHash = null;
+        }, 600000);
+
+        // Check if hash exist in markers
+        if (markers && self.data.lastProcessingHash) {
+          angular.forEach(markers, function(marker) {
+            angular.forEach(marker.playList, function(record) {
+              if (record.hash == self.data.lastProcessingHash) {
+                self.data.lastProcessingHash = null;
+              }
+            });
+          });
+        }
+
+        return (self.data.lastProcessingHash) ? true : false;
+      },
+      /**
+       * Set the a status property to know when the marker was processed by the server.
+       *
+       * @param hash
+       *   Hash to identify the last marker inserted.
+       */
+      setProcessing: function(hash) {
+        this.data.lastProcessingHash = hash;
       }
     };
   });
