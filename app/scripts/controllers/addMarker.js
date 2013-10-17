@@ -102,7 +102,7 @@ angular.module('publicEducationApp')
           lat: $scope.markers.marker.lat
         };
 
-      // Getting the promise of add a new marker
+      // Getting the promise of add a new marker.
       Marker.addMarker(venue, $scope.text, $scope.file, location, $scope.user);
 
       $scope.setState('completed');

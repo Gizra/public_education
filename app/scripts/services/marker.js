@@ -96,11 +96,10 @@ angular.module('publicEducationApp')
        *   true.
        * @returns {*}
        */
-      gettingMarkers: function(cache) {
+      gettingMarkers: function() {
         var self = this;
 
         var defer = $q.defer();
-        cache = cache || true;
         var markers;
 
         $http({
@@ -185,9 +184,8 @@ angular.module('publicEducationApp')
        *
        * @param markers
        *   marker for the server
+       * @returns true|false
        *
-       * @return
-       *   true|false
        */
       isProcessing: function(markers) {
         var self = this;
