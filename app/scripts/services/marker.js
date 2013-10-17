@@ -110,6 +110,11 @@ angular.module('publicEducationApp')
 
           // Check if resolve cache or server data.
           if (self.isProcessing(data)) {
+            // Set timeout to abort cache in case of server issues.
+            $timeout(function() {
+              self.data.lastProcessingHash = null;
+            }, 600000);
+
             defer.resolve(self.data.markers);
           }
           else {
@@ -187,10 +192,11 @@ angular.module('publicEducationApp')
       isProcessing: function(markers) {
         var self = this;
 
-        if (markers) {
-          angular.forEach(markers, function(marker, key) {
-            angular.forEach(marker.playList, function(record, key) {
-              if (self.data.lastProcessingHash !== null && record.hash == self.data.lastProcessingHash) {
+        // Check if hash exist in markers
+        if (markers && self.data.lastProcessingHash) {
+          angular.forEach(markers, function(marker) {
+            angular.forEach(marker.playList, function(record) {
+              if (record.hash == self.data.lastProcessingHash) {
                 self.data.lastProcessingHash = null;
               }
             });

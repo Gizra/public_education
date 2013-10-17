@@ -103,14 +103,13 @@ angular.module('publicEducationApp')
         };
 
       // Getting the promise of add a new marker
-      var addingMarker = Marker.addMarker(venue, $scope.text, $scope.file, location, $scope.user);
+      Marker.addMarker(venue, $scope.text, $scope.file, location, $scope.user);
 
-      addingMarker.then(function() {
-        $scope.setState('completed');
+      $scope.setState('completed');
 
-        // Clear local storage.
-        storage.remove('text');
-      });
+      // Clear local storage.
+      storage.remove('text');
+
     };
 
     // @todo: Move to init function?

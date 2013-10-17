@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('publicEducationApp')
-  .controller('ListMarkersCtrl', function ($scope, Leaflet, storage, Marker, $location, $timeout, $rootScope) {
+  .controller('ListMarkersCtrl', function ($scope, Leaflet, storage, Marker, $location, $timeout) {
 
     angular.extend($scope, Leaflet.getDefaults());
     storage.bind($scope,'center', {defaultValue: Leaflet.getCenter()});
@@ -18,6 +18,10 @@ angular.module('publicEducationApp')
     // Get markers.
     var getMarkers = function() {
       Marker.gettingMarkers().then(function(data) {
+       if (data === {}) {
+          // Rare case, mostly in development, were all markers have been deleted.
+          $scope.markers = {};
+        }
 
         angular.forEach(data, function(marker, key) {
           marker.icon = L.divIcon({
@@ -31,7 +35,7 @@ angular.module('publicEducationApp')
           $scope.markers[key] = marker;
         });
       })
-      // Refresh markers each minute, after data was received.
+        // Refresh markers each minute, after data was received.
         .then($timeout(getMarkers, 60000).resolve);
     };
 
