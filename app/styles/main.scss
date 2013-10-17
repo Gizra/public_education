@@ -3,7 +3,9 @@
 $instructions: #C5222D;
 $recorder: #218AFC;
 $disabled: #9B9B9B;
-$warning: #FF0000;
+$warning: #C5222D;
+$command-text: #1C299A;
+$gray-text: #9B9B9B;
 
 $iconSpritePath: "../images/glyphicons-halflings.png";
 $iconWhiteSpritePath: "../images/glyphicons-halflings-white.png";
@@ -135,7 +137,8 @@ div.leaflet-div-icon {
   .venue {
     padding: 40px 80px 0 106px;
     overflow: hidden;
-    height: 1em;
+    height: 1.5em;
+    overflow: hidden;
   }
 
   .edit-place {
@@ -155,7 +158,7 @@ div.leaflet-div-icon {
 .command-form {
   font-size: 48px;
   line-height: 90px;
-  color: #1C299A;
+  color: $command-text;
   font-family: $sans;
   position: absolute;
   width: 90%;
@@ -176,7 +179,7 @@ div.leaflet-div-icon {
   padding: 0 5%;
   width: 90%;
   z-index: 10;
-  color: #9B9B9B;
+  color: $gray-text;
   height: 2.5em;
   line-height: 2em;
 
@@ -186,6 +189,8 @@ div.leaflet-div-icon {
     padding-left: 2em;
     background: url(../images/placemark@2x.png) no-repeat;
     position: absolute;
+    height: 2em;
+    overflow: hidden;
   }
 
   .char-count {
@@ -278,7 +283,7 @@ div.leaflet-div-icon {
       }
 
       &.after-rec {
-        margin: 4px 70px;
+        margin: 4px 0;
         min-height: 432px;
         position: relative;
 
@@ -287,26 +292,31 @@ div.leaflet-div-icon {
         }
 
         button {
-          float: left;
+          position: absolute;
           height: 90px;
           width: 90px;
-          margin: 175px auto 0;
-          margin-right: 60px;
+          top: 175px;
+          margin: 0;
 
           &.discard-rec {
             background-image: url(../images/discard-rec@2x.png);
+            left: 20%;
+            margin-left: -45px;
           }
 
           &.play-rec {
             background-image: url(../images/play-rec@2x.png);
             height: 200px;
             width: 200px;
-            margin-top: 120px;
+            top: 120px;
+            left: 50%;
+            margin-left: -100px;
           }
 
           &.confirm-rec {
             background-image: url(../images/confirm-rec@2x.png);
-            margin-right: 0;
+            right: 20%;
+            margin-right: -45px;
 
             &.disabled {
               background-image: url(../images/confirm-rec-grayed@2x.png);
@@ -346,6 +356,10 @@ div.leaflet-div-icon {
   line-height: 1em;
   z-index: 10000;
 
+  .user-wrapper {
+    //height: 80px;
+  }
+
   .profie-pic {
     height: 2em;
     width: 2em;
@@ -362,10 +376,101 @@ div.leaflet-div-icon {
 
   .venue-name {
     //margin: 0.5em;
-    color: #9B9B9B;
+    color: $gray-text;
   }
 
   .expand {
     background: url(../images/expand@2x.png);
   }
 }
+
+.recording-content {
+  background: #0d0d0d;
+  height: 100%;
+  padding: 5% 5% 50%;
+  position: relative;
+
+  p {
+    margin: 0;
+    border-top: $gray-text 2px solid;
+    padding: 1em 0;
+    //font-size: 1em;
+    line-height: 2em;
+  }
+
+  .edit-text {
+    font-size: 0.75em;
+    color: $gray-text;
+  }
+
+  .play-rec {
+    height: 4em;
+    width: 4em;
+    display: block;
+    margin: 0 auto 1em ;
+    text-indent: -999999px;
+    border-radius: 4em;
+    border: 2px solid $recorder;
+    background: url(../images/play-rec@2x.png) center center no-repeat;
+  }
+
+  .flag {
+    text-decoration: none;
+    position: absolute;
+    right: 0.25em;
+    bottom: 0.25em;
+    padding-right: 2em;
+    background: url(../images/flag@2x.png) no-repeat right top;
+    display: block;
+    height: 2em;
+    line-height: 2em;
+    color: $warning;
+  }
+}
+
+.share-btns {
+  margin: 0 auto;
+  width: 340px;
+  padding: 0;
+
+  li {
+    list-style: none;
+    margin: none;
+    float: left;
+    margin-right: 20px;
+
+    &:last-child {
+      margin-right: 0;
+    }
+
+    a {
+      display: block;
+      width: 70px;
+      height: 70px;
+      text-indent: -999999px;
+
+      &.share-tw {
+        background: url(../images/share-tw@2x.png);
+      }
+
+      &.share-fb {
+        background: url(../images/share-fb@2x.png);
+      }
+
+      &.share-email {
+        background: url(../images/share-email@2x.png);
+      }
+
+      &.share-link {
+        background: url(../images/share-link@2x.png);
+      }
+    }
+  }
+}
+
+
+
+
+
+
+

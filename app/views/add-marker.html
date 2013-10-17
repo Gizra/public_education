@@ -23,7 +23,7 @@
       {{markers.marker.venue.name | venueName}}
     </div>
 
-    <a class="confirm" ng-show="markers.marker.venue.name.length" ng-click="setState('form')">V</a>
+    <a class="action confirm" ng-show="markers.marker.venue.name.length" ng-click="setState('form')">V</a>
   </div>
 </div>
 
@@ -35,7 +35,7 @@
       <textarea class="command-form" rows="6" name="text" ng-model="text" placeholder="Write your command" required></textarea><br>
     </div>
 
-    <div class="info-wrapper bottom-bar" ng-class="{disabled: 80 - text.length < 0 , warning: 70 - text.length < 0}">
+    <div class="info-wrapper" ng-class="{disabled: 80 - text.length < 0 , warning: 70 - text.length < 0}">
       <div class="venue">
         {{markers.marker.venue.name | venueName}}
       </div>
