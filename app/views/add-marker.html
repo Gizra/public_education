@@ -1,0 +1,91 @@
+
+<div class="map-wrapper" ng-show="state == 'mark'">
+  <div class="instructions-wrapper">
+
+    <a href="/#" class="close">X</a>
+
+    <div ng-show="center.zoom >= 16">
+      Move the map under the marker to pin your command elsewhere
+    </div>
+
+    <div ng-show="center.zoom < 16">
+      You need to zoom.
+    </div>
+  </div>
+
+  <leaflet center="center" markers="markers" defaults="defaults"></leaflet>
+
+  <div class="location-wrapper" ng-show="center.zoom >= 16 && !mapIsMoving">
+
+    <a class="edit-place">Edit Place</a>
+
+    <div class="venue">
+      {{markers.marker.venue.name | venueName}}
+    </div>
+
+    <a class="confirm" ng-show="markers.marker.venue.name.length" ng-click="setState('form')">V</a>
+  </div>
+</div>
+
+<div class="form-wrapper" ng-show="state == 'form'">
+  <a class="close" ng-click="setState('mark')">X</a>
+
+  <form>
+    <div>
+      <textarea class="command-form" rows="6" name="text" ng-model="text" placeholder="Write your command" required></textarea><br>
+    </div>
+
+    <div class="info-wrapper" ng-class="{disabled: 80 - text.length < 0 , warning: 70 - text.length < 0}">
+      <div class="venue">
+        {{markers.marker.venue.name | venueName}}
+      </div>
+
+      <div class="char-count">
+        {{ 80 - text.length}}
+      </div>
+
+      <div>
+        <a class="confirm" ng-click="setState('record')">V</a>
+      </div>
+    </div>
+  </form>
+</div>
+
+<div class="record-wrapper" ng-show="['record', 'recording', 'recorded', 'playRecord', 'afterPlay'].indexOf(state) != -1">
+
+  <a title="Back to writing the text" class="close" ng-click="setState('form')">X</a>
+  <div class="command-form" ng-click="setState('form')">
+    {{ text }}
+  </div>
+
+  <div class="info-wrapper">
+    <div class="venue">
+      {{markers.marker.venue.name | venueName}}
+    </div>
+  </div>
+
+  <div class="recorder" ng-show="markers.marker.venue.name">
+    <sound-recorder class="rec" file="file" on-recorded="onRecorded()"></sound-recorder>
+  </div>
+
+</div>
+
+<div class="completed-wrapper" ng-show="state == 'completed'">
+  <div>Thanks</div>
+  <p>
+    Your command has been recorded.
+  </p>
+  <p>
+    now, go tell your friends!
+  </p>
+  <ul>
+    <li><a href="">Twitter</a></li>
+    <li><a href="">Facebook</a></li>
+    <li><a href="">Google+</a></li>
+    <li><a href="">Email</a></li>
+  </ul>
+
+  <div>
+    <a href="#/" ng-click="setState('mark')">X Close</a>
+  </div>
+</div>

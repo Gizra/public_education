@@ -1,0 +1,14 @@
+node_modules
+dist
+.tmp
+.sass-cache
+app/bower_components
+app/scripts/config.js
+www
+.idea
+.cordova
+merges
+platforms
+plugins
+Gruntfile.js
+.grunt
