@@ -16,7 +16,6 @@ angular.module('publicEducationApp')
     $scope.playList = [];
     $scope.currentTrack = 0;
 
-    console.log('PlayMakerCtrl');
     Marker.gettingMarkers().then(function(data) {
       $scope.markers = data.data;
 
@@ -28,7 +27,7 @@ angular.module('publicEducationApp')
       $scope.selectedMarker = $scope.markers[$scope.venueId];
       angular.forEach($scope.selectedMarker.playList, function(value) {
         // Push the new items to the play list.
-          $scope.playList.push(value);
+        $scope.playList.push(value);
       });
 
       $scope.center = {
@@ -38,7 +37,6 @@ angular.module('publicEducationApp')
       }
 
       $scope.$watch('currentTrack', function(track) {
-        console.log('Track: ' + track);
         if (track <= $scope.selectedMarker.playList.length) {
           $scope.playItem($scope.selectedMarker.playList[track].src);
         }
@@ -51,7 +49,6 @@ angular.module('publicEducationApp')
      * @param src
      */
     $scope.playItem = function(src) {
-      console.log('src: ' + src);
       var mediaPlayer = Phonegap.getMedia(src, function onSuccess() {
         // If play was successful, skip to the next track.
         $scope.$apply(function () {

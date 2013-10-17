@@ -18,10 +18,6 @@ angular.module('publicEducationApp')
     // Get markers.
     var getMarkers = function() {
       Marker.gettingMarkers().then(function(data) {
-       if (data === {}) {
-          // Rare case, mostly in development, were all markers have been deleted.
-          $scope.markers = {};
-        }
 
         angular.forEach(data, function(marker, key) {
           marker.icon = L.divIcon({
@@ -36,7 +32,7 @@ angular.module('publicEducationApp')
         });
       })
         // Refresh markers each minute, after data was received.
-        .then($timeout(getMarkers, 60000).resolve);
+        .then($timeout(getMarkers, 6000).resolve);
     };
 
     // Initial request get markers.
