@@ -72,14 +72,14 @@ angular.module('publicEducationApp')
           location: location
         };
 
-        // Creting hash.
-        newMarker.hash = md5.createHash(id);
+        // Creating hash form a string of the newMarker obj.
+        newMarker.hash = md5.createHash(angular.toJson(newMarker, false));
         this.setProcessing(newMarker.hash);
 
         this.data.markers[id].playList = this.data.markers[id].playList || [];
         this.data.markers[id].playList.unshift(newMarker);
 
-        // Add the venue information to the uploded marker, so we can create
+        // Add the venue information to the uploaded marker, so we can create
         // a Venue record if it doesn't exist yet, without re-calling
         // FourSquare.
         newMarker.venue = {
