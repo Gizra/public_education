@@ -66,7 +66,7 @@ angular.module('publicEducationApp')
           location: location
         };
 
-
+        // @todo Crossbrowser md5 version
         // var hash = Crypto.md5(newMarker);
         newMarker.hash = new Date().getTime();
         this.setProcessing(newMarker.hash);
@@ -103,35 +103,21 @@ angular.module('publicEducationApp')
         cache = cache || true;
         var markers;
 
-        /*
-        if (!this.data.markers || !cache) {
-
-        } else {
-          // Get markers from cache.
-          markers = this.data.markers;
-        }
-        */
-
-
         $http({
           method: 'GET',
           url: BACKEND_URL + '/get-markers'
         }).success(function (data) {
-          // Check if server get the new marker in the response.
-          self.markerUpdated(data);
 
-          // Still processing?.
-          if (self.isProcessing()) {
-            console.log('cache');
+          // Check if resolve cache or server data.
+          if (self.isProcessing(data)) {
             defer.resolve(self.data.markers);
           }
           else {
-            console.log('server');
             // Update cache
             self.data.markers = data;
             defer.resolve(data);
-
           }
+
         });
 
         return defer.promise
@@ -188,40 +174,41 @@ angular.module('publicEducationApp')
         return defer.promise;
       },
 
-      isProcessing: function() {
-        var last = this.data.lastProcessingHash;
-
-
-
-        return (last) ? true : false;
-      },
-
-      setProcessing: function(hash) {
-        if (hash) {
-          this.data.lastProcessingHash = hash;
-        }
-      },
-
       /**
-       * Validate if
+       * Validate if the server still processing the last marker inserted;
+       * return true when last marker was processed by the server, but false.
        *
        * @param markers
-       *  marker for the server
+       *   marker for the server
+       *
+       * @return
+       *   true|false
        */
-      markerUpdated: function(markers) {
-        var last = this.data.lastProcessingHash;
+      isProcessing: function(markers) {
+        var self = this;
 
         if (markers) {
           angular.forEach(markers, function(marker, key) {
             angular.forEach(marker.playList, function(record, key) {
-              if (last !== null && record.hash == last) {
-                last = null;
+              if (self.data.lastProcessingHash !== null && record.hash == self.data.lastProcessingHash) {
+                self.data.lastProcessingHash = null;
               }
             });
           });
         }
 
-        this.data.lastProcessingHash = last;
+        return (self.data.lastProcessingHash) ? true : false;
+      },
+      /**
+       * Set the a status property to know when the marker was processed by the server.
+       *
+       * @param hash
+       *   Hash to identify the last marker inserted
+       */
+      setProcessing: function(hash) {
+        if (hash) {
+          this.data.lastProcessingHash = hash;
+        }
       }
     };
   });
