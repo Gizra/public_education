@@ -207,7 +207,7 @@ angular.module('publicEducationApp')
        * Set the a status property to know when the marker was processed by the server.
        *
        * @param hash
-       *   Hash to identify the last marker inserted
+       *   Hash to identify the last marker inserted.
        */
       setProcessing: function(hash) {
         if (hash) {
