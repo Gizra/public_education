@@ -1,16 +1,18 @@
 <div ng-show="state == 'beforeRecord'">
-  <button ng-click="startRecord()">Start record</button>
+  <div class="remaining-time disabled">00:06</div>
+  <button ng-click="startRecord()" class="start-rec">Start record</button>
 </div>
 
 <div ng-show="state == 'recording'">
-  <button ng-click="stopRecord()">Stop record</button>
-  <div class="remaining-time" ng-show="counter > 0">{{ counter + ' sec left' }}</div>
+  <div class="remaining-time" ng-show="counter > 0" ng-class="{warning: counter < 2}">{{ counter }}</div>
+  <button ng-click="stopRecord()" class="stop-rec">Stop record</button>
 </div>
 
-<div ng-show="['afterRecord', 'playRecord', 'afterPlay'].indexOf(state) != -1">
-  <button ng-click="state = 'beforeRecord'">Discard</button>
+<div ng-show="['afterRecord', 'playRecord', 'afterPlay'].indexOf(state) != -1" class="after-rec">
+  <div class="remaining-time">{{ counter }}</div>
+  <button ng-click="state = 'beforeRecord'" class="discard-rec">Discard</button>
 
-  <button ng-click="playRecord()">Play</button>
+  <button ng-click="playRecord()" class="play-rec">Play</button>
 
-  <button ng-click="onRecorded()">Confirm</button>
+  <button ng-click="onRecorded()" class="confirm-rec">Confirm</button>
 </div>

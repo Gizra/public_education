@@ -1,8 +1,14 @@
 @import "compass/css3";
 
 $instructions: #C5222D;
+$recorder: #218AFC;
+$disabled: #9B9B9B;
+$warning: #FF0000;
+
 $iconSpritePath: "../images/glyphicons-halflings.png";
 $iconWhiteSpritePath: "../images/glyphicons-halflings-white.png";
+
+$sans: "Helvetica Neue", "Helvetica", "Arial", sans-serif;
 
 html, body, .leaflet-container, .container {
   height: 100%;
@@ -10,8 +16,15 @@ html, body, .leaflet-container, .container {
 
 body{
   margin: 0;
-  font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif;
-  font-size: 2em;
+  font-family: $sans;
+  font-size: 1em;
+
+  @media
+  (-webkit-min-device-pixel-ratio: 1),
+  (max-resolution: 192dpi) {
+    /* Retina-specific stuff here */
+    font-size: 2em;
+  }
 }
 
 .container {
@@ -32,6 +45,7 @@ body{
     height: 117px;
     width: 128px;
   }
+
 }
 
 div.leaflet-div-icon {
@@ -72,15 +86,17 @@ div.leaflet-div-icon {
   div {
     padding: 20px;
   }
+}
 
-  .close {
-    float: right;
-    display: block;
-    background: url(../images/close@2x.png);
-    height: 64px;
-    width: 64px;
-    text-indent: -999999px;
-  }
+.close {
+  position: absolute;
+  right: 0;
+  display: block;
+  background: url(../images/close@2x.png);
+  height: 64px;
+  width: 64px;
+  text-indent: -999999px;
+  z-index: 999999;
 }
 
 .leaflet-control-container .leaflet-top {
@@ -125,31 +141,171 @@ div.leaflet-div-icon {
   }
 }
 
-.completed-wrapper {
-  padding: 20px;
-}
+/*  Form  */
 
-// Play mode page.
-.actions-wrapper,
-.playlist-info {
+.command-form {
+  font-size: 48px;
+  line-height: 90px;
+  color: #1C299A;
+  font-family: $sans;
   position: absolute;
-  z-index: 99;
-  padding: 20px 10px;
-  width: 100%;
-  background: black;
-  color: white;
+  width: 90%;
+  height: 100%;
+  padding: 4.2% 5%;
+  border: 0;
+  background: #FFFDF7;
+  background-image: -o-radial-gradient(50% 89%, rgba(255,255,255,0.00) 21%, rgba(0,0,0,0.07) 89%), url(../images/grid-paper-lines@2x.png);
+  background-image: -moz-radial-gradient(50% 89%, rgba(255,255,255,0.00) 21%, rgba(0,0,0,0.07) 89%), url(../images/grid-paper-lines@2x.png);
+  background-image: -webkit-radial-gradient(50% 89%, rgba(255,255,255,0.00) 21%, rgba(0,0,0,0.07) 89%), url(../images/grid-paper-lines@2x.png);
+  background-image: -ms-radial-gradient(50% 89%, rgba(255,255,255,0.00) 21%, rgba(0,0,0,0.07) 89%), url(../images/grid-paper-lines@2x.png);
+  background-image: radial-gradient(50% 89%, rgba(255,255,255,0.00) 21%, rgba(0,0,0,0.07) 89%), url(../images/grid-paper-lines@2x.png);
 }
 
-.actions-wrapper {
-  top: 0;
-}
-
-.playlist-info {
+.info-wrapper {
+  position: absolute;
   bottom: 0;
+  padding: 0 5%;
+  width: 90%;
+  z-index: 10;
+  color: #9B9B9B;
+  height: 2.5em;
+  line-height: 2em;
+
+  .venue {
+    left: 0.5em;
+    bottom: 0.5em;
+    padding-left: 2em;
+    background: url(../images/placemark@2x.png) no-repeat;
+    position: absolute;
+  }
+
+  .char-count {
+    right: 2.5em;
+    bottom: 0.5em;
+    position: absolute;
+  }
+
+  &.warning .char-count {
+    color: $warning;
+  }
+
+  .confirm {
+    right: 0.5em;
+    bottom: 0.5em;
+    position: absolute;
+    background: url(../images/confirm@2x.png) no-repeat 0 -5px;
+    width: 2em;
+    display: block;
+    text-indent: -9999999px;
+  }
+
+  &.disabled .confirm {
+    background-image: url(../images/confirm-grayed@2x.png);
+  }
 }
 
-body {
-  background: #fafafa;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  color: #333;
+.record-wrapper {
+
+  .info-wrapper {
+    bottom: 432px;
+  }
+
+  .recorder {
+    width: 100%;
+    height: 432px;
+    position: absolute;
+    z-index: 10;
+    bottom: 0;
+    background: #B7B7B7;
+    background-image: -o-radial-gradient(50% 139%, rgba(255,255,255,0.81) 0%, rgba(255,255,255,0.00) 100%);
+    background-image: -moz-radial-gradient(50% 139%, rgba(255,255,255,0.81) 0%, rgba(255,255,255,0.00) 100%);
+    background-image: -webkit-radial-gradient(50% 139%, rgba(255,255,255,0.81) 0%, rgba(255,255,255,0.00) 100%);
+    background-image: -ms-radial-gradient(50% 139%, rgba(255,255,255,0.81) 0%, rgba(255,255,255,0.00) 100%);
+    background-image: radial-gradient(50% 139%, rgba(255,255,255,0.81) 0%, rgba(255,255,255,0.00) 100%);
+    -moz-box-shadow:    0px -4px 0px 0px rgba(0,0,0,0.11);
+    -webkit-box-shadow: 0px -4px 0px 0px rgba(0,0,0,0.11);
+    box-shadow:         0px -4px 0px 0px rgba(0,0,0,0.11);
+  }
+
+  .rec {
+      background: url(../images/record-btn@2x.png) center center no-repeat;
+      display: block;
+
+    .remaining-time {
+      color: $recorder;
+      position: absolute;
+      width: 100%;
+      text-align: center;
+      margin-top: -1.5em;
+
+      &.disabled {
+        color: $disabled;
+      }
+
+      &.warning {
+        color: $warning
+      }
+    }
+
+    button {
+      border: 0;
+      text-indent: -9999999px;
+      background: transparent center center no-repeat;
+      height: 200px;
+      width: 200px;
+      margin: 120px auto 0;
+      padding: 0;
+      display: block;
+    }
+
+    div {
+
+      button.start-rec {
+        background-image: url(../images/start-rec@2x.png);
+      }
+
+      button.stop-rec {
+        background-image: url(../images/stop-rec@2x.png);
+      }
+
+      &.after-rec {
+        margin: 4px 70px;
+        min-height: 432px;
+        position: relative;
+
+        .remaining-time{
+          margin-top: 2.15em;
+        }
+
+        button {
+          float: left;
+          height: 90px;
+          width: 90px;
+          margin: 175px auto 0;
+          margin-right: 60px;
+
+          &.discard-rec {
+            background-image: url(../images/discard-rec@2x.png);
+          }
+
+          &.play-rec {
+            background-image: url(../images/play-rec@2x.png);
+            height: 200px;
+            width: 200px;
+            margin-top: 120px;
+          }
+
+          &.confirm-rec {
+            background-image: url(../images/confirm-rec@2x.png);
+            margin-right: 0;
+
+            &.disabled {
+              background-image: url(../images/confirm-rec-grayed@2x.png);
+            }
+          }
+        }
+      }
+    }
+  }
+
 }
