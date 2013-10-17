@@ -1,4 +1,3 @@
-
 <div class="map-wrapper" ng-show="state == 'mark'">
   <div class="instructions-wrapper">
 
@@ -15,8 +14,8 @@
 
   <leaflet center="center" markers="markers" defaults="defaults"></leaflet>
 
-  <div class="location-wrapper" ng-show="center.zoom >= 16 && !mapIsMoving">
-
+  <div class="location-wrapper" ng-show="center.zoom >= 16">
+    
     <a class="edit-place">Edit Place</a>
 
     <div class="venue">
@@ -28,14 +27,14 @@
 </div>
 
 <div class="form-wrapper" ng-show="state == 'form'">
-  <a class="cancel" ng-click="setState('mark')">X</a>
+  <a class="close" ng-click="setState('mark')">X</a>
 
-  <form ng-class="{error: 80 - text.length < 0}">
+  <form>
     <div>
-      <textarea rows="6" name="text" ng-model="text" placeholder="Write your command" required></textarea><br>
+      <textarea class="command-form" rows="6" name="text" ng-model="text" placeholder="Write your command" required></textarea><br>
     </div>
 
-    <div class="info-wrapper">
+    <div class="info-wrapper" ng-class="{disabled: 80 - text.length < 0 , warning: 70 - text.length < 0}">
       <div class="venue">
         {{markers.marker.venue.name | venueName}}
       </div>
@@ -45,8 +44,7 @@
       </div>
 
       <div>
-        <a ng-hide="80 - text.length < 0 || text.length == 0" ng-click="setState('record')">V</a>
-        <div ng-show="80 - text.length < 0">You must enter text below 80 chars</div>
+        <a class="confirm" ng-click="setState('record')">V</a>
       </div>
     </div>
   </form>
@@ -54,37 +52,19 @@
 
 <div class="record-wrapper" ng-show="['record', 'recording', 'recorded', 'playRecord', 'afterPlay'].indexOf(state) != -1">
 
-  <a title="Back to writing the text" class="cancel" ng-click="setState('form')">X</a>
-  <div>
-    Text: {{ text }}
+  <a title="Back to writing the text" class="close" ng-click="setState('form')">X</a>
+  <div class="command-form" ng-click="setState('form')">
+    {{ text }}
   </div>
 
-  <div>
-    Venue: {{markers.marker.venue.name | venueName}}
+  <div class="info-wrapper">
+    <div class="venue">
+      {{markers.marker.venue.name | venueName}}
+    </div>
   </div>
 
-  <div ng-show="markers.marker.venue.name">
-    <sound-recorder file="file" on-recorded="onRecorded()"></sound-recorder>
+  <div class="recorder" ng-show="markers.marker.venue.name">
+    <sound-recorder class="rec" file="file" on-recorded="onRecorded()"></sound-recorder>
   </div>
 
-</div>
-
-<div class="completed-wrapper" ng-show="state == 'completed'">
-  <div>Thanks</div>
-  <p>
-    Your command has been recorded.
-  </p>
-  <p>
-    now, go tell your friends!
-  </p>
-  <ul>
-    <li><a href="">Twitter</a></li>
-    <li><a href="">Facebook</a></li>
-    <li><a href="">Google+</a></li>
-    <li><a href="">Email</a></li>
-  </ul>
-
-  <div>
-    <a href="#/" ng-click="setState('mark')">X Close</a>
-  </div>
 </div>
