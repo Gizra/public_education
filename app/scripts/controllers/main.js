@@ -21,22 +21,26 @@ angular.module('publicEducationApp')
 
         data = data.data;
 
+        var markersFromServer = {};
+
         angular.forEach(data, function(marker, key) {
           //console.log('Redraw. ', !Marker.isProcessing());
-          if (!Marker.isProcessing()) {
             // Redraw.
-            marker.icon = L.divIcon({
-              iconSize: [63, 71],
-              // Set the icon according to the playlist count.
-              html: '<div class="marker-icon">' + marker.playList.length + '</div>',
-              // @todo: angular-leaflet fails without this one.
-              iconAnchor:   [31, 71]
-            });
-            $scope.markers[key] = marker;
-          }
+          marker.icon = L.divIcon({
+            iconSize: [63, 71],
+            // Set the icon according to the playlist count.
+            html: '<div class="marker-icon">' + marker.playList.length + '</div>',
+            // @todo: angular-leaflet fails without this one.
+            iconAnchor:   [31, 71]
+          });
 
-
+          markersFromServer[key] = marker;
         });
+
+        if (!Marker.isProcessing()) {
+          $scope.markers = markersFromServer;
+        }
+
       })
       // Refresh markers each minute, after data was received.
         .then($timeout(getMarkers, 5000).resolve);

@@ -105,10 +105,7 @@ angular.module('publicEducationApp')
 
           self.markerUpdated(data);
           // Check if isProcessing to selecting data to repain
-          // Processing
-          //if (!self.isProcessing()) {
-            self.data.markers = data;
-          //}
+          self.data.markers = data;
 
         });
       },
@@ -173,7 +170,6 @@ angular.module('publicEducationApp')
         if (hash) {
           this.data.lastProcessingHash = hash;
         }
-
       },
 
       /**
@@ -182,7 +178,7 @@ angular.module('publicEducationApp')
        */
       markerUpdated: function(markers) {
         var last = this.data.lastProcessingHash;
-        console.log(markers);
+        // console.log(markers);
         if (markers) {
           angular.forEach(markers, function(marker, key) {
             angular.forEach(marker.playList, function(record, key) {
