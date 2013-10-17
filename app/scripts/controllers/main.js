@@ -14,7 +14,6 @@ angular.module('publicEducationApp')
 
     $scope.markers = {};
 
-
     // Get markers.
     var getMarkers = function() {
       Marker.gettingMarkers().then(function(data) {
@@ -32,7 +31,7 @@ angular.module('publicEducationApp')
         });
       })
         // Refresh markers each minute, after data was received.
-        .then($timeout(getMarkers, 6000).resolve);
+        .then($timeout(getMarkers, 60000).resolve);
     };
 
     // Initial request get markers.

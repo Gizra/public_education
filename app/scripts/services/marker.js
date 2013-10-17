@@ -192,7 +192,7 @@ angular.module('publicEducationApp')
         // Set timeout to abort cache in case of server issues.
         $timeout(function() {
           self.data.lastProcessingHash = null;
-        }, 24000);
+        }, 600000);
 
         // Check if hash exist in markers
         if (markers && self.data.lastProcessingHash) {
