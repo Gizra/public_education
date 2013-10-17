@@ -1,0 +1,16 @@
+<h5>User markers</h5>
+<div class="container">
+  <ul>
+    <li ng-repeat="marker in markers">
+      <input type="checkbox"/>
+      <span>{{marker.name}} / location: {{marker.lat}}, {{marker.lng}} </span>
+      <ul>
+        <li ng-repeat="record in marker.playList">
+          <a href="#/admin/confirmation">delete</a>
+          <audio src="{{record.src}}" controls></audio>
+          <span> {{record.hash}} / {{record.text}} / location: {{record.lat}}, {{record.lng}}</span>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>

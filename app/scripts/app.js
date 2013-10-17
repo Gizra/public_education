@@ -25,6 +25,10 @@ angular.module('publicEducationApp', [
         templateUrl: 'views/login.html',
         controller: 'loginCtrl'
       })
+      .when('/admin', {
+        templateUrl: 'views/admin.html',
+        controller: 'AdminCtrl'
+      })
       .otherwise({
         redirectTo: '/'
       });
