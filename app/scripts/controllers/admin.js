@@ -16,4 +16,15 @@ angular.module('publicEducationApp')
 
     // Initial request get markers.
     getMarkers();
+
+    /**
+     * Function to delete an specific record
+     *
+     * @params markerId
+     */
+    $scope.delete = function(record) {
+      // Possible cache the record to avoid search
+      location.path('#/admin/confirmation/' + record._id);
+    }
+
   });

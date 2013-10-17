@@ -29,6 +29,10 @@ angular.module('publicEducationApp', [
         templateUrl: 'views/admin.html',
         controller: 'AdminCtrl'
       })
+      .when('/admin/delete', {
+        templateUrl: 'views/delete/:recordId',
+        controller: 'AdminCtrl'
+      })
       .otherwise({
         redirectTo: '/'
       });

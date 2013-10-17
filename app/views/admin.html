@@ -6,7 +6,7 @@
       <span>{{marker.name}} / location: {{marker.lat}}, {{marker.lng}} </span>
       <ul>
         <li ng-repeat="record in marker.playList">
-          <a href="#/admin/confirmation">delete</a>
+          <a href="delete(record)">delete</a>
           <audio src="{{record.src}}" controls></audio>
           <span> {{record.hash}} / {{record.text}} / location: {{record.lat}}, {{record.lng}}</span>
         </li>

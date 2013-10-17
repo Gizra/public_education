@@ -1,0 +1,7 @@
+<p>Are you sure?</p>
+
+  <div ng-repeat="record in records">
+    <a href="confirmDelete(record._id)">Yes</a> / <a href="cancel()">No</a>
+    <audio src="{{record.src}}" controls></audio>
+    <span> {{record.hash}} / {{record.text}} / location: {{record.lat}}, {{record.lng}}</span>
+  </div>
