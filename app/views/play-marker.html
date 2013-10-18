@@ -21,18 +21,22 @@
     <img ng-show="selectedMarker.playList[currentTrack].user.photo" ng-src="{{ selectedMarker.playList[currentTrack].user.photo }}" />
   </div>
   <div class="user-wrapper">
-    <div class="user-name">
-      User Name
-    </div>
     <div class="venue-name">
-      @{{ selectedMarker.name }}
+      {{ selectedMarker.name }}
+    </div>
+    <div class="user-name">
+      by User Name
     </div>
     <div class="action expand">
       V
     </div>
     <div class="recording-content">
+      <div class="play-rec">
+        <a href="#" class="rwd">previous</a>
+        <a href="#" class="play">re-play</a>
+        <a href="#" class="fwd">next</a>
+      </div>
       <p>You pro-Gezis, it would be fine if you just wander, you always lie down. <a class="edit-text" href="#">[edit]</a></p>
-      <div class="play-rec">re-play</div>
       <ul class="share-btns">
         <li><a href="#" class="share-tw">Share on Twitter</a></li>
         <li><a href="#" class="share-fb">Share on Facebook</a></li>

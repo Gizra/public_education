@@ -32,7 +32,7 @@
 
   <form>
     <div>
-      <textarea class="command-form" rows="6" name="text" ng-model="text" placeholder="Write your command" required></textarea><br>
+      <textarea class="command-form" rows="6" name="text" ng-model="text" placeholder="Write a command. Make it specific for this location." required></textarea><br>
     </div>
 
     <div class="info-wrapper" ng-class="{disabled: 80 - text.length < 0 , warning: 70 - text.length < 0}">
@@ -75,7 +75,7 @@
   <div>
     <a href="#/" ng-click="setState('mark')" class="close">X Close</a>
   </div>
-  
+
   <div class="confirmation-message">
     <p>
       <strong>Thanks!</strong>
