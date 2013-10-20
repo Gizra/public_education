@@ -3,7 +3,11 @@
 $instructions: #C5222D;
 $recorder: #218AFC;
 $disabled: #9B9B9B;
-$warning: #FF0000;
+$warning: #C5222D;
+$command-text: #1C299A;
+$gray-text: #9B9B9B;
+$dark-pane: rgba(0,0,0,0.7);
+$success: #429620;
 
 $iconSpritePath: "../images/glyphicons-halflings.png";
 $iconWhiteSpritePath: "../images/glyphicons-halflings-white.png";
@@ -24,6 +28,12 @@ body{
   (max-resolution: 192dpi) {
     /* Retina-specific stuff here */
     font-size: 2em;
+  }
+}
+
+@media handheld {
+  .leaflet-control-zoom {
+    display: none;
   }
 }
 
@@ -79,7 +89,7 @@ div.leaflet-div-icon {
   top: 0;
   z-index: 99;
   width: 100%;
-  background: rgba(0,0,0,0.7);
+  background: $dark-pane;
   color: $instructions;
   font-weight: bold;
 
@@ -103,7 +113,7 @@ div.leaflet-div-icon {
   top: 140px;
 }
 
-.location-wrapper {
+.bottom-bar {
   position: absolute;
   bottom: 0;
   z-index: 99;
@@ -112,21 +122,25 @@ div.leaflet-div-icon {
   color: white;
   height: 110px;
 
-  .confirm {
+  .action {
     position: absolute;
     bottom: 17px;
     right: 17px;
     display: block;
-    background: url(../images/confirm@2x.png);
     height: 70px;
     width: 70px;
     text-indent: -999999px;
   }
 
+  .confirm {
+    background: url(../images/confirm@2x.png);
+  }
+
   .venue {
     padding: 40px 80px 0 106px;
     overflow: hidden;
-    height: 1em;
+    height: 1.2em;
+    overflow: hidden;
   }
 
   .edit-place {
@@ -144,14 +158,14 @@ div.leaflet-div-icon {
 /*  Form  */
 
 .command-form {
-  font-size: 48px;
+  font-size: 1.5em;
   line-height: 90px;
-  color: #1C299A;
+  color: $command-text;
   font-family: $sans;
   position: absolute;
   width: 90%;
   height: 100%;
-  padding: 4.2% 5%;
+  padding: 0.55em 5%;
   border: 0;
   background: #FFFDF7;
   background-image: -o-radial-gradient(50% 89%, rgba(255,255,255,0.00) 21%, rgba(0,0,0,0.07) 89%), url(../images/grid-paper-lines@2x.png);
@@ -167,16 +181,18 @@ div.leaflet-div-icon {
   padding: 0 5%;
   width: 90%;
   z-index: 10;
-  color: #9B9B9B;
+  color: $gray-text;
   height: 2.5em;
   line-height: 2em;
 
   .venue {
     left: 0.5em;
     bottom: 0.5em;
-    padding-left: 2em;
+    padding: 0 4em 0 2em;
     background: url(../images/placemark@2x.png) no-repeat;
     position: absolute;
+    height: 2em;
+    overflow: hidden;
   }
 
   .char-count {
@@ -269,7 +285,7 @@ div.leaflet-div-icon {
       }
 
       &.after-rec {
-        margin: 4px 70px;
+        margin: 4px 0;
         min-height: 432px;
         position: relative;
 
@@ -278,26 +294,31 @@ div.leaflet-div-icon {
         }
 
         button {
-          float: left;
+          position: absolute;
           height: 90px;
           width: 90px;
-          margin: 175px auto 0;
-          margin-right: 60px;
+          top: 175px;
+          margin: 0;
 
           &.discard-rec {
             background-image: url(../images/discard-rec@2x.png);
+            left: 20%;
+            margin-left: -45px;
           }
 
           &.play-rec {
             background-image: url(../images/play-rec@2x.png);
             height: 200px;
             width: 200px;
-            margin-top: 120px;
+            top: 120px;
+            left: 50%;
+            margin-left: -100px;
           }
 
           &.confirm-rec {
             background-image: url(../images/confirm-rec@2x.png);
-            margin-right: 0;
+            right: 20%;
+            margin-right: -45px;
 
             &.disabled {
               background-image: url(../images/confirm-rec-grayed@2x.png);
@@ -307,5 +328,205 @@ div.leaflet-div-icon {
       }
     }
   }
-
 }
+
+.completed-wrapper {
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.7);
+  margin: 2em 10%;
+  height: 20em;
+  width: 80%;
+  position: relative;
+
+  .confirmation-message {
+    padding: 7em 5% 0;
+    background: url(../images/confirmation@2x.png) center 5em no-repeat;
+    text-align: center;
+    color: $gray-text;
+
+    strong {
+      color: $success;
+    }
+  }
+}
+
+/* Play mode */
+
+.dark-overlay{
+  display: block;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  top: 0;
+}
+
+.placemark-big {
+  background-image: url(../images/placemark-big@2x.png);
+  position: absolute;
+  width: 442px;
+  height: 511px;
+  top: 50%;
+  left: 50%;
+  margin: -255px 0 0 -221px;
+}
+
+.playlist-info {
+  position: absolute;
+  bottom: 0;
+  font-size: 1em;
+  line-height: 1em;
+  z-index: 10000;
+
+  .user-wrapper {
+    //height: 80px;
+  }
+
+  .profie-pic {
+    height: 2em;
+    width: 2em;
+    border-radius: 2em;
+    float: left;
+    margin: 0.6em;
+    border: 2px solid #9B9B9B;
+  }
+
+  .venue-name {
+    font-weight: 700;
+    margin-top: 0.7em;
+    height: 1em;
+    margin-right: 2.5em;
+    overflow: hidden;
+  }
+
+  .user-name {
+    //margin: 0.5em;
+    color: $gray-text;
+    height: 1em;
+    margin-right: 2.5em;
+    overflow: hidden;
+  }
+
+  .expand {
+    background: url(../images/expand@2x.png);
+  }
+}
+
+.recording-content {
+  background: #0d0d0d;
+  height: 100%;
+  padding: 1em 5% 6.5em;
+  position: relative;
+  border-top: $gray-text 2px solid;
+  margin-top: 0.75em;
+
+  p {
+    //margin: 0;
+    //font-size: 1em;
+    line-height: 2em;
+  }
+
+  .edit-text {
+    font-size: 0.75em;
+    color: $gray-text;
+  }
+
+  .play-rec {
+    margin: 0.5em auto 1.5em ;
+    height: 4em;
+    position: relative;;
+
+    a{
+      height: 2em;
+      width: 2em;
+      display: block;
+      text-indent: -999999px;
+      border-radius: 4em;
+      border: 2px solid #218afc;
+      position: absolute;
+      margin-top: 1em;
+      padding: 0.5em;
+    }
+
+    .rwd {
+      background: url(../images/rwd@2x.png) center center no-repeat;
+      left: 15%;
+      margin-left: -1.25em;
+    }
+
+    .play {
+      height: 4em;
+      width: 4em;
+      background: url(../images/play-rec@2x.png) center center no-repeat;
+      left: 50%;
+      margin-left: -2.56em;
+      margin-top: 0;
+    }
+
+    .fwd {
+      background: url(../images/fwd@2x.png) center center no-repeat;
+      right: 15%;
+      margin-right: -1.25em;
+    }
+  }
+
+  .flag {
+    text-decoration: none;
+    position: absolute;
+    right: 0.25em;
+    bottom: 0.25em;
+    padding-right: 2em;
+    background: url(../images/flag@2x.png) no-repeat right top;
+    display: block;
+    height: 2em;
+    line-height: 2em;
+    color: $warning;
+  }
+}
+
+.share-btns {
+  margin: 0 auto;
+  width: 340px;
+  padding: 0;
+
+  li {
+    list-style: none;
+    margin: none;
+    float: left;
+    margin-right: 20px;
+
+    &:last-child {
+      margin-right: 0;
+    }
+
+    a {
+      display: block;
+      width: 70px;
+      height: 70px;
+      text-indent: -999999px;
+
+      &.share-tw {
+        background: url(../images/share-tw@2x.png);
+      }
+
+      &.share-fb {
+        background: url(../images/share-fb@2x.png);
+      }
+
+      &.share-email {
+        background: url(../images/share-email@2x.png);
+      }
+
+      &.share-link {
+        background: url(../images/share-link@2x.png);
+      }
+    }
+  }
+}
+
+
+
+
+
+
+

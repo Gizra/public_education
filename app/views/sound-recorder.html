@@ -4,12 +4,12 @@
 </div>
 
 <div ng-show="state == 'recording'">
-  <div class="remaining-time" ng-show="counter > 0" ng-class="{warning: counter < 2}">{{ counter }}</div>
+  <div class="remaining-time" ng-show="counter > 0" ng-class="{warning: counter < 2}">00:0{{ counter }}</div>
   <button ng-click="stopRecord()" class="stop-rec">Stop record</button>
 </div>
 
 <div ng-show="['afterRecord', 'playRecord', 'afterPlay'].indexOf(state) != -1" class="after-rec">
-  <div class="remaining-time">{{ counter }}</div>
+  <div class="remaining-time">00:0{{ counter }}</div>
   <button ng-click="state = 'beforeRecord'" class="discard-rec">Discard</button>
 
   <button ng-click="playRecord()" class="play-rec">Play</button>
