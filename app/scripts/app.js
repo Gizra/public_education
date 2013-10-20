@@ -30,7 +30,7 @@ angular.module('publicEducationApp', [
         controller: 'AdminCtrl'
       })
       .when('/admin/delete', {
-        templateUrl: 'views/delete/:recordId',
+        templateUrl: 'views/delete-confirmation.html',
         controller: 'AdminCtrl'
       })
       .otherwise({

@@ -1,16 +1,31 @@
-<h5>User markers</h5>
-<div class="container">
-  <ul>
-    <li ng-repeat="marker in markers">
-      <input type="checkbox"/>
-      <span>{{marker.name}} / location: {{marker.lat}}, {{marker.lng}} </span>
-      <ul>
-        <li ng-repeat="record in marker.playList">
-          <a href="delete(record)">delete</a>
-          <audio src="{{record.src}}" controls></audio>
-          <span> {{record.hash}} / {{record.text}} / location: {{record.lat}}, {{record.lng}}</span>
-        </li>
-      </ul>
-    </li>
-  </ul>
+<div ng-show="state == 'markers'">
+  <h5>User markers</h5>
+  <div class="container">
+    <ul>
+      <li ng-repeat="marker in markers">
+        <input type="checkbox"/>
+        <span>{{marker.name}}</span>
+        <ul>
+          <li ng-repeat="record in marker.playList">
+            <a ng-click="delete(record)" href>delete</a>
+            <audio src="{{record.src}}" controls></audio>
+            <span> {{record.text}} / location: {{record.lat}}, {{record.lng}}</span>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div ng-show="state == 'delete'">
+  <p>Delete record</p>
+  <form action="">
+    <div ng-repeat="record in selected">
+      <audio src="{{record.src}}" controls></audio>
+      <span> {{record.text}} / location: {{record.lat}}, {{record.lng}}</span>
+    </div>
+    <p>Are you sure?</p>
+    <button ng-click="confirmDelete(record._id)">Yes</button>
+    <button ng-click="cancel()">No</button>
+  </form>
 </div>

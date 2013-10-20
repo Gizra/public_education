@@ -11,10 +11,12 @@ angular.module('publicEducationApp')
        * data.marker: List of markers in cache
        * data.lastProcessing: A hash of the last marker added, during server
        *                      processing set a valid hash md5 otherwise null.
+       * data.selected: Markers or Records in cache to performance actions.
        */
       data: {
         markers: null,
-        lastProcessingHash: null
+        lastProcessingHash: null,
+        selected: null
       },
 
       /**
@@ -206,6 +208,7 @@ angular.module('publicEducationApp')
 
         return (self.data.lastProcessingHash) ? true : false;
       },
+
       /**
        * Set the a status property to know when the marker was processed by the server.
        *
@@ -214,6 +217,13 @@ angular.module('publicEducationApp')
        */
       setProcessing: function(hash) {
         this.data.lastProcessingHash = hash;
+      },
+
+      /**
+       * Delete a specific record
+       */
+      deleteRecord: function() {
+
       }
     };
   });

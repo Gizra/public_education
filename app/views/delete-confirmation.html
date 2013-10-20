@@ -1,7 +1,12 @@
-<p>Are you sure?</p>
-
-  <div ng-repeat="record in records">
-    <a href="confirmDelete(record._id)">Yes</a> / <a href="cancel()">No</a>
+<p>Delete record</p>
+{{recordsSelected}}
+<form action="">
+  <div ng-repeat="record in recordsSelected">
     <audio src="{{record.src}}" controls></audio>
-    <span> {{record.hash}} / {{record.text}} / location: {{record.lat}}, {{record.lng}}</span>
+    <span> {{record.text}} / location: {{record.lat}}, {{record.lng}}</span>
   </div>
+  <p>Are you sure?</p>
+  <button ng-click="confirmDelete(record)">Yes</button>
+  <button ng-click="cancel()">No</button>
+</form>
+
