@@ -15,7 +15,7 @@
 
   <leaflet center="center" markers="markers" defaults="defaults"></leaflet>
 
-  <div class="location-wrapper" ng-show="center.zoom >= 16 && !mapIsMoving">
+  <div class="location-wrapper bottom-bar" ng-show="center.zoom >= 16 && !mapIsMoving">
 
     <a class="edit-place">Edit Place</a>
 
@@ -23,7 +23,7 @@
       {{markers.marker.venue.name | venueName}}
     </div>
 
-    <a class="confirm" ng-show="markers.marker.venue.name.length" ng-click="setState('form')">V</a>
+    <a class="action confirm" ng-show="markers.marker.venue.name.length" ng-click="setState('form')">V</a>
   </div>
 </div>
 
@@ -32,7 +32,7 @@
 
   <form>
     <div>
-      <textarea class="command-form" rows="6" name="text" ng-model="text" placeholder="Write your command" required></textarea><br>
+      <textarea class="command-form" rows="6" name="text" ng-model="text" placeholder="Write a command. Make it specific for this location." required></textarea><br>
     </div>
 
     <div class="info-wrapper" ng-class="{disabled: 80 - text.length < 0 , warning: 70 - text.length < 0}">
@@ -45,7 +45,7 @@
       </div>
 
       <div>
-        <a class="confirm" ng-click="setState('record')">V</a>
+        <a class="action confirm" ng-click="setState('record')">V</a>
       </div>
     </div>
   </form>
@@ -71,21 +71,26 @@
 </div>
 
 <div class="completed-wrapper" ng-show="state == 'completed'">
-  <div>Thanks</div>
-  <p>
-    Your command has been recorded.
-  </p>
-  <p>
-    now, go tell your friends!
-  </p>
-  <ul>
-    <li><a href="">Twitter</a></li>
-    <li><a href="">Facebook</a></li>
-    <li><a href="">Google+</a></li>
-    <li><a href="">Email</a></li>
-  </ul>
 
   <div>
-    <a href="#/" ng-click="setState('mark')">X Close</a>
+    <a href="#/" ng-click="setState('mark')" class="close">X Close</a>
   </div>
+
+  <div class="confirmation-message">
+    <p>
+      <strong>Thanks!</strong>
+    </p>
+    <p>
+      Your command has been recorded.
+    </p>
+    <p>
+      now, go tell your friends!
+    </p>
+  </div>
+  <ul class="share-btns">
+    <li><a href="#" class="share-tw">Share on Twitter</a></li>
+    <li><a href="#" class="share-fb">Share on Facebook</a></li>
+    <li><a href="#" class="share-email">Send as in an email</a></li>
+    <li><a href="#" class="share-link">Link to this command</a></li>
+  </ul>
 </div>
