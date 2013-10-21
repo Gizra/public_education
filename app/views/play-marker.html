@@ -27,9 +27,7 @@
     <div class="user-name">
      {{ user.name }}
     </div>
-    <div class="action expand" ng-click="toggleEditMode()">
-      V
-    </div>
+    <div class="action expand" ng-click="toggleEditMode()"> </div>
     <div class="recording-content">
       <div class="play-rec">
         <play-marker playlist="playList"></play-marker>
@@ -37,7 +35,7 @@
         <a href="#" class="play">re-play</a>
         <a href="#" class="fwd">next</a>
       </div>
-      <p> {{ selectedMarker.currentRecord.text }}</p>
+      <p class="record-text"> {{ selectedMarker.currentRecord.text }}</p>
       <ul class="share-btns">
         <li><a ng-click="shareLink('twitter')" class="share-tw">Share on Twitter</a></li>
         <li><a ng-click="shareLink('facebook')" class="share-fb">Share on Facebook</a></li>

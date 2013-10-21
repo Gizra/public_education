@@ -17,12 +17,13 @@ angular.module('publicEducationApp')
     $scope.playList = [];
     $scope.currentTrack = 0;
 
-    // Default values, user
+    // Default values, user.
     $scope.user = {
-      name:"Anonymous"
+      name:"Anonymous",
+      email: ''
     };
 
-    // Edit mode.
+    // Default values edit mode ng-class.
     $scope.classPlayerMode = 'playlist-info bottom-bar';
     $scope.editMode = false;
 
@@ -54,8 +55,6 @@ angular.module('publicEducationApp')
         if (track <= $scope.selectedMarker.playList.length) {
           $scope.playItem($scope.selectedMarker.playList[track].src);
         }
-
-        console.log($scope.selectedMarker.currentRecord);
       });
     });
 
@@ -91,11 +90,11 @@ angular.module('publicEducationApp')
     });
 
     /**
-     * Toggle between edit anf play mode
+     * Toggle between edit anf play mode.
      */
     $scope.toggleEditMode = function() {
       $scope.editMode = !$scope.editMode;
-      $scope.classPlayerMode = (!$scope.editMode) ? 'playlist-info bottom-bar' : 'playlist-info';
+      $scope.classPlayerMode = (!$scope.editMode) ? 'playlist-info bottom-bar' : 'playlist-info edit-mode';
     }
 
     /**
@@ -114,10 +113,15 @@ angular.module('publicEducationApp')
           + '&p[images][0]=&p[title]=Public%20Education&p[summary]=' + text;
       }
       else if (method === 'email') {
-        url = '';
+        url = 'mailto:'
+          + $scope.user.email
+          + '?body='
+          + text
+          + ' - '
+          + encodeURIComponent($location.absUrl());
       }
       else if (method === 'link') {
-        url = '';
+        url = $location.absUrl();
       }
 
       $window.open(url, method, 'width=626,height=445');
