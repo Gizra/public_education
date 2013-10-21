@@ -19,8 +19,7 @@ angular.module('publicEducationApp')
 
     // Default values, user.
     $scope.user = {
-      name:"Anonymous",
-      email: ''
+      name:"Anonymous"
     };
 
     // Default values edit mode ng-class.
@@ -49,7 +48,7 @@ angular.module('publicEducationApp')
       }
 
       $scope.$watch('currentTrack', function(track) {
-        // Populate info of current record in the scope
+        // Populate info of current record in the scope.
         $scope.selectedMarker.currentRecord = $scope.selectedMarker.playList[track];
 
         if (track <= $scope.selectedMarker.playList.length) {
@@ -98,7 +97,7 @@ angular.module('publicEducationApp')
     }
 
     /**
-     * Share link to twitter, facebook.
+     * Share link to twitter, facebook, email and link.
      */
     $scope.shareLink = function(method) {
       var url;
@@ -110,12 +109,10 @@ angular.module('publicEducationApp')
       else if (method === 'facebook') {
         url = 'http://www.facebook.com/sharer/sharer.php?s=100&p[url]='
           + encodeURIComponent($location.absUrl())
-          + '&p[images][0]=&p[title]=Public%20Education&p[summary]=' + text;
+          + '&p[title]=Public%20Education&p[summary]=' + text;
       }
       else if (method === 'email') {
-        url = 'mailto:'
-          + $scope.user.email
-          + '?body='
+        url = 'mailto:?body='
           + text
           + ' - '
           + encodeURIComponent($location.absUrl());
