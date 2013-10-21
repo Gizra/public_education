@@ -23,7 +23,6 @@ angular.module('publicEducationApp')
     };
 
     // Default values edit mode ng-class.
-    $scope.classPlayerMode = 'playlist-info bottom-bar';
     $scope.editMode = false;
     $scope.actualPage = $location.absUrl();
 
@@ -94,7 +93,6 @@ angular.module('publicEducationApp')
      */
     $scope.toggleEditMode = function() {
       $scope.editMode = !$scope.editMode;
-      $scope.classPlayerMode = (!$scope.editMode) ? 'playlist-info bottom-bar' : 'playlist-info edit-mode';
     };
 
     /**
