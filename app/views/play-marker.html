@@ -16,7 +16,7 @@
   <div class="placemark-big"></div>
 </div>
 
-<div class="playlist-info bottom-bar">
+<div ng-class="classPlayerMode">
   <div class="profie-pic">
     <img ng-show="selectedMarker.playList[currentTrack].user.photo" ng-src="{{ selectedMarker.playList[currentTrack].user.photo }}" />
   </div>
@@ -25,23 +25,24 @@
       {{ selectedMarker.name }}
     </div>
     <div class="user-name">
-      by User Name
+     {{ user.name }}
     </div>
-    <div class="action expand">
+    <div class="action expand" ng-click="toggleEditMode()">
       V
     </div>
     <div class="recording-content">
       <div class="play-rec">
+        <play-marker playlist="playList"></play-marker>
         <a href="#" class="rwd">previous</a>
         <a href="#" class="play">re-play</a>
         <a href="#" class="fwd">next</a>
       </div>
-      <p>You pro-Gezis, it would be fine if you just wander, you always lie down. <a class="edit-text" href="#">[edit]</a></p>
+      <p> {{ selectedMarker.currentRecord.text }}</p>
       <ul class="share-btns">
-        <li><a href="#" class="share-tw">Share on Twitter</a></li>
-        <li><a href="#" class="share-fb">Share on Facebook</a></li>
-        <li><a href="#" class="share-email">Send as in an email</a></li>
-        <li><a href="#" class="share-link">Link to this command</a></li>
+        <li><a ng-click="shareLink('twitter')" class="share-tw">Share on Twitter</a></li>
+        <li><a ng-click="shareLink('facebook')" class="share-fb">Share on Facebook</a></li>
+        <li><a ng-click="shareLink('email')" class="share-email">Send as in an email</a></li>
+        <li><a ng-click="shareLink('link')" class="share-link">Link to this command</a></li>
       </ul>
       <a class="flag" href="#" title="flag this recording">Flag</a>
     </div>

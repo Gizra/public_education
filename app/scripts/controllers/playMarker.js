@@ -1,12 +1,13 @@
 'use strict';
 
 angular.module('publicEducationApp')
-  .controller('PlayMarkerCtrl', function ($scope, $routeParams, $location, storage, Marker, Leaflet, Phonegap) {
+  .controller('PlayMarkerCtrl', function ($scope, $routeParams, $location, storage, Marker, Leaflet, Phonegap, $window) {
 
     $scope.venueId = $routeParams.venueId;
       angular.extend($scope, {
         selectedMarker: {
-          playList: []
+          playList: [],
+          currentRecord: null
         }
     });
 
@@ -16,8 +17,18 @@ angular.module('publicEducationApp')
     $scope.playList = [];
     $scope.currentTrack = 0;
 
+    // Default values, user
+    $scope.user = {
+      name:"Anonymous"
+    };
+
+    // Edit mode.
+    $scope.classPlayerMode = 'playlist-info bottom-bar';
+    $scope.editMode = false;
+
+
     Marker.gettingMarkers().then(function(data) {
-      $scope.markers = data.data;
+      $scope.markers = data;
 
       if (!$scope.markers[$scope.venueId]) {
         // Redirect to homepage on wrong venue ID.
@@ -37,9 +48,14 @@ angular.module('publicEducationApp')
       }
 
       $scope.$watch('currentTrack', function(track) {
+        // Populate info of current record in the scope
+        $scope.selectedMarker.currentRecord = $scope.selectedMarker.playList[track];
+
         if (track <= $scope.selectedMarker.playList.length) {
           $scope.playItem($scope.selectedMarker.playList[track].src);
         }
+
+        console.log($scope.selectedMarker.currentRecord);
       });
     });
 
@@ -74,4 +90,36 @@ angular.module('publicEducationApp')
 
     });
 
+    /**
+     * Toggle between edit anf play mode
+     */
+    $scope.toggleEditMode = function() {
+      $scope.editMode = !$scope.editMode;
+      $scope.classPlayerMode = (!$scope.editMode) ? 'playlist-info bottom-bar' : 'playlist-info';
+    }
+
+    /**
+     * Share link to twitter, facebook.
+     */
+    $scope.shareLink = function(method) {
+      var url;
+      var text = $scope.selectedMarker.currentRecord.text + '-' + encodeURIComponent($location.absUrl());
+
+      if (method === 'twitter') {
+        url = 'https://twitter.com/share?text='+text;
+      }
+      else if (method === 'facebook') {
+        url = 'http://www.facebook.com/sharer/sharer.php?s=100&p[url]='
+          + encodeURIComponent($location.absUrl())
+          + '&p[images][0]=&p[title]=Public%20Education&p[summary]=' + text;
+      }
+      else if (method === 'email') {
+        url = '';
+      }
+      else if (method === 'link') {
+        url = '';
+      }
+
+      $window.open(url, method, 'width=626,height=445');
+    }
   });
