@@ -15,7 +15,7 @@ angular.module('publicEducationApp')
     $scope.center = Leaflet.getCenter();
     $scope.selectedMarker = {};
     $scope.playList = [];
-    $scope.currentTrack = 0;
+
 
     // Default values of a user.
     $scope.user = {
@@ -47,30 +47,7 @@ angular.module('publicEducationApp')
         zoom: 16
       };
 
-      $scope.$watch('currentTrack', function(track) {
-        // Populate info of current record in the scope.
-        $scope.selectedMarker.currentRecord = $scope.selectedMarker.playList[track];
-
-        if (track <= $scope.selectedMarker.playList.length) {
-          $scope.playItem($scope.selectedMarker.playList[track].src);
-        }
-      });
     });
-
-    /**
-     * Play an item.
-     *
-     * @param src
-     */
-    $scope.playItem = function(src) {
-      var mediaPlayer = Phonegap.getMedia(src, function onSuccess() {
-        // If play was successful, skip to the next track.
-        $scope.$apply(function () {
-          ++$scope.currentTrack;
-        });
-      });
-      mediaPlayer.play();
-    };
 
     angular.extend($scope, Leaflet.getDefaults());
 

@@ -6,11 +6,64 @@ angular.module('publicEducationApp')
       templateUrl: 'scripts/directives/audioPlayer/audioPlayer.html',
       restrict: 'E',
       scope: {
-        playlist: '=playlist'
+        playList: '=playList',
+        currentRecord: '=currentRecord'
       },
-      link: function postLink(scope, element, attrs) {
+      link: function postLink(scope) {
 
         scope.isPhoneGap = Phonegap.isMobile.any();
+
+        scope.currentTrack = 0;
+
+        scope.previous = function() {
+          if (scope.currentTrack > 0) {
+            --scope.currentTrack;
+          }
+        };
+
+        scope.next = function() {
+          if (scope.currentTrack < scope.playList.length) {
+            ++scope.currentTrack;
+          }
+        };
+
+        scope.playPauseHtml5 = function() {
+          scope.playerControl.playPause();
+        };
+
+        /**
+         * Play an item in PhoneGap devices.
+         *
+         * @param src
+         */
+        scope.playPhoneGap = function(src) {
+          scope.mediaPlayer = Phonegap.getMedia(src, function onSuccess() {
+            // If play was successful, skip to the next track.
+            scope.$apply(function () {
+              ++scope.currentTrack;
+            });
+          });
+          scope.mediaPlayer.play();
+        };
+
+        scope.$watch('currentTrack', function(track) {
+          // Populate info of current record in the scope.
+          if (!scope.playList.length) {
+            return;
+          }
+
+          scope.currentRecord = scope.playList[track];
+
+          if (scope.isPhoneGap) {
+            scope.playPhoneGap(scope.playList[track].src);
+          }
+        });
+
+
+        scope.$watch('playerControl.currentTrack', function(currentTrack) {
+          // Change current track by the HTML5 <audio> tag.
+          scope.currentTrack = currentTrack;
+        });
       }
     };
   });
