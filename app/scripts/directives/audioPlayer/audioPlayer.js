@@ -22,7 +22,7 @@ angular.module('publicEducationApp')
         };
 
         scope.next = function() {
-          if (scope.currentTrack < scope.playList.length) {
+          if (scope.currentTrack < scope.playList.length - 1) {
             ++scope.currentTrack;
           }
         };
@@ -46,7 +46,14 @@ angular.module('publicEducationApp')
           scope.mediaPlayer.play();
         };
 
-        scope.$watch('currentTrack', function(track) {
+        /**
+         * Pause an item in PhoneGap devies.
+         */
+        scope.pausePhoneGap = function() {
+          scope.mediaPlayer.pause();
+        };
+
+        scope.$watch('currentTrack', function(track, oldTrack) {
           // Populate info of current record in the scope.
           if (!scope.playList.length) {
             return;
@@ -57,12 +64,22 @@ angular.module('publicEducationApp')
           if (scope.isPhoneGap) {
             scope.playPhoneGap(scope.playList[track].src);
           }
+          else if (oldTrack > 0) {
+            // HTML <audio> tag.
+            if (oldTrack < track) {
+              scope.playerControl.next();
+            }
+            else {
+              scope.playerControl.prev();
+            }
+
+          }
         });
 
 
         scope.$watch('playerControl.currentTrack', function(currentTrack) {
           // Change current track by the HTML5 <audio> tag.
-          scope.currentTrack = currentTrack;
+          scope.currentTrack = currentTrack - 1;
         });
       }
     };
