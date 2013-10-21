@@ -25,6 +25,7 @@ angular.module('publicEducationApp')
     // Default values edit mode ng-class.
     $scope.classPlayerMode = 'playlist-info bottom-bar';
     $scope.editMode = false;
+    $scope.actualPage = $location.absUrl();
 
 
     Marker.gettingMarkers().then(function(data) {
@@ -117,10 +118,9 @@ angular.module('publicEducationApp')
           + ' - '
           + encodeURIComponent($location.absUrl());
       }
-      else if (method === 'link') {
-        url = $location.absUrl();
-      }
 
       $window.open(url, method, 'width=626,height=445');
     }
+
+
   });
