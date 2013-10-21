@@ -98,7 +98,7 @@ angular.module('publicEducationApp')
     }
 
     /**
-     * Share link to twitter, facebook, email and link.
+     * Share link to twitter, facebook, email.
      */
     $scope.shareLink = function(method) {
       var url;
