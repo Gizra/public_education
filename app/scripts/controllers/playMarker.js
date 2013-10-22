@@ -25,8 +25,6 @@ angular.module('publicEducationApp')
     // Default values edit mode ng-class.
     $scope.classPlayerMode = 'playlist-info bottom-bar';
     $scope.editMode = false;
-    $scope.actualPage = $location.absUrl();
-
 
     Marker.gettingMarkers().then(function(data) {
       $scope.markers = data;
@@ -96,26 +94,5 @@ angular.module('publicEducationApp')
       $scope.editMode = !$scope.editMode;
       $scope.classPlayerMode = (!$scope.editMode) ? 'playlist-info bottom-bar' : 'playlist-info edit-mode';
     };
-
-    /**
-     * Share link to twitter, facebook, email.
-     */
-    $scope.shareLink = function(method) {
-      var url;
-      var text = $scope.selectedMarker.currentRecord.text + '-' + encodeURIComponent($location.absUrl());
-
-      if (method === 'twitter') {
-        url = 'https://twitter.com/share?text='+text;
-      }
-      else if (method === 'facebook') {
-        url = 'http://www.facebook.com/sharer/sharer.php?s=100&p[url]=' + encodeURIComponent($location.absUrl()) + '&p[title]=Public%20Education&p[summary]=' + text;
-      }
-      else if (method === 'email') {
-        url = 'mailto:?body=' + text + ' - ' + encodeURIComponent($location.absUrl());
-      }
-
-      $window.open(url, method, 'width=626,height=445');
-    };
-
 
   });
