@@ -12,8 +12,10 @@ angular.module('publicEducationApp')
       link: function postLink(scope) {
 
         scope.isPhoneGap = Phonegap.isMobile.any();
-
         scope.currentTrack = 0;
+
+        //alert(Phonegap.isMobile.any());
+        console.log('isMobile:', Phonegap.isMobile.any());
 
         scope.previous = function() {
           if (scope.currentTrack > 0) {
@@ -34,10 +36,10 @@ angular.module('publicEducationApp')
         /**
          * Play an item in PhoneGap devices.
          *
-         * @param src
          */
-        scope.playPhoneGap = function(src) {
-          scope.mediaPlayer = Phonegap.getMedia(src, function onSuccess() {
+        scope.playPhoneGap = function() {
+
+          scope.mediaPlayer = Phonegap.getMedia(function onSuccess() {
             // If play was successful, skip to the next track.
             scope.$apply(function () {
               ++scope.currentTrack;
@@ -47,11 +49,28 @@ angular.module('publicEducationApp')
         };
 
         /**
+         * Play previous item in PhoneGap devices
+         */
+        scope.previousPhoneGap = function() {
+
+          return;
+        };
+
+        /**
+         * Play next item in PhoneGap devices
+         */
+        scope.nextPhoneGap = function() {
+
+          return;
+        };
+
+        /**
          * Pause an item in PhoneGap devies.
          */
         scope.pausePhoneGap = function() {
           scope.mediaPlayer.pause();
         };
+
 
         scope.$watch('currentTrack', function(track, oldTrack) {
           // Populate info of current record in the scope.
