@@ -1,7 +1,3 @@
-<div class="track-info">
-  Track {{ currentTrack + 1 }} / {{ playList.length }}
-</div>
-
 <div ng-show="!isPhoneGap" class="play-rec">
   <audio data-player-control="playerControl" playlist="playList" audio-player autoplay="true"></audio>
   <a href class="rwd" ng-click="previous()">previous</a>
@@ -15,4 +11,6 @@
   <a href class="fwd" ng-click="nextPhoneGap()">next</a>
 </div>
 
-<p class="record-text"> {{ currentRecord.text }} </p>
+<div class="track-info">
+  Track {{ currentTrack + 1 }} / {{ playList.length }}
+</div>
