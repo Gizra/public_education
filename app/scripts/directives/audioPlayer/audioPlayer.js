@@ -13,29 +13,19 @@ angular.module('publicEducationApp')
 
         scope.isPhoneGap = Phonegap.isMobile.any();
         scope.currentTrack = 0;
-        scope.playList = scope.playList || [];
 
-        /**
-         * Play a previous item in HTML5.
-         */
         scope.previous = function() {
           if (scope.currentTrack > 0) {
             --scope.currentTrack;
           }
         };
 
-        /**
-         * Play a next item in HTML5.
-         */
         scope.next = function() {
           if (scope.currentTrack < scope.playList.length - 1) {
             ++scope.currentTrack;
           }
         };
 
-        /**
-         * Play an item in HTML5.
-         */
         scope.playPauseHtml5 = function() {
           scope.playerControl.playPause();
         };
@@ -45,16 +35,15 @@ angular.module('publicEducationApp')
          *
          * @param src
          */
-          console.log('src:', src);
-          scope.mediaPlayer = Phonegap.getMedia(src, function onSuccess() {
         scope.playPhoneGap = function() {
+          console.log('playPhoneGap');
+          console.log(scope.currentRecord);
 
           scope.mediaPlayer = Phonegap.getMedia(scope.currentRecord.src, function onSuccess() {
             // If play was successful, skip to the next track, if it exists.
             scope.$apply(function () {
               if (scope.currentTrack +1 < scope.playList.length) {
                 ++scope.currentTrack;
-                console.log('Track is now ' + scope.currentTrack);
               }
             });
           });
@@ -67,9 +56,12 @@ angular.module('publicEducationApp')
             return;
           }
 
+          console.log('Track is: ' + track);
           scope.currentRecord = scope.playList[track];
 
+
           if (scope.isPhoneGap) {
+            console.log('auto play.');
             scope.playPhoneGap();
           }
           else if (oldTrack > 0) {
@@ -80,14 +72,17 @@ angular.module('publicEducationApp')
             else {
               scope.playerControl.prev();
             }
+
           }
         });
 
 
-        scope.$watch('playerControl.currentTrack', function(currentTrack) {
-          // Change current track by the HTML5 <audio> tag.
-          scope.currentTrack = currentTrack - 1;
-        });
+        if (!scope.isPhoneGap) {
+          scope.$watch('playerControl.currentTrack', function(currentTrack) {
+            // Change current track by the HTML5 <audio> tag.
+            scope.currentTrack = currentTrack - 1;
+          });
+        }
       }
     };
   });
