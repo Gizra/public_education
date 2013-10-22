@@ -29,8 +29,7 @@
     </div>
     <div class="action expand" ng-click="toggleEditMode()"> </div>
     <div class="recording-content">
-      <audio-player play-list="playList" current-record="selectedMarker.currentRecord"></audio-player>
-      <p class="record-text"> {{ selectedMarker.currentRecord.text }}</p>
+      <audio-player play-list="playList" current-record="selectedMarker.currentRecord" list="selectedMarker.playList"></audio-player>
       <ul class="share-btns">
         <li><a ng-click="shareLink('twitter')" class="share-tw">Share on Twitter</a></li>
         <li><a ng-click="shareLink('facebook')" class="share-fb">Share on Facebook</a></li>
