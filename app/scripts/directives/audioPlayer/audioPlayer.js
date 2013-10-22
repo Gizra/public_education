@@ -42,11 +42,17 @@ angular.module('publicEducationApp')
 
         /**
          * Play an item in PhoneGap devices.
+         *
+         * @param src
          */
         scope.playPhoneGap = function(src) {
           console.log('src:', src);
           scope.mediaPlayer = Phonegap.getMedia(src, function onSuccess() {
 
+            // If play was successful, skip to the next track.
+            scope.$apply(function () {
+              ++scope.currentTrack;
+            });
           });
           scope.mediaPlayer.play();
         };
@@ -77,7 +83,7 @@ angular.module('publicEducationApp')
 
         scope.$watch('currentTrack', function(track, oldTrack) {
           // Populate info of current record in the scope.
-          if (!angular.isDefined(scope.playList)) {
+          if (!scope.playList.length) {
             return;
           }
 
