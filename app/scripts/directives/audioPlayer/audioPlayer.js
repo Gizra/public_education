@@ -45,41 +45,21 @@ angular.module('publicEducationApp')
          *
          * @param src
          */
-        scope.playPhoneGap = function(src) {
           console.log('src:', src);
           scope.mediaPlayer = Phonegap.getMedia(src, function onSuccess() {
+        scope.playPhoneGap = function() {
 
-            // If play was successful, skip to the next track.
+          scope.mediaPlayer = Phonegap.getMedia(scope.currentRecord.src, function onSuccess() {
+            // If play was successful, skip to the next track, if it exists.
             scope.$apply(function () {
-              ++scope.currentTrack;
+              if (scope.currentTrack +1 < scope.playList.length) {
+                ++scope.currentTrack;
+                console.log('Track is now ' + scope.currentTrack);
+              }
             });
           });
           scope.mediaPlayer.play();
         };
-
-        /**
-         * Play previous item in PhoneGap devices
-         */
-        scope.previousPhoneGap = function() {
-
-          return;
-        };
-
-        /**
-         * Play next item in PhoneGap devices
-         */
-        scope.nextPhoneGap = function() {
-
-          return;
-        };
-
-        /**
-         * Pause an item in PhoneGap devies.
-         */
-        scope.pausePhoneGap = function() {
-          scope.mediaPlayer.pause();
-        };
-
 
         scope.$watch('currentTrack', function(track, oldTrack) {
           // Populate info of current record in the scope.
@@ -90,7 +70,7 @@ angular.module('publicEducationApp')
           scope.currentRecord = scope.playList[track];
 
           if (scope.isPhoneGap) {
-            scope.playPhoneGap(scope.playList[track].src);
+            scope.playPhoneGap();
           }
           else if (oldTrack > 0) {
             // HTML <audio> tag.
