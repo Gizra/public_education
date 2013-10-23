@@ -36,6 +36,8 @@ angular.module('publicEducationApp')
       }
 
       $scope.selectedMarker = $scope.markers[$scope.venueId];
+
+      // Needed to fill the playList of the component angular-audio-player.
       angular.forEach($scope.selectedMarker.playList, function(value) {
         // Push the new items to the play list.
         $scope.playList.push(value);
@@ -53,7 +55,7 @@ angular.module('publicEducationApp')
 
 
     /**
-     * Intercept Drag Map Event
+     * Intercept Drag Map Event.
      */
     $scope.$on('leafletDirectiveMap.drag', function(event, args) {
 
