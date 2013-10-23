@@ -23,6 +23,7 @@ angular.module('publicEducationApp')
     };
 
     // Default values edit mode ng-class.
+    $scope.classPlayerMode = 'playlist-info bottom-bar';
     $scope.editMode = false;
     $scope.actualPage = $location.absUrl();
 
