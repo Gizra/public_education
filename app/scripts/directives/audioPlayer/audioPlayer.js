@@ -74,11 +74,22 @@ angular.module('publicEducationApp')
             // Change current track by the HTML5 <audio> tag.
             scope.currentTrack = currentTrack - 1;
 
-            if (!scope.playerControl) {
+            if (!scope.playerControl || !scope.playerControl.tracks) {
+              return;
+            }
+          });
+
+          // @todo: Wathc only on playAllMarkers.
+          scope.$watch('playerControl.playing', function(playing) {
+            if (playing) {
               return;
             }
 
-            if (currentTrack === scope.playerControl.tracks && !scope.playerControl.playing) {
+            if (!scope.playerControl || !scope.playerControl.tracks) {
+              return;
+            }
+
+            if (scope.currentTrack + 1 === scope.playerControl.tracks && scope.playerControl.currentTime) {
               // User reached the last song.
               scope.playListFinished = true;
             }
