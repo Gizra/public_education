@@ -10,7 +10,6 @@ angular.module('publicEducationApp')
         currentRecord: '=currentRecord'
       },
       link: function postLink(scope) {
-
         scope.isPhoneGap = Phonegap.isMobile.any();
 
 
@@ -32,8 +31,6 @@ angular.module('publicEducationApp')
 
         /**
          * Play an item in PhoneGap devices.
-         *
-         * @param src
          */
         scope.playPhoneGap = function() {
           scope.mediaPlayer = Phonegap.getMedia(scope.currentRecord.src, function onSuccess() {
@@ -79,16 +76,16 @@ angular.module('publicEducationApp')
         }
 
         /**
-         * Initialize currentTrack just when have a playList filled.
+         * Initialize currentTrack just when the playList is filled.
          *
          * This is need because the process $http and linking phase of the directive
          * (angularjs bootstrap) are asynchronous.
          */
         scope.$watch('playList', function(playList) {
-          if (angular.isDefined(playList)) {
+          if (playList.length) {
             scope.currentTrack = 0;
           }
-        });
+        }, true);
       }
     };
   });
