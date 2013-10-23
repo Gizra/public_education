@@ -16,7 +16,7 @@
   <div class="placemark-big"></div>
 </div>
 
-<div ng-class="classPlayerMode">
+<div class="playlist-info" ng-class="{'bottom-bar': !editMode, 'edit-mode': editMode}">
   <div class="profie-pic">
     <img ng-show="selectedMarker.playList[currentTrack].user.photo" ng-src="{{ selectedMarker.playList[currentTrack].user.photo }}" />
   </div>
@@ -29,13 +29,10 @@
     </div>
     <div class="action expand" ng-click="toggleEditMode()"> </div>
     <div class="recording-content">
-      <div class="play-rec">
-        <play-marker playlist="playList"></play-marker>
-        <a href="#" class="rwd">previous</a>
-        <a href="#" class="play">re-play</a>
-        <a href="#" class="fwd">next</a>
-      </div>
+      <audio-player play-list="selectedMarker.playList" current-record="selectedMarker.currentRecord"></audio-player>
+
       <p class="record-text"> {{ selectedMarker.currentRecord.text }}</p>
+
       <ul class="share-btns">
         <li><a ng-click="shareLink('twitter')" class="share-tw">Share on Twitter</a></li>
         <li><a ng-click="shareLink('facebook')" class="share-fb">Share on Facebook</a></li>

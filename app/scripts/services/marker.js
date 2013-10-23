@@ -87,7 +87,7 @@ angular.module('publicEducationApp')
           name: venue.name,
           lat: venue.lat,
           lng: venue.lng
-        }
+        };
 
         return this.uploadingMarker(newMarker);
       },
@@ -104,7 +104,6 @@ angular.module('publicEducationApp')
         var self = this;
 
         var defer = $q.defer();
-        var markers;
 
         $http({
           method: 'GET',
@@ -120,10 +119,9 @@ angular.module('publicEducationApp')
             self.data.markers = data;
             defer.resolve(data);
           }
-
         });
 
-        return defer.promise
+        return defer.promise;
       },
 
       /**
@@ -148,17 +146,17 @@ angular.module('publicEducationApp')
         else if (Phonegap.isMobile.Android()) {
           fileURI = '/mnt/sdcard/' + marker.src;
           options.mimeType = 'audio/amr';
+
+          // Request headers needs to be in the following format.
+          // @see https://github.com/superjoe30/node-multiparty/pull/15
+          var headers = {'Content-type': 'multipart/form-data; boundary=+++++'};
+          options.headers = headers;
         }
         else {
           // Development.
           fileURI = '/tmp/' + marker.src;
           options.mimeType = 'audio/amr';
         }
-
-        // Request headers needs to be in the following format.
-        // @see https://github.com/superjoe30/node-multiparty/pull/15
-        var headers = {'Content-type': 'multipart/form-data; boundary=+++++'};
-        options.headers = headers;
 
         options.fileName = fileURI.substr(fileURI.lastIndexOf('/')+1);
 
