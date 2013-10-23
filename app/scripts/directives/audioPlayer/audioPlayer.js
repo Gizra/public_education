@@ -7,7 +7,8 @@ angular.module('publicEducationApp')
       restrict: 'E',
       scope: {
         playList: '=playList',
-        currentRecord: '=currentRecord'
+        currentRecord: '=currentRecord',
+        playListFinished: '=playListFinished'
       },
       link: function postLink(scope) {
         scope.isPhoneGap = Phonegap.isMobile.any();
@@ -72,6 +73,15 @@ angular.module('publicEducationApp')
           scope.$watch('playerControl.currentTrack', function(currentTrack) {
             // Change current track by the HTML5 <audio> tag.
             scope.currentTrack = currentTrack - 1;
+
+            if (!scope.playerControl) {
+              return;
+            }
+
+            if (currentTrack === scope.playerControl.tracks && !scope.playerControl.playing) {
+              // User reached the last song.
+              scope.playListFinished = true;
+            }
           });
         }
 

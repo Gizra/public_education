@@ -54,7 +54,11 @@ angular.module('publicEducationApp')
     $scope.playListFinished = false;
 
     if (Marker.isPlayingAllMarkers()) {
-      $scope.watch('playListFinished', function() {
+      $scope.$watch('playListFinished', function(playListFinished) {
+        if (!playListFinished) {
+          return;
+        }
+
         // Load the next venue from the markers list.
         var firstVenueId = null,
           reachedCurrentVenueId = false,
@@ -65,15 +69,20 @@ angular.module('publicEducationApp')
             firstVenueId = key;
           }
 
-          if (key === $scope.venueId) {
-            reachedCurrentVenueId = true;
+          if (nextVenueId) {
+            // @todo: Is there a way to break the forEach?
             return;
           }
 
-          if (reachedCurrentVenueId) {
+          if (key === $scope.venueId) {
+            reachedCurrentVenueId = true;
+          }
+          else if (reachedCurrentVenueId) {
             nextVenueId = key;
           }
         });
+
+        console.log('venue ID ' + nextVenueId);
 
         if (nextVenueId) {
           // Redirect to the next venue.

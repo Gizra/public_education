@@ -16,8 +16,22 @@ angular.module('publicEducationApp')
 
     $scope.playAllMarkers = function() {
       Marker.setPlayingAllMarkers(true);
+      $scope.redirectToFirstVenue();
     };
 
+
+    $scope.$watch('markers', function() {
+      if (Marker.isPlayingAllMarkers()) {
+        $scope.redirectToFirstVenue();
+      }
+    });
+
+    $scope.redirectToFirstVenue = function() {
+      // Redirect to the first venueId.
+      angular.forEach($scope.markers, function(marker, key) {
+        $location.path('/play-marker/' + key);
+      });
+    };
 
 
     // Get markers.
@@ -53,7 +67,4 @@ angular.module('publicEducationApp')
       // Redirect to play-marker, when user clicks a marker.
       $location.path('/play-marker/' + args.markerName);
     });
-
-
-
   });
