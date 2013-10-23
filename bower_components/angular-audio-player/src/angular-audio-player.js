@@ -33,6 +33,7 @@ angular.module('angular-audio-player', ['helperFunctions'])
       this.name = options.name || 'audioplayer';
       this._scope = scope; // useless for now
       this._bindListeners(scope);
+      console.log(playlist);
       this._playlist = playlist;
 
       this.playing = false;
@@ -62,7 +63,7 @@ angular.module('angular-audio-player', ['helperFunctions'])
     AudioPlayer.prototype = {
       /**
        * @usage load([audioElement], [autoplayNext]);
-       * 
+       *
        * @param  {audioElement Obj} audioElement [a single audioElement, may contain multiple <source>(s)]
        * @param  {boolean} autoplayNext [flag to autostart loaded element]
        */
@@ -252,7 +253,7 @@ angular.module('angular-audio-player', ['helperFunctions'])
               return $log.error('if you use playlist attribute, you need to $scope.playlistVariable = []; in your code');
             }
           }
-          
+
           /**
            * Playlist update logic:
            * If the player has started ->
@@ -261,15 +262,15 @@ angular.module('angular-audio-player', ['helperFunctions'])
            *     Assign to it the new tracknumber
            *   Else ->
            *     Pause the player, and get the new Playlist
-           *   
+           *
            * Else (if the player hasn't started yet)
            *   Just replace the <src> tags inside the <audio>
-           * 
+           *
            * Example
            * playlist: [a,b,c], playing: c, trackNum: 2
            * ----delay 5 sec-----
            * playlist: [f,a,b,c], playing: c, trackNum: 3
-           * 
+           *
            */
           if (player.currentTrack) {
             currentTrack = playlistOld ? playlistOld[player.currentTrack - 1] : -1;

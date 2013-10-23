@@ -1,31 +1,48 @@
 <div class="actions-wrapper">
   <div class="actions-icons">
-    <div>
+    <div class="add-marker-wrapper">
       <a ng-href="#/add-marker">Add marker</a>
     </div>
     <div>
-      <a ng-href="#/">Close</a>
+      <a ng-href="#/" class="close">Close</a>
     </div>
   </div>
 </div>
 
 <div class="map-wrapper">
   <leaflet center="center" markers="markers" defaults="defaults"></leaflet>
+  <a ng-href="#/" class="dark-overlay"></a>
   <!-- Placeholder audio marker to float above the map -->
-  <div class="big-icon"></div>
+  <div class="placemark-big"></div>
 </div>
 
-<div class="playlist-info">
-  <div class="photo">
+<div ng-class="classPlayerMode">
+  <div class="profie-pic">
     <img ng-show="selectedMarker.playList[currentTrack].user.photo" ng-src="{{ selectedMarker.playList[currentTrack].user.photo }}">
   </div>
   <div class="user-wrapper">
     <div class="venue-name">
-      @{{ selectedMarker.name }}
+      {{ selectedMarker.name }}
     </div>
-    <div>
-      V
+    <div class="user-name">
+     {{ user.name }}
+    </div>
+    <div class="action expand" ng-click="toggleEditMode()"> </div>
+    <div class="recording-content">
+      <div class="play-rec">
+        <play-marker playlist="playList"></play-marker>
+        <a href="#" class="rwd">previous</a>
+        <a href="#" class="play">re-play</a>
+        <a href="#" class="fwd">next</a>
+      </div>
+      <p class="record-text"> {{ selectedMarker.currentRecord.text }}</p>
+      <ul class="share-btns">
+        <li><a ng-click="shareLink('twitter')" class="share-tw">Share on Twitter</a></li>
+        <li><a ng-click="shareLink('facebook')" class="share-fb">Share on Facebook</a></li>
+        <li><a ng-click="shareLink('email')" class="share-email">Send as in an email</a></li>
+        <li><a href="{{ actualPage }}" target="_blank" class="share-link">Link to this command</a></li>
+      </ul>
+      <a class="flag" href="#" title="flag this recording">Flag</a>
     </div>
   </div>
-
 </div>
