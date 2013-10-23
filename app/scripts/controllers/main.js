@@ -14,6 +14,12 @@ angular.module('publicEducationApp')
 
     $scope.markers = {};
 
+    $scope.playAllMarkers = function() {
+      Marker.setPlayingAllMarkers(true);
+    };
+
+
+
     // Get markers.
     var getMarkers = function() {
       Marker.gettingMarkers().then(function(data) {

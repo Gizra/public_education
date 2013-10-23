@@ -55,7 +55,16 @@ body{
     height: 117px;
     width: 128px;
   }
+}
 
+.footer {
+  position: absolute;
+  z-index: 99;
+  height: 100px;
+  bottom: 0;
+  opacity: 50%;
+  background: black;
+  color: #ffffff;
 }
 
 div.leaflet-div-icon {
