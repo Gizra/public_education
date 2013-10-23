@@ -8,13 +8,17 @@ angular.module('publicEducationApp')
       /**
        * Private variable to hold the state.
        *
-       * data.marker: List of markers in cache
-       * data.lastProcessing: A hash of the last marker added, during server
-       *                      processing set a valid hash md5 otherwise null.
+       * - markers: List of markers in cache
+       * - lastProcessing:
+       *   A hash of the last marker added, during server processing set a valid
+       *   hash md5, otherwise null.
+       * - markersCacheTimestamp: timestamp of when marker was retrieved from
+       *   server.
        */
       data: {
         markers: null,
-        lastProcessingHash: null
+        lastProcessingHash: null,
+        markersCacheTimestamp: null
       },
 
       /**
@@ -100,15 +104,25 @@ angular.module('publicEducationApp')
        *   true.
        * @returns {*}
        */
-      gettingMarkers: function() {
+      gettingMarkers: function(skipCache) {
         var self = this;
-
         var defer = $q.defer();
+        skipCache = skipCache || false;
+        var now = new Date().getTime();
+
+
+        if (this.data.markersCacheTimestamp && now < (this.data.markersCacheTimestamp + 60000) && !skipCache) {
+          // Return markers from cache.
+          defer.resolve(this.data.markers);
+          return defer.promise;
+        }
 
         $http({
           method: 'GET',
           url: BACKEND_URL + '/get-markers'
         }).success(function (data) {
+          // Update the timestamp of the response from the server.
+          self.data.markersCacheTimestamp = new Date().getTime();
 
           // Check if resolve cache or server data.
           if (self.isProcessing(data)) {
