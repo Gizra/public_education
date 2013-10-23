@@ -113,7 +113,7 @@ angular.module('publicEducationApp')
         var now = new Date().getTime();
 
 
-        if (this.data.markersCacheTimestamp && now < (this.data.markersCacheTimestamp + 60000) && !skipCache) {
+        if ((this.data.isPlayingAllMarkers || this.data.markersCacheTimestamp && now < (this.data.markersCacheTimestamp + 60000)) && !skipCache) {
           // Return markers from cache.
           defer.resolve(this.data.markers);
           return defer.promise;
