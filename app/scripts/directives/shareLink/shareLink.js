@@ -3,9 +3,10 @@
 angular.module('publicEducationApp')
   .directive('shareLink', function ($location, $window) {
     return {
-      template: '<ul class="share-btns">\n  <li><a ng-click="shareLink(\'twitter\')" class="share-tw">Share on Twitter</a></li>\n  <li><a ng-click="shareLink(\'facebook\')" class="share-fb">Share on Facebook</a></li>\n  <li><a ng-click="shareLink(\'email\')" class="share-email">Send as in an email</a></li>\n  <li><a href="{{ actualPage }}" target="_blank" class="share-link">Link to this command</a></li>\n</ul>',
+      templateUrl: 'scripts/directives/shareLink/shareLink.html',
       restrict: 'E',
-      link: function postLink(scope, element, attrs) {
+      link: function postLink(scope) {
+        // Get the actual link to share
         scope.actualPage = $location.absUrl();
 
         /**
