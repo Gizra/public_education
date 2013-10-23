@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('publicEducationApp')
-  .service('Marker', function Marker($q, $http, $timeout, BACKEND_URL, Phonegap) {
+  .service('Marker', function Marker($q, $http, $timeout, BACKEND_URL, Phonegap, md5) {
 
     return {
 
@@ -72,15 +72,14 @@ angular.module('publicEducationApp')
           location: location
         };
 
-        // @todo Crossbrowser md5 version, require research.
-        // var hash = Crypto.md5(newMarker);
-        newMarker.hash = new Date().getTime();
+        // Creating hash form a string of the newMarker obj.
+        newMarker.hash = md5.createHash(angular.toJson(newMarker, false));
         this.setProcessing(newMarker.hash);
 
         this.data.markers[id].playList = this.data.markers[id].playList || [];
         this.data.markers[id].playList.unshift(newMarker);
 
-        // Add the venue information to the uploded marker, so we can create
+        // Add the venue information to the uploaded marker, so we can create
         // a Venue record if it doesn't exist yet, without re-calling
         // FourSquare.
         newMarker.venue = {
@@ -88,7 +87,7 @@ angular.module('publicEducationApp')
           name: venue.name,
           lat: venue.lat,
           lng: venue.lng
-        }
+        };
 
         return this.uploadingMarker(newMarker);
       },
@@ -105,7 +104,6 @@ angular.module('publicEducationApp')
         var self = this;
 
         var defer = $q.defer();
-        var markers;
 
         $http({
           method: 'GET',
@@ -121,10 +119,9 @@ angular.module('publicEducationApp')
             self.data.markers = data;
             defer.resolve(data);
           }
-
         });
 
-        return defer.promise
+        return defer.promise;
       },
 
       /**
@@ -149,17 +146,17 @@ angular.module('publicEducationApp')
         else if (Phonegap.isMobile.Android()) {
           fileURI = '/mnt/sdcard/' + marker.src;
           options.mimeType = 'audio/amr';
+
+          // Request headers needs to be in the following format.
+          // @see https://github.com/superjoe30/node-multiparty/pull/15
+          var headers = {'Content-type': 'multipart/form-data; boundary=+++++'};
+          options.headers = headers;
         }
         else {
           // Development.
           fileURI = '/tmp/' + marker.src;
           options.mimeType = 'audio/amr';
         }
-
-        // Request headers needs to be in the following format.
-        // @see https://github.com/superjoe30/node-multiparty/pull/15
-        var headers = {'Content-type': 'multipart/form-data; boundary=+++++'};
-        options.headers = headers;
 
         options.fileName = fileURI.substr(fileURI.lastIndexOf('/')+1);
 
