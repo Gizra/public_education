@@ -10,5 +10,5 @@ www
 merges
 platforms
 plugins
-Gruntfile.js
 .grunt
+config.json
