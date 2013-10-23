@@ -6,7 +6,7 @@ angular.module('publicEducationApp')
       templateUrl: 'scripts/directives/shareLink/shareLink.html',
       restrict: 'E',
       link: function postLink(scope) {
-        // Get the actual link to share
+        // Get the actual link to share.
         scope.actualPage = $location.absUrl();
 
         /**
