@@ -15,7 +15,7 @@ angular.module('publicEducationApp')
     $scope.center = Leaflet.getCenter();
     $scope.selectedMarker = {};
     $scope.playList = [];
-    $scope.currentTrack = 0;
+
 
     // Default values of a user.
     $scope.user = {
@@ -25,6 +25,8 @@ angular.module('publicEducationApp')
     // Default values edit mode ng-class.
     $scope.classPlayerMode = 'playlist-info bottom-bar';
     $scope.editMode = false;
+    $scope.actualPage = $location.absUrl();
+
 
     Marker.gettingMarkers().then(function(data) {
       $scope.markers = data;
@@ -35,6 +37,8 @@ angular.module('publicEducationApp')
       }
 
       $scope.selectedMarker = $scope.markers[$scope.venueId];
+
+      // Needed to fill the playList of the component angular-audio-player.
       angular.forEach($scope.selectedMarker.playList, function(value) {
         // Push the new items to the play list.
         $scope.playList.push(value);
@@ -46,36 +50,13 @@ angular.module('publicEducationApp')
         zoom: 16
       };
 
-      $scope.$watch('currentTrack', function(track) {
-        // Populate info of current record in the scope.
-        $scope.selectedMarker.currentRecord = $scope.selectedMarker.playList[track];
-
-        if (track <= $scope.selectedMarker.playList.length) {
-          $scope.playItem($scope.selectedMarker.playList[track].src);
-        }
-      });
     });
-
-    /**
-     * Play an item.
-     *
-     * @param src
-     */
-    $scope.playItem = function(src) {
-      var mediaPlayer = Phonegap.getMedia(src, function onSuccess() {
-        // If play was successful, skip to the next track.
-        $scope.$apply(function () {
-          ++$scope.currentTrack;
-        });
-      });
-      mediaPlayer.play();
-    };
 
     angular.extend($scope, Leaflet.getDefaults());
 
 
     /**
-     * Intercept Drag Map Event
+     * Intercept Drag Map Event.
      */
     $scope.$on('leafletDirectiveMap.drag', function(event, args) {
 
@@ -92,7 +73,27 @@ angular.module('publicEducationApp')
      */
     $scope.toggleEditMode = function() {
       $scope.editMode = !$scope.editMode;
-      $scope.classPlayerMode = (!$scope.editMode) ? 'playlist-info bottom-bar' : 'playlist-info edit-mode';
     };
+
+    /**
+     * Share link to twitter, facebook, email.
+     */
+    $scope.shareLink = function(method) {
+      var url;
+      var text = $scope.selectedMarker.currentRecord.text + '-' + encodeURIComponent($location.absUrl());
+
+      if (method === 'twitter') {
+        url = 'https://twitter.com/share?text='+text;
+      }
+      else if (method === 'facebook') {
+        url = 'http://www.facebook.com/sharer/sharer.php?s=100&p[url]=' + encodeURIComponent($location.absUrl()) + '&p[title]=Public%20Education&p[summary]=' + text;
+      }
+      else if (method === 'email') {
+        url = 'mailto:?body=' + text + ' - ' + encodeURIComponent($location.absUrl());
+      }
+
+      $window.open(url, method, 'width=626,height=445');
+    };
+
 
   });
