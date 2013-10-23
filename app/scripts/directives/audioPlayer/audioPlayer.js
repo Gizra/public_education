@@ -31,7 +31,7 @@ angular.module('publicEducationApp')
 
         /**
          * Play an item in PhoneGap devices.
-          */
+         */
         scope.playPhoneGap = function() {
           scope.mediaPlayer = Phonegap.getMedia(scope.currentRecord.src, function onSuccess() {
             // If play was successful, skip to the next track, if it exists.
