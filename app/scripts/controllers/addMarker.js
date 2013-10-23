@@ -2,6 +2,15 @@
 
 angular.module('publicEducationApp')
   .controller('AddMarkerCtrl', function ($scope, $location, Leaflet, Foursquare, storage, User, Marker, BACKEND_URL) {
+     // Get User information
+    User.getUser().then(function(data) {
+      // @todo: Redirect is user already logged in.
+      console.log(data);
+      $scope.user = data;
+    });
+
+    // Default value to callback auth
+    $scope.back = encodeURIComponent($location.absUrl());
 
     /**
      * Update the map's center, and get the venue name from FourSquare.
