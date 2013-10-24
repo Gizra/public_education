@@ -7,15 +7,25 @@ angular.module('publicEducationApp')
       $location.path('/add-marker/' + provider);
     };
 
+    // @todo Improve logic, Move into a directive and make communication with service?
     $scope.$watch('state', function() {
-      if ($scope.state === 'credentials' && $routeParams.provider) {
-        // Get provider parameter and auth
-        OAuthIo.auth($routeParams.provider).then(function(data) {
-          $scope.user = data;
+      if ($scope.state === 'credentials') {
+        if ($routeParams.provider) {
+          // Get provider parameter and auth
+          OAuthIo.auth($routeParams.provider).then(function(data) {
+            $scope.user = data;
 
-          // Upload the data and save marker
-          $scope.onRecorded();
-        });
+            // Upload the data and save marker
+            $scope.onRecorded();
+          });
+        }
+        else {
+          // Default values of a user.
+          $scope.user = {
+            name: 'Anonymous',
+            photo: ''
+          };
+        }
       }
     });
 
