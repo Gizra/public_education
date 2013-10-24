@@ -11,9 +11,11 @@ angular.module('publicEducationApp')
       if ($scope.state === 'credentials' && $routeParams.provider) {
         // Get provider parameter and auth
         OAuthIo.auth($routeParams.provider).then(function(data) {
-          console.log(data);
+          $scope.user = data;
+
+          // Upload the data and save marker
+          $scope.onRecorded();
         });
-        console.log('provider:', $routeParams.provider);
       }
     });
 
@@ -26,7 +28,6 @@ angular.module('publicEducationApp')
     $scope.$watch('center', function (center) {
       $scope.updateMarker(center.lat, center.lng);
     });
-
 
     $scope.updateMarker = function(lat, lng) {
       if ($scope.center.zoom >= 16) {

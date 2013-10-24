@@ -25,31 +25,29 @@ angular.module('publicEducationApp')
      * Request data from facebook with the token and store in service property data.user.
      *
      * @param token
+     * @param provider
+     *
      * @returns {*}
      *  promise
      */
-    function gettingUserData(token, provider) {
+    function gettingFacebookData(token) {
       var deferred = $q.defer();
       var url;
 
       // Create URL for each provider.
-      if (provider === 'facebook') {
-        url = 'https://graph.facebook.com/me?fields=picture.type(small),name,username&access_token=' + token;
-      }
+      url = 'https://graph.facebook.com/me?fields=picture.type(small),name,username&access_token=' + token;
 
       // Request data to facebook.
       $http({
         method: 'GET',
         url: url
       }).success(function(result) {
-          if (provider === 'facebook') {
-            data.user.username = result.username;
-            data.user.name = result.name;
-            data.user.photo = 'https://graph.facebook.com/'+ result.username +'/picture';
-          }
-        });
+          data.user.username = result.username;
+          data.user.name = result.name;
+          data.user.photo = 'https://graph.facebook.com/'+ result.username +'/picture';
 
-      deferred.resolve(data.user);
+          deferred.resolve(data.user);
+        });
 
       return deferred.promise;
     }
@@ -70,19 +68,29 @@ angular.module('publicEducationApp')
         // Get the token from OAuth.io
         OAuth.popup(provider, function(err, result) {
           if (result) {
-            if ('facebook') {
+            if (provider === 'facebook') {
               data.token = result.access_token;
-              deferred.resolve(gettingUserData(data.token, 'facebook'));
+              deferred.resolve(gettingFacebookData(data.token));
             }
-            else if ('twitter') {
+            else if (provider === 'twitter') {
               data.token = result.oauth_token;
-              deferred.resolve(gettingUserData(data.token, 'twitter'));
+              // @todo require implementation for twitter API
+              deferred.reject({msg:'require implementation'});
             }
           }
         });
 
         return deferred.promise;
-      }
+      },
 
+      /**
+       * Get user data information stored
+       *
+       * @returns {*}
+       */
+      getUser: function() {
+
+        return data.user;
+      }
     };
   });
