@@ -45,11 +45,11 @@ angular.module('publicEducationApp')
           if (provider === 'facebook') {
             data.user.username = result.username;
             data.user.name = result.name;
-            data.user.photo = result.picture.data.url;
+            data.user.photo = 'https://graph.facebook.com/'+ result.username +'/picture';
           }
-          
-          deferred.resolve(data.user);
         });
+
+      deferred.resolve(data.user);
 
       return deferred.promise;
     }
