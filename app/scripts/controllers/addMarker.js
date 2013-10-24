@@ -2,13 +2,6 @@
 
 angular.module('publicEducationApp')
   .controller('AddMarkerCtrl', function ($scope, $location, Leaflet, Foursquare, storage, User, Marker, BACKEND_URL) {
-     // Get User information
-    User.getUser().then(function(data) {
-      // @todo: Redirect is user already logged in.
-      console.log(data);
-      $scope.user = data;
-    });
-
     // Default value to callback auth
     $scope.back = encodeURIComponent($location.absUrl());
 
@@ -18,6 +11,29 @@ angular.module('publicEducationApp')
      * The marker is always in the center of the map, and visible only if the
      * zoom is equal or above 16.
      */
+
+    $scope.oauth = function(provider) {
+      $location.path('/add-marker/' + provider);
+    }
+
+    $scope.$watch('state', function() {
+      if ($scope.state === 'credentials' && $location.path() === '/add-marker/facebook') {
+        OAuth.popup('facebook', function(err, result) {
+          console.error(err);
+          console.log(result);
+        });
+      }
+
+      if ($scope.state === 'credentials' && $location.path() === '/add-marker/twitter') {
+        OAuth.popup('twitter', function(err, result) {
+          console.error(err);
+          console.log(result);
+        });
+      }
+
+
+      //OAuth
+    });
 
     $scope.$watch('center', function (center) {
       $scope.updateMarker(center.lat, center.lng);
