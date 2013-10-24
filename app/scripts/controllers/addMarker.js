@@ -14,28 +14,24 @@ angular.module('publicEducationApp')
 
     $scope.oauth = function(provider) {
       $location.path('/add-marker/' + provider);
-    }
+    };
+
+    OAuth.initialize('nCYMyRVLEfy-4Sk_TPQCaey4Hhk');
 
     $scope.$watch('state', function() {
       // @todo: need to improve the logic just testing.
       if ($scope.state === 'credentials' && $location.path() === '/add-marker/facebook') {
         OAuth.popup('facebook', function(err, result) {
-          console.log(result, err);
-
-          $scope.$apply(function() {
-            $scope.result = angular.toJson(result, true);
-          });
+          console.log('facebook');
+          console.log(result.access_token);
 
         });
       }
 
       if ($scope.state === 'credentials' && $location.path() === '/add-marker/twitter') {
         OAuth.popup('twitter', function(err, result) {
-          console.log(result, err);
-
-          $scope.$apply(function() {
-            $scope.result = angular.toJson(result, true);
-          });
+          console.log('twitter');
+          console.log(result.oauth_token);
         });
       }
     });

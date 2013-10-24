@@ -34,6 +34,4 @@ angular.module('publicEducationApp', [
       });
 
     delete $httpProvider.defaults.headers.common['X-Requested-With'];
-
-    OAuth.initialize('nCYMyRVLEfy-4Sk_TPQCaey4Hhk');
   });
