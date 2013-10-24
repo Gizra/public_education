@@ -1,9 +1,21 @@
 'use strict';
 
 angular.module('publicEducationApp')
-  .controller('AddMarkerCtrl', function ($scope, $location, Leaflet, Foursquare, storage, User, Marker, BACKEND_URL) {
-    // Default value to callback auth
-    $scope.back = encodeURIComponent($location.absUrl());
+  .controller('AddMarkerCtrl', function ($scope, $location, Leaflet, Foursquare, storage, User, Marker, BACKEND_URL, OAuthIo, $routeParams) {
+
+    $scope.oauth = function(provider) {
+      $location.path('/add-marker/' + provider);
+    };
+
+    $scope.$watch('state', function() {
+      // @todo: need to improve the logic just testing.
+      if ($scope.state === 'credentials' && $routeParams.provider) {
+        // Get provider parameter and auth
+        console.log(OAuthIo.auth($routeParams.provider));
+        console.log('provider:', $routeParams.provider);
+      }
+
+    });
 
     /**
      * Update the map's center, and get the venue name from FourSquare.
@@ -11,31 +23,6 @@ angular.module('publicEducationApp')
      * The marker is always in the center of the map, and visible only if the
      * zoom is equal or above 16.
      */
-
-    $scope.oauth = function(provider) {
-      $location.path('/add-marker/' + provider);
-    };
-
-    OAuth.initialize('nCYMyRVLEfy-4Sk_TPQCaey4Hhk');
-
-    $scope.$watch('state', function() {
-      // @todo: need to improve the logic just testing.
-      if ($scope.state === 'credentials' && $location.path() === '/add-marker/facebook') {
-        OAuth.popup('facebook', function(err, result) {
-          console.log('facebook');
-          console.log(result.access_token);
-
-        });
-      }
-
-      if ($scope.state === 'credentials' && $location.path() === '/add-marker/twitter') {
-        OAuth.popup('twitter', function(err, result) {
-          console.log('twitter');
-          console.log(result.oauth_token);
-        });
-      }
-    });
-
     $scope.$watch('center', function (center) {
       $scope.updateMarker(center.lat, center.lng);
     });
