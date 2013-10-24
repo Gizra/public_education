@@ -1,0 +1,14 @@
+{
+  "development": {
+    "FOURSQUARE": {
+      "id": "client_id",
+      "secret": "client_secret"
+    }
+  },
+  "production": {
+    "FOURSQUARE": {
+      "id": "client_id",
+      "secret": "client_secret"
+    }
+  }
+}

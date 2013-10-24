@@ -1,7 +1,7 @@
 
-if grep -q client_id Gruntfile.js
+if grep -q client_id config.json
 then
-	echo "In order for Foursquare to work you need to enter the real client_id and client_secret in Gruntfile.js"
+	echo "In order for Foursquare to work you need to enter the real client_id and client_secret in config.json"
 else
 	echo "Foursquare ID OK"
 fi

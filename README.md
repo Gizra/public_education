@@ -1,9 +1,9 @@
 Public Education (PE) - Client side
 ================
 
-Copy Grunt file configuration:
+Create a configuration:
 
-```cp Gruntfile.example.js Gruntfile.js```
+```cp config.example.json config.json```
 
 To enable Foursquare functionality, replace ```client_id``` and ```client_secret``` in Gruntfile.js with your Foursquare client ID/secret.
 
