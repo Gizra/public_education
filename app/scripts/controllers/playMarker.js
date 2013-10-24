@@ -34,8 +34,6 @@ angular.module('publicEducationApp')
 
       // Needed to fill the playList of the component angular-audio-player.
       angular.forEach($scope.selectedMarker.playList, function(value) {
-        console.log($scope.selectedMarker);
-
         // Push the new items to the play list.
         $scope.playList.push(value);
         $scope.user = $scope.selectedMarker.user;

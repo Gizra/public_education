@@ -1,10 +1,9 @@
 'use strict';
 
 angular.module('publicEducationApp')
-  .factory('OAuthIo', function ($window, $http, $q) {
+  .factory('OAuthIo', function ($window, $http, $q, OAUTHIO) {
     var OAuth = $window.OAuth;
-    // @todo Integrate with the new config file, require merge with master.
-    OAuth.initialize('nCYMyRVLEfy-4Sk_TPQCaey4Hhk');
+    Auth.initialize(OAUTHIO.id);
 
     /**
      * Store some data to maintain cache.

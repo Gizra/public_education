@@ -284,7 +284,7 @@ module.exports = function (grunt) {
             'bower_components/**/*',
             'images/{,*/}*.{gif,webp}',
             'styles/fonts/*',
-            'config.xml',
+            'config.json',
             'cordova.js',
             'cordova_plugins.js'
           ]
@@ -373,8 +373,9 @@ module.exports = function (grunt) {
         constants: {
           ENV: 'development',
           FOURSQUARE: '<%= yeoman.development.FOURSQUARE %>',
+          OAUTHIO: '<%= yeoman.development.OAUTHIO %>',
           // Define the backend URL.
-          BACKEND_URL: 'http://public-education.herokuapp.com'
+          BACKEND_URL: 'http://10.0.0.133:3000'
         }
       }],
       production: [{
@@ -384,6 +385,7 @@ module.exports = function (grunt) {
         constants: {
           ENV: 'production',
           FOURSQUARE: '<%= yeoman.production.FOURSQUARE %>',
+          OAUTHIO: '<%= yeoman.production.OAUTHIO %>',
           // Define the backend URL.
           BACKEND_URL: 'http://public-education.herokuapp.com'
         }
