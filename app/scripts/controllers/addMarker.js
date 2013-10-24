@@ -17,17 +17,21 @@ angular.module('publicEducationApp')
     }
 
     $scope.$watch('state', function() {
+      @todo: need to improve the logic just testing
       if ($scope.state === 'credentials' && $location.path() === '/add-marker/facebook') {
         OAuth.popup('facebook', function(err, result) {
-          console.error(err);
-          console.log(result);
+          $scope.$apply(function() {
+            $scope.result = angular.toJson(result, true);
+          });
+
         });
       }
 
       if ($scope.state === 'credentials' && $location.path() === '/add-marker/twitter') {
         OAuth.popup('twitter', function(err, result) {
-          console.error(err);
-          console.log(result);
+          $scope.$apply(function() {
+            $scope.result = angular.toJson(result, true);
+          });
         });
       }
 
