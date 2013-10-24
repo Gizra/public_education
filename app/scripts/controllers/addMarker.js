@@ -11,7 +11,9 @@ angular.module('publicEducationApp')
       // @todo: need to improve the logic just testing.
       if ($scope.state === 'credentials' && $routeParams.provider) {
         // Get provider parameter and auth
-        console.log(OAuthIo.auth($routeParams.provider));
+        OAuthIo.auth($routeParams.provider).then(function(data) {
+          console.log(data);
+        });
         console.log('provider:', $routeParams.provider);
       }
 
