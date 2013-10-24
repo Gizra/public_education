@@ -17,7 +17,7 @@ angular.module('publicEducationApp')
     }
 
     $scope.$watch('state', function() {
-      @todo: need to improve the logic just testing
+      // @todo: need to improve the logic just testing.
       if ($scope.state === 'credentials' && $location.path() === '/add-marker/facebook') {
         OAuth.popup('facebook', function(err, result) {
           $scope.$apply(function() {
@@ -34,9 +34,6 @@ angular.module('publicEducationApp')
           });
         });
       }
-
-
-      //OAuth
     });
 
     $scope.$watch('center', function (center) {
