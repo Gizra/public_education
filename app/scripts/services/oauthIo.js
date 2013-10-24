@@ -3,6 +3,7 @@
 angular.module('publicEducationApp')
   .factory('OAuthIo', function ($window, $http, $q) {
     var OAuth = $window.OAuth;
+    // @todo Integrate with the new config file, require merge with master.
     OAuth.initialize('nCYMyRVLEfy-4Sk_TPQCaey4Hhk');
 
     /**
@@ -24,30 +25,36 @@ angular.module('publicEducationApp')
      * Request data from facebook with the token and store in service property data.user.
      *
      * @param token
+     * @returns {*}
+     *  promise
      */
-    function getFacebookData(token) {
+    function gettingUserData(token, provider) {
       var deferred = $q.defer();
+      var url;
+
+      // Create URL for each provider.
+      if (provider === 'facebook') {
+        url = 'https://graph.facebook.com/me?fields=picture.type(small),name,username&access_token=' + token;
+      }
 
       // Request data to facebook.
       $http({
         method: 'GET',
-        url: 'https://graph.facebook.com/me?fields=picture.type(small),name,username&access_token=' + token
+        url: url
       }).success(function(result) {
-          data.user.username = result.username;
-          data.user.name = result.name;
-          data.user.photo = result.picture.data.url;
-
+          if (provider === 'facebook') {
+            data.user.username = result.username;
+            data.user.name = result.name;
+            data.user.photo = result.picture.data.url;
+          }
+          
           deferred.resolve(data.user);
         });
 
-      return deferred.promise
+      return deferred.promise;
     }
 
-    function getTwitterData() {
-      return true;
-    }
-
-    // Public API OAuthIo
+    // Public API OAuthIo.
     return {
       /**
        * Get the basic user (username. name, photo) information from a provider
@@ -65,14 +72,15 @@ angular.module('publicEducationApp')
           if (result) {
             if ('facebook') {
               data.token = result.access_token;
-              deferred.resolve(getFacebookData(data.token));
+              deferred.resolve(gettingUserData(data.token, 'facebook'));
             }
             else if ('twitter') {
-              data.token = result.oauth_token
-              getTwitterData();
+              data.token = result.oauth_token;
+              deferred.resolve(gettingUserData(data.token, 'twitter'));
             }
           }
         });
+
         return deferred.promise;
       }
 

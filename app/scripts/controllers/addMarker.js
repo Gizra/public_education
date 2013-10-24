@@ -8,7 +8,6 @@ angular.module('publicEducationApp')
     };
 
     $scope.$watch('state', function() {
-      // @todo: need to improve the logic just testing.
       if ($scope.state === 'credentials' && $routeParams.provider) {
         // Get provider parameter and auth
         OAuthIo.auth($routeParams.provider).then(function(data) {
@@ -16,7 +15,6 @@ angular.module('publicEducationApp')
         });
         console.log('provider:', $routeParams.provider);
       }
-
     });
 
     /**
