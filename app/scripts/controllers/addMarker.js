@@ -20,6 +20,8 @@ angular.module('publicEducationApp')
       // @todo: need to improve the logic just testing.
       if ($scope.state === 'credentials' && $location.path() === '/add-marker/facebook') {
         OAuth.popup('facebook', function(err, result) {
+          console.log(result, err);
+
           $scope.$apply(function() {
             $scope.result = angular.toJson(result, true);
           });
@@ -29,6 +31,8 @@ angular.module('publicEducationApp')
 
       if ($scope.state === 'credentials' && $location.path() === '/add-marker/twitter') {
         OAuth.popup('twitter', function(err, result) {
+          console.log(result, err);
+
           $scope.$apply(function() {
             $scope.result = angular.toJson(result, true);
           });
