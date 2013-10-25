@@ -33,8 +33,8 @@
   <a class="close" ng-click="setState('mark')">X</a>
 
   <form>
-    <div>
-      <textarea class="command-form" rows="6" name="text" ng-model="text" placeholder="Write a command. Make it specific for this location." required></textarea><br>
+    <div class="textarea-wrapper">
+      <textarea class="command-form" rows="6" name="text" ng-model="text" placeholder="Write a command. Make it specific for this location." required></textarea>
     </div>
 
     <div class="info-wrapper" ng-class="{disabled: 80 - text.length < 0 , warning: 70 - text.length < 0}">
@@ -75,25 +75,6 @@
 </div>
 <!-- .../END RECORDING -->
 
-<<<<<<< HEAD
-<div class="completed-wrapper" ng-show="state == 'completed'">
-
-  <div>
-    <a href="#/" ng-click="setState('mark')" class="close">X Close</a>
-  </div>
-
-  <div class="confirmation-message">
-    <p>
-      <strong>Thanks!</strong>
-    </p>
-    <p>
-      Your command has been recorded.
-    </p>
-    <p>
-      now, go tell your friends!
-    </p>
-  </div>
-=======
 
 <!-- COMPLETE -->
 <div  class="completed-wrapper" ng-show="state == 'completed'">
@@ -113,7 +94,6 @@
       now, go tell your friends!
     </p>
   </div>
->>>>>>> master
   <ul class="share-btns">
     <li><a href="#" class="share-tw">Share on Twitter</a></li>
     <li><a href="#" class="share-fb">Share on Facebook</a></li>
