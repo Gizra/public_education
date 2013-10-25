@@ -12,7 +12,7 @@ angular.module('publicEducationApp')
             lat: 41.0383,
             lng: 28.9869,
             zoom: 16
-          }
+          },
         },
         markers: {},
         marker: null
@@ -23,7 +23,8 @@ angular.module('publicEducationApp')
           defaults: {
             tileLayer: 'http://{s}.tiles.mapbox.com/v3/mushon.map-wjhkqj4n/{z}/{x}/{y}.png',
             maxZoom: 20,
-            minZoom: 14
+            minZoom: 14,
+            attributionControl: false
           }
         };
       },

@@ -16,7 +16,11 @@
   <div class="placemark-big"></div>
 </div>
 
+<<<<<<< HEAD
 <div class="playlist-info bottom-bar">
+=======
+<div class="playlist-info" ng-class="{'bottom-bar': !editMode, 'edit-mode': editMode}">
+>>>>>>> master
   <div class="profie-pic">
     <img ng-show="selectedMarker.playList[currentTrack].user.photo" ng-src="{{ selectedMarker.playList[currentTrack].user.photo }}" />
   </div>
@@ -25,6 +29,7 @@
       {{ selectedMarker.name }}
     </div>
     <div class="user-name">
+<<<<<<< HEAD
       by User Name
     </div>
     <div class="action expand">
@@ -42,8 +47,27 @@
         <li><a href="#" class="share-fb">Share on Facebook</a></li>
         <li><a href="#" class="share-email">Send as in an email</a></li>
         <li><a href="#" class="share-link">Link to this command</a></li>
+=======
+     {{ user.name }}
+    </div>
+    <div class="action expand" ng-click="toggleEditMode()"> </div>
+    <div class="recording-content">
+      <audio-player play-list="playList" current-record="selectedMarker.currentRecord"></audio-player>
+
+      <p class="record-text"> {{ selectedMarker.currentRecord.text }}</p>
+
+      <ul class="share-btns">
+        <li><a ng-click="shareLink('twitter')" class="share-tw">Share on Twitter</a></li>
+        <li><a ng-click="shareLink('facebook')" class="share-fb">Share on Facebook</a></li>
+        <li><a ng-click="shareLink('email')" class="share-email">Send as in an email</a></li>
+        <li><a href="{{ actualPage }}" target="_blank" class="share-link">Link to this command</a></li>
+>>>>>>> master
       </ul>
       <a class="flag" href="#" title="flag this recording">Flag</a>
     </div>
   </div>
+<<<<<<< HEAD
 </div>
+=======
+</div>
+>>>>>>> master

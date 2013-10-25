@@ -1,4 +1,4 @@
-
+<!-- MARKER -->
 <div class="map-wrapper" ng-show="state == 'mark'">
   <div class="instructions-wrapper">
 
@@ -26,7 +26,9 @@
     <a class="action confirm" ng-show="markers.marker.venue.name.length" ng-click="setState('form')">V</a>
   </div>
 </div>
+<!-- .../END MARKER -->
 
+<!-- FORM -->
 <div class="form-wrapper" ng-show="state == 'form'">
   <a class="close" ng-click="setState('mark')">X</a>
 
@@ -50,7 +52,9 @@
     </div>
   </form>
 </div>
+<!-- .../END FORM -->
 
+<!-- RECORDING -->
 <div class="record-wrapper" ng-show="['record', 'recording', 'recorded', 'playRecord', 'afterPlay'].indexOf(state) != -1">
 
   <a title="Back to writing the text" class="close" ng-click="setState('form')">X</a>
@@ -69,7 +73,9 @@
   </div>
 
 </div>
+<!-- .../END RECORDING -->
 
+<<<<<<< HEAD
 <div class="completed-wrapper" ng-show="state == 'completed'">
 
   <div>
@@ -87,6 +93,27 @@
       now, go tell your friends!
     </p>
   </div>
+=======
+
+<!-- COMPLETE -->
+<div  class="completed-wrapper" ng-show="state == 'completed'">
+
+  <div>
+    <a href="#/" ng-click="setState('mark')" class="close">X Close</a>
+  </div>
+
+  <div class="confirmation-message">
+    <p>
+      <strong>Thanks!</strong>
+    </p>
+    <p>
+      Your command has been recorded.
+    </p>
+    <p>
+      now, go tell your friends!
+    </p>
+  </div>
+>>>>>>> master
   <ul class="share-btns">
     <li><a href="#" class="share-tw">Share on Twitter</a></li>
     <li><a href="#" class="share-fb">Share on Facebook</a></li>
@@ -94,3 +121,4 @@
     <li><a href="#" class="share-link">Link to this command</a></li>
   </ul>
 </div>
+<!-- .../END COMPLETE -->

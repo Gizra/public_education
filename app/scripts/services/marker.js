@@ -1,13 +1,24 @@
 'use strict';
 
 angular.module('publicEducationApp')
-  .service('Marker', function Marker($q, $http, $timeout, BACKEND_URL, Phonegap) {
+  .service('Marker', function Marker($q, $http, $timeout, BACKEND_URL, Phonegap, md5) {
 
     return {
 
-      // Private variable to hold the state.
+      /**
+       * Private variable to hold the state.
+       *
+       * - markers: List of markers in cache
+       * - lastProcessing:
+       *   A hash of the last marker added, during server processing set a valid
+       *   hash md5, otherwise null.
+       * - markersCacheTimestamp: timestamp of when marker was retrieved from
+       *   server.
+       */
       data: {
-        markers: null
+        markers: null,
+        lastProcessingHash: null,
+        markersCacheTimestamp: null
       },
 
       /**
@@ -39,7 +50,7 @@ angular.module('publicEducationApp')
             name: venue.name,
             lat: venue.lat,
             lng: venue.lng,
-            playlist: []
+            playList: []
           };
         }
 
@@ -65,10 +76,14 @@ angular.module('publicEducationApp')
           location: location
         };
 
+        // Creating hash form a string of the newMarker obj.
+        newMarker.hash = md5.createHash(angular.toJson(newMarker, false));
+        this.setProcessing(newMarker.hash);
+
         this.data.markers[id].playList = this.data.markers[id].playList || [];
         this.data.markers[id].playList.unshift(newMarker);
 
-        // Add the venue information to the uploded marker, so we can create
+        // Add the venue information to the uploaded marker, so we can create
         // a Venue record if it doesn't exist yet, without re-calling
         // FourSquare.
         newMarker.venue = {
@@ -76,7 +91,7 @@ angular.module('publicEducationApp')
           name: venue.name,
           lat: venue.lat,
           lng: venue.lng
-        }
+        };
 
         return this.uploadingMarker(newMarker);
       },
@@ -89,14 +104,38 @@ angular.module('publicEducationApp')
        *   true.
        * @returns {*}
        */
-      gettingMarkers: function() {
+      gettingMarkers: function(skipCache) {
         var self = this;
-        return $http({
+        var defer = $q.defer();
+        skipCache = skipCache || false;
+        var now = new Date().getTime();
+
+
+        if (this.data.markersCacheTimestamp && now < (this.data.markersCacheTimestamp + 60000) && !skipCache) {
+          // Return markers from cache.
+          defer.resolve(this.data.markers);
+          return defer.promise;
+        }
+
+        $http({
           method: 'GET',
           url: BACKEND_URL + '/get-markers'
         }).success(function (data) {
-          self.data.markers = data;
+          // Update the timestamp of the response from the server.
+          self.data.markersCacheTimestamp = new Date().getTime();
+
+          // Check if resolve cache or server data.
+          if (self.isProcessing(data)) {
+            defer.resolve(self.data.markers);
+          }
+          else {
+            // Update cache.
+            self.data.markers = data;
+            defer.resolve(data);
+          }
         });
+
+        return defer.promise;
       },
 
       /**
@@ -121,6 +160,11 @@ angular.module('publicEducationApp')
         else if (Phonegap.isMobile.Android()) {
           fileURI = '/mnt/sdcard/' + marker.src;
           options.mimeType = 'audio/amr';
+
+          // Request headers needs to be in the following format.
+          // @see https://github.com/superjoe30/node-multiparty/pull/15
+          var headers = {'Content-type': 'multipart/form-data; boundary=+++++'};
+          options.headers = headers;
         }
         else {
           // Development.
@@ -128,18 +172,12 @@ angular.module('publicEducationApp')
           options.mimeType = 'audio/amr';
         }
 
-        // Request headers needs to be in the following format.
-        // @see https://github.com/superjoe30/node-multiparty/pull/15
-        var headers = {'Content-type': 'multipart/form-data; boundary=+++++'};
-        options.headers = headers;
-
         options.fileName = fileURI.substr(fileURI.lastIndexOf('/')+1);
 
         // We need to stringify the marker.
         options.params = {marker: JSON.stringify(marker)};
 
         ft.upload(fileURI, BACKEND_URL + '/add-marker', function onSuccess(result) {
-          console.log('Response = ' + result.response);
           defer.resolve(result);
         }, function onError(error) {
           console.log('An error has occurred: Code = ' + error.code);
@@ -148,6 +186,46 @@ angular.module('publicEducationApp')
         }, options);
 
         return defer.promise;
+      },
+
+      /**
+       * Validate if the server still processing the last marker inserted;
+       * return true when last marker was processed by the server, but false.
+       *
+       * @param markers
+       *   marker for the server
+       * @returns true|false
+       *
+       */
+      isProcessing: function(markers) {
+        var self = this;
+
+        // Set timeout to abort cache in case of server issues.
+        $timeout(function() {
+          self.data.lastProcessingHash = null;
+        }, 600000);
+
+        // Check if hash exist in markers
+        if (markers && self.data.lastProcessingHash) {
+          angular.forEach(markers, function(marker) {
+            angular.forEach(marker.playList, function(record) {
+              if (record.hash == self.data.lastProcessingHash) {
+                self.data.lastProcessingHash = null;
+              }
+            });
+          });
+        }
+
+        return (self.data.lastProcessingHash) ? true : false;
+      },
+      /**
+       * Set the a status property to know when the marker was processed by the server.
+       *
+       * @param hash
+       *   Hash to identify the last marker inserted.
+       */
+      setProcessing: function(hash) {
+        this.data.lastProcessingHash = hash;
       }
     };
   });

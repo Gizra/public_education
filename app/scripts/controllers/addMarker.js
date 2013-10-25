@@ -102,16 +102,15 @@ angular.module('publicEducationApp')
           lat: $scope.markers.marker.lat
         };
 
-      Marker.addMarker(venue, $scope.text, $scope.file, location, $scope.user).then(function() {
-        // After resolve promises Marker.addMarker.
-      });
+      // Getting the promise of add a new marker.
+      Marker.addMarker(venue, $scope.text, $scope.file, location, $scope.user);
 
       $scope.setState('completed');
 
       // Clear local storage.
       storage.remove('text');
-    };
 
+    };
 
     // @todo: Move to init function?
     storage.bind($scope, 'center', {defaultValue: Leaflet.getCenter()});
