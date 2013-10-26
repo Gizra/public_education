@@ -235,7 +235,7 @@ div.leaflet-div-icon {
     background-size: contain; //retina
     width: 2em;
     display: block;
-    text-indent: -9999999em;
+    color: rgba(0,0,0,0);
   }
 
   &.disabled .confirm {
@@ -247,12 +247,12 @@ div.leaflet-div-icon {
 .record-wrapper {
 
   .info-wrapper {
-    bottom: 432px;
+    bottom: 216px;
   }
 
   .recorder {
     width: 100%;
-    height: 432px;
+    height: 216px;
     position: absolute;
     z-index: 10;
     bottom: 0;
@@ -262,7 +262,6 @@ div.leaflet-div-icon {
     background-image: -webkit-radial-gradient(50% 139%, rgba(255,255,255,0.81) 0%, rgba(255,255,255,0.00) 100%);
     background-image: -ms-radial-gradient(50% 139%, rgba(255,255,255,0.81) 0%, rgba(255,255,255,0.00) 100%);
     background-image: radial-gradient(50% 139%, rgba(255,255,255,0.81) 0%, rgba(255,255,255,0.00) 100%);
-    background-size: 50%; //retina
     -moz-box-shadow:    0px -4px 0px 0px rgba(0,0,0,0.11);
     -webkit-box-shadow: 0px -4px 0px 0px rgba(0,0,0,0.11);
     box-shadow:         0px -4px 0px 0px rgba(0,0,0,0.11);
@@ -270,15 +269,16 @@ div.leaflet-div-icon {
 
   .rec {
       background: url(../images/record-btn@2x.png) center center no-repeat;
-      background-size: contain; //retina
+      background-size: 150px; //retina
       display: block;
+      height: 100%;
 
     .remaining-time {
       color: $recorder;
       position: absolute;
       width: 100%;
       text-align: center;
-      margin-top: -1.5em;
+      top: 0.75em;
 
       &.disabled {
         color: $disabled;
@@ -293,63 +293,63 @@ div.leaflet-div-icon {
       border: 0;
       text-indent: -9999999px;
       background: transparent center center no-repeat;
-      height: 200px;
-      width: 200px;
-      margin: 120px auto 0;
+      height: 150px;
+      width: 150px;
+      margin: -75px -75px;
       padding: 0;
       display: block;
+      position: absolute;
+      top: 50%;
+      left: 50%;
     }
 
     div {
 
       button.start-rec {
         background-image: url(../images/start-rec@2x.png);
-        background-size: contain; //retina
+        background-size: 50%; //retina
       }
 
       button.stop-rec {
         background-image: url(../images/stop-rec@2x.png);
-        background-size: contain; //retina
+        background-size: 50%; //retina
       }
 
       &.after-rec {
-        margin: 4px 0;
-        min-height: 432px;
+        min-height: 216px;
         position: relative;
-
-        .remaining-time{
-          margin-top: 2.15em;
-        }
 
         button {
           position: absolute;
-          height: 90px;
-          width: 90px;
-          top: 175px;
+          height: 45px;
+          width: 45px;
+          top: 88px;
           margin: 0;
 
           &.discard-rec {
             background-image: url(../images/discard-rec@2x.png);
             background-size: contain; //retina
-            left: 20%;
-            margin-left: -45px;
+            left: 15%;
+            margin-left: -22px;
           }
 
           &.play-rec {
             background-image: url(../images/play-rec@2x.png);
-            background-size: contain; //retina
-            height: 200px;
-            width: 200px;
-            top: 120px;
+            background-size: 50%; //retina
+            height: 100px;
+            width: 100px;
+            top: 50%;
             left: 50%;
-            margin-left: -100px;
+            margin-left: -50px;
+            margin-top: -50px;
           }
 
           &.confirm-rec {
             background-image: url(../images/confirm-rec@2x.png);
             background-size: contain; //retina
-            right: 20%;
-            margin-right: -45px;
+            right: 15%;
+            margin-right: -22px;
+            left: inherit;
 
             &.disabled {
               background-image: url(../images/confirm-rec-grayed@2x.png);
@@ -363,17 +363,17 @@ div.leaflet-div-icon {
 }
 
 .completed-wrapper {
-  border-radius: 10px;
+  border-radius: 5px;
   background: rgba(0, 0, 0, 0.7);
-  margin: 2em 10%;
-  height: 20em;
+  margin: 10%;
+  height: 80%;
   width: 80%;
   position: relative;
 
   .confirmation-message {
-    padding: 7em 5% 0;
-    background: url(../images/confirmation@2x.png) center 5em no-repeat;
-    background-size: contain; //retina
+    padding: 70px 5% 0;
+    background: url(../images/confirmation@2x.png) center 40px no-repeat;
+    background-size: 45px; //retina
     text-align: center;
     color: $gray-text;
 
@@ -454,13 +454,13 @@ div.leaflet-div-icon {
   color: white;
 
   .action {
-    position: fixed;
-    bottom: 550px;
-    right: 17px;
     display: block;
-    height: 70px;
-    width: 70px;
+    height: 35px;
+    width: 35px;
+    background-size: contain;
     text-indent: -999999px;
+    float: right;
+    margin: -32px 12px 0 0;
   }
 }
 
