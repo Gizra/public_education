@@ -60,9 +60,10 @@ angular.module('publicEducationApp')
 
         if (user) {
           userInfo = {
+            username: user.username,
             name: user.name,
-            // @todo: Deal with photo from different providers and anonymous.
-            photo: user.photo
+            photo: user.photo,
+            provider: user.provider
           };
         }
 
