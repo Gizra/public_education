@@ -45,7 +45,7 @@ angular.module('publicEducationApp')
           data.user.username = result.username;
           data.user.name = result.name;
           data.user.photo = 'https://graph.facebook.com/'+ result.username +'/picture';
-          data.provider = 'facebook';
+          data.user.provider = 'facebook';
 
           deferred.resolve(data.user);
         });
