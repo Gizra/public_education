@@ -415,12 +415,18 @@ div.leaflet-div-icon {
 }
 
 .completed-wrapper {
-  border-radius: 5px;
-  background: rgba(0, 0, 0, 0.7);
-  margin: 10%;
-  height: 80%;
-  width: 80%;
-  position: relative;
+  height: 100%;
+
+  .completed-modal {
+    border-radius: 5px;
+    background: rgba(0, 0, 0, 0.7);
+    margin: 10%;
+    height: 80%;
+    width: 80%;
+    position: absolute;
+    top: 0%;
+    left: 0%;
+  }
 
   .confirmation-message {
     padding: 70px 5% 0;
