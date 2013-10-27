@@ -18,8 +18,12 @@ angular.module('publicEducationApp')
 
     // Default values edit mode ng-class.
     $scope.classPlayerMode = 'playlist-info bottom-bar';
-    $scope.editMode = false;
+    $scope.editMode = Marker.isPlayingAllMarkers();
     $scope.actualPage = $location.absUrl();
+
+    $scope.PlayingAllMarkers = function() {
+      Marker.setPlayingAllMarkers(false);
+    };
 
     // Geting markers.
     Marker.gettingMarkers().then(function(data) {
@@ -44,8 +48,52 @@ angular.module('publicEducationApp')
         lng: $scope.selectedMarker.lng,
         zoom: 16
       };
-
     });
+
+    $scope.playListFinished = false;
+
+    if (Marker.isPlayingAllMarkers()) {
+      $scope.$watch('playListFinished', function(playListFinished) {
+        if (!playListFinished) {
+          return;
+        }
+
+        // Load the next venue from the markers list.
+        var firstVenueId = null,
+          reachedCurrentVenueId = false,
+          nextVenueId = null;
+
+        angular.forEach($scope.markers, function(value, key) {
+          if (!firstVenueId) {
+            firstVenueId = key;
+          }
+
+          if (nextVenueId) {
+            // @todo: Is there a way to break the forEach?
+            return;
+          }
+
+          if (key === $scope.venueId) {
+            reachedCurrentVenueId = true;
+          }
+          else if (reachedCurrentVenueId) {
+            nextVenueId = key;
+          }
+        });
+
+        if (nextVenueId) {
+          // Redirect to the next venue.
+          $location.path('/play-marker/' + nextVenueId);
+        }
+        else {
+          // Redirect back to the first venue, and let the Markers service know
+          // it can refresh the cache.
+          Marker.setSkipCacheNextInterval();
+          $location.path('/play-marker/' + firstVenueId);
+        }
+      });
+    }
+
 
     angular.extend($scope, Leaflet.getDefaults());
 

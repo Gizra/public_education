@@ -8,6 +8,7 @@
       "id": "public_key"
     },
     "RECORD_FLAGS": ["koc"],
+    "IS_MOBILE": true,
     "BACKEND_URL": "http://localhost:9000"
   },
   "production": {
@@ -19,6 +20,7 @@
       "id": "public_key"
     },
     "RECORD_FLAGS": ["koc"],
+    "IS_MOBILE": true,
     "BACKEND_URL": "http://localhost:9000"
   }
 }

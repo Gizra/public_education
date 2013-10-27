@@ -18,7 +18,9 @@ angular.module('publicEducationApp')
       data: {
         markers: null,
         lastProcessingHash: null,
-        markersCacheTimestamp: null
+        markersCacheTimestamp: null,
+        playAllMarkers: false,
+        skipCacheNextInterval: false
       },
 
       /**
@@ -108,15 +110,18 @@ angular.module('publicEducationApp')
       gettingMarkers: function(skipCache) {
         var self = this;
         var defer = $q.defer();
-        skipCache = skipCache || false;
+        skipCache = skipCache || this.data.skipCacheNextInterval;
         var now = new Date().getTime();
 
 
-        if (this.data.markersCacheTimestamp && now < (this.data.markersCacheTimestamp + 60000) && !skipCache) {
+        if ((this.data.isPlayingAllMarkers || this.data.markersCacheTimestamp && now < (this.data.markersCacheTimestamp + 60000)) && !skipCache) {
           // Return markers from cache.
           defer.resolve(this.data.markers);
           return defer.promise;
         }
+
+        // Set skip cache next interval back to false.
+        this.data.skipCacheNextInterval = false;
 
         $http({
           method: 'GET',
@@ -230,6 +235,18 @@ angular.module('publicEducationApp')
        */
       setProcessing: function(hash) {
         this.data.lastProcessingHash = hash;
+      },
+
+      isPlayingAllMarkers: function() {
+        return this.data.playAllMarkers;
+      },
+
+      setPlayingAllMarkers: function(value) {
+        this.data.playAllMarkers = value;
+      },
+
+      setSkipCacheNextInterval: function() {
+        this.data.skipCacheNextInterval = true;
       }
     };
   });
