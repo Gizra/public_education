@@ -21,7 +21,7 @@ angular.module('publicEducationApp')
     $scope.editMode = false;
     $scope.actualPage = $location.absUrl();
 
-    // Getting markers.
+    // Geting markers.
     Marker.gettingMarkers().then(function(data) {
       $scope.markers = data;
 
