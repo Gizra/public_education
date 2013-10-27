@@ -3,7 +3,7 @@
 angular.module('publicEducationApp')
   .factory('OAuthIo', function ($window, $http, $q, OAUTHIO) {
     var OAuth = $window.OAuth;
-    Auth.initialize(OAUTHIO.id);
+    OAuth.initialize(OAUTHIO.id);
 
     /**
      * Store some data to maintain cache.
