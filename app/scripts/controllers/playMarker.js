@@ -16,16 +16,12 @@ angular.module('publicEducationApp')
     $scope.selectedMarker = {};
     $scope.playList = [];
 
-
-    // Default values of a user.
-    $scope.user = {
-      name: 'Anonymous'
-    };
-
     // Default values edit mode ng-class.
     $scope.classPlayerMode = 'playlist-info bottom-bar';
     $scope.editMode = false;
+    $scope.actualPage = $location.absUrl();
 
+    // Geting markers.
     Marker.gettingMarkers().then(function(data) {
       $scope.markers = data;
 
@@ -40,6 +36,7 @@ angular.module('publicEducationApp')
       angular.forEach($scope.selectedMarker.playList, function(value) {
         // Push the new items to the play list.
         $scope.playList.push(value);
+        $scope.user = $scope.selectedMarker.user;
       });
 
       $scope.center = {

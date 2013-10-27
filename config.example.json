@@ -1,0 +1,22 @@
+{
+  "development": {
+    "FOURSQUARE": {
+      "id": "client_id",
+      "secret": "client_secret"
+    },
+    "OAUTHIO": {
+      "id": "public_key"
+    },
+    "BACKEND_URL": "http://localhost:9000"
+  },
+  "production": {
+    "FOURSQUARE": {
+      "id": "client_id",
+      "secret": "client_secret"
+    },
+    "OAUTHIO": {
+      "id": "public_key"
+    },
+    "BACKEND_URL": "http://localhost:9000"
+  }
+}

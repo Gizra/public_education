@@ -26,6 +26,14 @@ module.exports = function (grunt) {
     yeomanConfig.app = require('./bower.json').appPath || yeomanConfig.app;
   } catch (e) {}
 
+  // Custom config found in config.json (if exists).
+  try {
+    var evnConfig = require('./config.json');
+    if (evnConfig) {
+      grunt.util._.extend(yeomanConfig, evnConfig);
+    }
+  } catch (e) {}
+
   grunt.initConfig({
     yeoman: yeomanConfig,
     watch: {
@@ -363,12 +371,10 @@ module.exports = function (grunt) {
         name: 'config',
         constants: {
           ENV: 'development',
-          FOURSQUARE: {
-            id: 'client_id',
-            secret: 'client_secret'
-          },
+          FOURSQUARE: '<%= yeoman.development.FOURSQUARE %>',
+          OAUTHIO: '<%= yeoman.development.OAUTHIO %>',
           // Define the backend URL.
-          BACKEND_URL: 'http://localhost:3000'
+          BACKEND_URL: '<%= yeoman.development.BACKEND_URL %>'
         }
       }],
       production: [{
@@ -377,12 +383,10 @@ module.exports = function (grunt) {
         name: 'config',
         constants: {
           ENV: 'production',
-          FOURSQUARE: {
-            id: 'client_id',
-            secret: 'client_secret'
-          },
+          FOURSQUARE: '<%= yeoman.production.FOURSQUARE %>',
+          OAUTHIO: '<%= yeoman.production.OAUTHIO %>',
           // Define the backend URL.
-          BACKEND_URL: ''
+          BACKEND_URL: '<%= yeoman.production.BACKEND_URL %>'
         }
       }]
     }

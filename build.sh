@@ -1,7 +1,7 @@
 
-if grep -q client_id Gruntfile.js
+if grep -q client_id config.json
 then
-	echo "In order for Foursquare to work you need to enter the real client_id and client_secret in Gruntfile.js"
+	echo "In order for Foursquare to work you need to enter the real client_id and client_secret in config.json"
 else
 	echo "Foursquare ID OK"
 fi
@@ -14,6 +14,7 @@ phonegap local plugin add https://git-wip-us.apache.org/repos/asf/cordova-plugin
 phonegap local plugin add https://git-wip-us.apache.org/repos/asf/cordova-plugin-media.git
 phonegap local plugin add https://git-wip-us.apache.org/repos/asf/cordova-plugin-file.git
 phonegap local plugin add https://git-wip-us.apache.org/repos/asf/cordova-plugin-file-transfer.git
+phonegap local plugin add https://github.com/oauth-io/oauth-phonegap.git
 
 # Install dependencies.
 npm install
