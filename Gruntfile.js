@@ -284,7 +284,7 @@ module.exports = function (grunt) {
             'bower_components/**/*',
             'images/{,*/}*.{gif,webp}',
             'styles/fonts/*',
-            'config.json',
+            'config.xml',
             'cordova.js',
             'cordova_plugins.js'
           ]
