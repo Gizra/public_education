@@ -99,8 +99,6 @@ angular.module('publicEducationApp')
           lat: $scope.markers.marker.lat
         };
 
-      console.log($scope.user);
-
       // Getting the promise of add a new marker.
       Marker.addMarker(venue, $scope.text, $scope.file, location, $scope.user);
 
@@ -112,7 +110,7 @@ angular.module('publicEducationApp')
     };
 
     /**
-     * Set configuration
+     * Set configuration.
      */
     $scope.$watch('state', function() {
       // Initialize user when enter to credentials state.
