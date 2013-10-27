@@ -1,35 +1,8 @@
 'use strict';
 
 angular.module('publicEducationApp')
-  .controller('AddMarkerCtrl', function ($scope, $location, Leaflet, Foursquare, storage, User, Marker, BACKEND_URL, OAuthIo, $routeParams) {
-
-    $scope.oauth = function(provider) {
-      $location.path('/add-marker/' + provider);
-    };
-
-    // @todo Improve logic, Move into a directive and make communication with service?
-    $scope.$watch('state', function() {
-      if ($scope.state === 'credentials') {
-        if ($routeParams.provider) {
-          // Get provider parameter and auth
-          OAuthIo.auth($routeParams.provider).then(function(data) {
-            $scope.user = data;
-
-            // Upload the data and save marker
-            $scope.onRecorded();
-          });
-        }
-        else {
-          // Default values of a user.
-          $scope.user = {
-            name: 'Anonymous',
-            photo: ''
-          };
-        }
-      }
-    });
-
-    /**
+  .controller('AddMarkerCtrl', function ($scope, $location, Leaflet, Foursquare, storage, User, Marker, BACKEND_URL, OAuthIo) {
+     /**
      * Update the map's center, and get the venue name from FourSquare.
      *
      * The marker is always in the center of the map, and visible only if the
@@ -135,6 +108,38 @@ angular.module('publicEducationApp')
       storage.remove('text');
 
     };
+
+    /**
+     * Set configuration
+     */
+    $scope.$watch('state', function() {
+      // Initialize user when enter to credentials state.
+      if ($scope.state === 'credentials') {
+        // Default values of a user.
+        $scope.user = {
+          username: '',
+          name: 'Anonymous',
+          photo: '',
+          provider: null
+        };
+      }
+    });
+
+    /**
+     * Login user in a specific provider OAuth (Facebook) and save the marker and related record.
+     *
+     * @param provider
+     */
+    $scope.oauth = function(provider) {
+      // Get provider parameter and auth.
+      OAuthIo.auth(provider).then(function(data) {
+        $scope.user = data;
+
+        // Upload the data and save marker.
+        $scope.onRecorded();
+      });
+    };
+
 
     // @todo: Move to init function?
     storage.bind($scope, 'center', {defaultValue: Leaflet.getCenter()});

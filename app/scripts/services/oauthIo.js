@@ -16,7 +16,8 @@ angular.module('publicEducationApp')
       user: {
         username: null,
         name: null,
-        photo: null
+        photo: null,
+        provider: null
       }
     };
 
@@ -34,7 +35,7 @@ angular.module('publicEducationApp')
       var url;
 
       // Create URL for each provider.
-      url = 'https://graph.facebook.com/me?fields=picture.type(small),name,username&access_token=' + token;
+      url = 'https://graph.facebook.com/me?fields=name,username&access_token=' + token;
 
       // Request data to facebook.
       $http({
@@ -44,6 +45,7 @@ angular.module('publicEducationApp')
           data.user.username = result.username;
           data.user.name = result.name;
           data.user.photo = 'https://graph.facebook.com/'+ result.username +'/picture';
+          data.provider = 'facebook';
 
           deferred.resolve(data.user);
         });
