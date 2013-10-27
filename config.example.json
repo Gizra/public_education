@@ -6,7 +6,8 @@
     },
     "OAUTHIO": {
       "id": "public_key"
-    }
+    },
+    "BACKEND_URL": "http://localhost:9000"
   },
   "production": {
     "FOURSQUARE": {
@@ -15,6 +16,7 @@
     },
     "OAUTHIO": {
       "id": "public_key"
-    }
+    },
+    "BACKEND_URL": "http://localhost:9000"
   }
 }
