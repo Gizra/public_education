@@ -21,6 +21,10 @@ angular.module('publicEducationApp')
     $scope.editMode = Marker.isPlayingAllMarkers();
     $scope.actualPage = $location.absUrl();
 
+    $scope.PlayingAllMarkers = function() {
+      Marker.setPlayingAllMarkers(false);
+    }
+
     // Geting markers.
     Marker.gettingMarkers().then(function(data) {
       $scope.markers = data;

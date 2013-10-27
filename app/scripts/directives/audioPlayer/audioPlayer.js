@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('publicEducationApp')
-  .directive('audioPlayer', function (Phonegap) {
+  .directive('audioPlayer', function (Phonegap, $log) {
     return {
       templateUrl: 'scripts/directives/audioPlayer/audioPlayer.html',
       restrict: 'E',
@@ -42,7 +42,7 @@ angular.module('publicEducationApp')
               }
             });
           });
-          scope.play = !scope.play;
+          scope.play = true;
           scope.mediaPlayer.play();
         };
 
@@ -56,9 +56,9 @@ angular.module('publicEducationApp')
 
           if (scope.isPhoneGap) {
             scope.playPhoneGap();
-
           }
           else if (oldTrack > 0) {
+            scope.play = true;
             // HTML <audio> tag.
             if (oldTrack < track) {
               scope.playerControl.next();
@@ -83,26 +83,29 @@ angular.module('publicEducationApp')
 
           // @todo: Wathc only on playAllMarkers.
           scope.$watch('playerControl.playing', function(playing) {
+            console.log('Playing: ' + playing);
             if (playing) {
+              // Audio is playing.
               return;
             }
 
             if (!scope.playerControl || !scope.playerControl.tracks) {
+              // Tracks not initalized yet.
               return;
             }
 
-            if (scope.currentTrack + 1 !== scope.playerControl.tracks) {
+            if (scope.playerControl.currentTrack !== scope.playerControl.tracks) {
+              // Still didn't reach the last song.
               return;
             }
 
-            console.log(scope.playerControl);
+            $log.log('Current track: ' + scope.playerControl.currentTrack);
+            $log.log('Tracks: ' + scope.playerControl.tracks);
+            $log.log(scope.playerControl);
 
-
-            if (scope.playerControl.currentTime || !scope.playerControl.duration) {
-              // User reached the last song.
-              scope.playListFinished = true;
-              console.log(scope.playerControl.tracks);
-            }
+            // User reached the last song.
+            scope.playListFinished = true;
+            scope.play = false;
           });
 
           // Initialize the play property.
