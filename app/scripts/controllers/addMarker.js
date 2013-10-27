@@ -147,5 +147,4 @@ angular.module('publicEducationApp')
     storage.bind($scope, 'markers');
     storage.bind($scope, 'state', {defaultValue: 'mark'});
     $scope.backendUrl = BACKEND_URL;
-
   });

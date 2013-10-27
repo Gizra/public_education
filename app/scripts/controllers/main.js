@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('publicEducationApp')
-  .controller('ListMarkersCtrl', function ($scope, Leaflet, storage, Marker, $location, $timeout) {
+  .controller('ListMarkersCtrl', function ($scope, Leaflet, storage, Marker, $location, $timeout, IS_MOBILE) {
 
     angular.extend($scope, Leaflet.getDefaults());
     storage.bind($scope,'center', {defaultValue: Leaflet.getCenter()});
@@ -67,4 +67,6 @@ angular.module('publicEducationApp')
       // Redirect to play-marker, when user clicks a marker.
       $location.path('/play-marker/' + args.markerName);
     });
+
+    $scope.isMobile = IS_MOBILE;
   });
