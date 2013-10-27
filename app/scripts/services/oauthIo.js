@@ -2,8 +2,6 @@
 
 angular.module('publicEducationApp')
   .factory('OAuthIo', function ($window, $http, $q, OAUTHIO) {
-    var OAuth = $window.OAuth;
-    OAuth.initialize(OAUTHIO.id);
 
     /**
      * Store some data to maintain cache.
@@ -35,12 +33,14 @@ angular.module('publicEducationApp')
       var url;
 
       // Create URL for each provider.
-      url = 'https://graph.facebook.com/me?fields=name,username&access_token=' + token;
-
       // Request data to facebook.
       $http({
         method: 'GET',
-        url: url
+        url: 'https://graph.facebook.com/me',
+        params: {
+          fields: 'name,username',
+          access_token: token
+        }
       }).success(function(result) {
           data.user.username = result.username;
           data.user.name = result.name;
@@ -67,17 +67,21 @@ angular.module('publicEducationApp')
         var deferred = $q.defer();
 
         // Get the token from OAuth.io
-        OAuth.popup(provider, function(err, result) {
-          if (result) {
-            if (provider === 'facebook') {
-              data.token = result.access_token;
-              deferred.resolve(gettingFacebookData(data.token));
-            }
-            else if (provider === 'twitter') {
-              data.token = result.oauth_token;
-              // @todo require implementation for twitter API
-              deferred.reject({msg:'require implementation'});
-            }
+        var OAuth = $window.OAuth;
+        OAuth.initialize(OAUTHIO.id);
+        OAuth.popup(provider, function(err, success) {
+          if (!success) {
+            return;
+          }
+
+          if (provider === 'facebook') {
+            data.token = success.access_token;
+            deferred.resolve(gettingFacebookData(data.token));
+          }
+          else if (provider === 'twitter') {
+            data.token = success.oauth_token;
+            // @todo require implementation for twitter API
+            deferred.reject({msg:'require implementation'});
           }
         });
 
