@@ -146,6 +146,13 @@ angular.module('publicEducationApp')
     storage.bind($scope, 'text');
     storage.bind($scope, 'markers');
     storage.bind($scope, 'state', {defaultValue: 'mark'});
+
+    // Populate icons to the scope
+    angular.extend($scope, {icons: Leaflet.getIcons()});
+
+    console.log($scope.icons);
+
+
     $scope.backendUrl = BACKEND_URL;
 
   });
