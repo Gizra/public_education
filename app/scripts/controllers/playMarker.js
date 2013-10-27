@@ -88,11 +88,11 @@ angular.module('publicEducationApp')
           $location.path('/play-marker/' + nextVenueId);
         }
         else {
-          // Redirect back to the first venue.
+          // Redirect back to the first venue, and let the Markers service know
+          // it can refresh the cache.
+          Marker.setSkipCacheNextInterval();
           $location.path('/play-marker/' + firstVenueId);
         }
-
-
       });
     }
 

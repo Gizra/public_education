@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('publicEducationApp')
-  .directive('audioPlayer', function (Phonegap, $log) {
+  .directive('audioPlayer', function (Phonegap) {
     return {
       templateUrl: 'scripts/directives/audioPlayer/audioPlayer.html',
       restrict: 'E',
@@ -98,10 +98,6 @@ angular.module('publicEducationApp')
               // Still didn't reach the last song.
               return;
             }
-
-            $log.log('Current track: ' + scope.playerControl.currentTrack);
-            $log.log('Tracks: ' + scope.playerControl.tracks);
-            $log.log(scope.playerControl);
 
             // User reached the last song.
             scope.playListFinished = true;
