@@ -1,15 +1,18 @@
-<div>
-  <a href="{{ backendUrl }}/auth/facebook">Facebook</a>
-</div>
+<div class="login-wrapper">
+	<a title="Back to recording" class="close" ng-click="setState('record')">X</a>
+	<div class="login-btn login-fb">
+	  <a href="{{ backendUrl }}/auth/facebook">Login with Facebook</a>
+	</div>
 
-<div>
-  <a href="{{ backendUrl }}/auth/twitter">Twitter</a>
+	<div class="login-btn login-tw">
+	  <a href="{{ backendUrl }}/auth/twitter">Login with Twitter</a>
+	</div>
+	<div class="login-or"><span>or</span></div>
+	<div class="login-btn login-anon">
+	    <a href="{{ backendUrl }}/">Post anonymously</a>
+	</div>
+	<br>
+	<pre>
+	    USER: {{ user }}
+	</pre>
 </div>
-or
-<div>
-    <a href="{{ backendUrl }}/">Post anonymously</a>
-</div>
-<br>
-<pre>
-    USER: {{ user }}
-</pre>

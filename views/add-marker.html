@@ -1,4 +1,4 @@
-<!-- MAKER -->
+<!-- MARKER -->
 <div class="map-wrapper" ng-show="state == 'mark'">
   <div class="instructions-wrapper">
 
@@ -33,8 +33,8 @@
   <a class="close" ng-click="setState('mark')">X</a>
 
   <form>
-    <div>
-      <textarea class="command-form" rows="6" name="text" ng-model="text" placeholder="Write a command. Make it specific for this location." required=""></textarea><br>
+    <div class="textarea-wrapper">
+      <textarea class="command-form" rows="6" name="text" ng-model="text" placeholder="Write a command. Make it specific for this location." required=""></textarea>
     </div>
 
     <div class="info-wrapper" ng-class="{disabled: 80 - text.length < 0 , warning: 70 - text.length < 0}">
