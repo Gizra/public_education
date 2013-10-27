@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('publicEducationApp')
-  .service('Marker', function Marker($q, $http, $timeout, BACKEND_URL, Phonegap, md5) {
+  .service('Marker', function Marker($q, $http, $timeout, BACKEND_URL, RECORD_FLAGS, Phonegap, md5) {
 
     return {
 
@@ -120,7 +120,10 @@ angular.module('publicEducationApp')
 
         $http({
           method: 'GET',
-          url: BACKEND_URL + '/get-markers'
+          url: BACKEND_URL + '/get-markers',
+          params: {
+            flags: RECORD_FLAGS.join()
+          }
         }).success(function (data) {
           // Update the timestamp of the response from the server.
           self.data.markersCacheTimestamp = new Date().getTime();
