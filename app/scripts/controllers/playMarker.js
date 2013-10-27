@@ -23,7 +23,7 @@ angular.module('publicEducationApp')
 
     $scope.PlayingAllMarkers = function() {
       Marker.setPlayingAllMarkers(false);
-    }
+    };
 
     // Geting markers.
     Marker.gettingMarkers().then(function(data) {
@@ -80,8 +80,6 @@ angular.module('publicEducationApp')
             nextVenueId = key;
           }
         });
-
-        console.log('venue ID ' + nextVenueId);
 
         if (nextVenueId) {
           // Redirect to the next venue.

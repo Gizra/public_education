@@ -81,7 +81,7 @@ angular.module('publicEducationApp')
             }
           });
 
-          // @todo: Wathc only on playAllMarkers.
+          // Watch when reaching the last audio.
           scope.$watch('playerControl.playing', function(playing) {
             if (playing) {
               // Audio is playing.
