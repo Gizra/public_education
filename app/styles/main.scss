@@ -569,6 +569,16 @@ div.leaflet-div-icon {
       margin-top: 0;
     }
 
+    .pause {
+      height: 4em;
+      width: 4em;
+      background: url(../images/fwd@2x.png) center center no-repeat;
+      background-size: 50%; //retina
+      left: 50%;
+      margin-left: -2.56em;
+      margin-top: 0;
+    }
+
     .fwd {
       background: url(../images/fwd@2x.png) center center no-repeat;
       background-size: 50%; //retina
