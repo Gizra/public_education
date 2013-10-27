@@ -32,7 +32,6 @@ module.exports = function (grunt) {
     if (evnConfig) {
       grunt.util._.extend(yeomanConfig, evnConfig);
     }
-    console.log(yeomanConfig);
   } catch (e) {}
 
   grunt.initConfig({
