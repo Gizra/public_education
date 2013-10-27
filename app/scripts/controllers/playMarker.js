@@ -21,8 +21,10 @@ angular.module('publicEducationApp')
     $scope.editMode = false;
     $scope.actualPage = $location.absUrl();
 
+
     // Geting markers.
     Marker.gettingMarkers().then(function(data) {
+
       $scope.markers = data;
 
       if (!$scope.markers[$scope.venueId]) {
@@ -31,13 +33,17 @@ angular.module('publicEducationApp')
       }
 
       $scope.selectedMarker = $scope.markers[$scope.venueId];
+      $scope.selectedMarker.currentRecord = $scope.selectedMarker.playList[0];
 
+      console.log('$scope.selectedMarker.currentRecord', $scope.selectedMarker.currentRecord);
       // Needed to fill the playList of the component angular-audio-player.
       angular.forEach($scope.selectedMarker.playList, function(value) {
         // Push the new items to the play list.
         $scope.playList.push(value);
         $scope.user = $scope.selectedMarker.user;
       });
+
+      console.log('$scope.playList', $scope.playList);
 
       $scope.center = {
         lat: $scope.selectedMarker.lat,

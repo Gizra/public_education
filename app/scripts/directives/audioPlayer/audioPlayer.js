@@ -12,7 +12,6 @@ angular.module('publicEducationApp')
       link: function postLink(scope) {
         scope.isPhoneGap = Phonegap.isMobile.any();
 
-
         scope.previous = function() {
           if (scope.currentTrack > 0) {
             --scope.currentTrack;
@@ -45,12 +44,16 @@ angular.module('publicEducationApp')
         };
 
         scope.$watch('currentTrack', function(track, oldTrack) {
+
+
           // Populate info of current record in the scope.
-          if (!scope.playList.length) {
+          if (!scope.playList.length || track === undefined || track < 0) {
             return;
           }
 
           scope.currentRecord = scope.playList[track];
+          console.log('++++', scope.currentRecord);
+          // console.log('++++', scope.currentRecord, track, oldTrack, scope.currentTrack);
 
           if (scope.isPhoneGap) {
             scope.playPhoneGap();
@@ -65,7 +68,7 @@ angular.module('publicEducationApp')
             }
 
           }
-        });
+        }, true);
 
 
         if (!scope.isPhoneGap) {
