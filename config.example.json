@@ -7,6 +7,7 @@
     "OAUTHIO": {
       "id": "public_key"
     },
+    "RECORD_FLAGS": ["koc"],
     "BACKEND_URL": "http://localhost:9000"
   },
   "production": {
@@ -17,6 +18,7 @@
     "OAUTHIO": {
       "id": "public_key"
     },
+    "RECORD_FLAGS": ["koc"],
     "BACKEND_URL": "http://localhost:9000"
   }
 }
