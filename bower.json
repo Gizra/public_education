@@ -15,7 +15,8 @@
     "leaflet": "http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.js",
     "angularLocalStorage": "~0.1.7",
     "angular-audio-player": "mrgamer/angular-audio-player#master",
-    "angular-md5": "~0.0.3"
+    "angular-md5": "~0.0.3",
+    "oauth": "oauth-io/oauth-js#master"
   },
   "devDependencies": {
     "angular-mocks": "~1.0.7",

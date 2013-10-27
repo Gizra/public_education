@@ -3,12 +3,18 @@
     "FOURSQUARE": {
       "id": "client_id",
       "secret": "client_secret"
+    },
+    "OAUTHIO": {
+      "id": "public_key"
     }
   },
   "production": {
     "FOURSQUARE": {
       "id": "client_id",
       "secret": "client_secret"
+    },
+    "OAUTHIO": {
+      "id": "public_key"
     }
   }
 }

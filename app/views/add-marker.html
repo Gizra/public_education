@@ -69,11 +69,24 @@
   </div>
 
   <div class="recorder" ng-show="markers.marker.venue.name">
-    <sound-recorder class="rec" file="file" on-recorded="onRecorded()"></sound-recorder>
+    <sound-recorder class="rec" file="file" on-recorded="setState('credentials')"></sound-recorder>
   </div>
 
 </div>
 <!-- .../END RECORDING -->
+
+<!-- CREDENTIALS -->
+<div class="login-wrapper" ng-show="state == 'credentials'">
+  <a title="Back to recording" class="close" ng-click="setState('record')">X</a>
+  <div class="login-btn login-fb">
+    <a ng-click="oauth('facebook')">Facebook</a>
+  </div>
+  <div class="login-or"><span>or</span></div>
+  <div class="login-btn login-anon">
+    <a ng-click="onRecorded()">Post anonymously</a>
+  </div>
+</div>
+<!-- .../END CREDENTIALS -->
 
 
 <!-- COMPLETE -->

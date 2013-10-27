@@ -14,6 +14,7 @@ phonegap local plugin add https://git-wip-us.apache.org/repos/asf/cordova-plugin
 phonegap local plugin add https://git-wip-us.apache.org/repos/asf/cordova-plugin-media.git
 phonegap local plugin add https://git-wip-us.apache.org/repos/asf/cordova-plugin-file.git
 phonegap local plugin add https://git-wip-us.apache.org/repos/asf/cordova-plugin-file-transfer.git
+phonegap local plugin add https://github.com/oauth-io/oauth-phonegap.git
 
 # Install dependencies.
 npm install

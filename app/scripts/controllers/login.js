@@ -6,8 +6,8 @@ angular.module('publicEducationApp')
     User.getUser().then(function(data) {
       // @todo: Redirect is user already logged in.
         console.log(data);
-      $scope.user = data;
-    });
+        $scope.user = data;
+      });
 
     // Get the backend URL.
     $scope.backendUrl = BACKEND_URL;
