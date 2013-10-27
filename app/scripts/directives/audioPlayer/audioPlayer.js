@@ -89,9 +89,17 @@ angular.module('publicEducationApp')
               return;
             }
 
-            if (scope.currentTrack + 1 === scope.playerControl.tracks && scope.playerControl.currentTime) {
+            if (scope.currentTrack + 1 !== scope.playerControl.tracks) {
+              return;
+            }
+
+            console.log(scope.playerControl);
+
+
+            if (scope.playerControl.currentTime || !scope.playerControl.duration) {
               // User reached the last song.
               scope.playListFinished = true;
+              console.log(scope.playerControl.tracks);
             }
           });
         }
