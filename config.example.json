@@ -6,7 +6,9 @@
     },
     "OAUTHIO": {
       "id": "public_key"
-    }
+    },
+    "RECORD_FLAGS": ["koc"],
+    "BACKEND_URL": "http://localhost:9000"
   },
   "production": {
     "FOURSQUARE": {
@@ -15,6 +17,8 @@
     },
     "OAUTHIO": {
       "id": "public_key"
-    }
+    },
+    "RECORD_FLAGS": ["koc"],
+    "BACKEND_URL": "http://localhost:9000"
   }
 }
