@@ -17,10 +17,6 @@ angular.module('publicEducationApp', [
         templateUrl: 'views/add-marker.html',
         controller: 'AddMarkerCtrl'
       })
-      .when('/add-marker/:provider', {
-        templateUrl: 'views/add-marker.html',
-        controller: 'AddMarkerCtrl'
-      })
       .when('/play-marker/:venueId', {
         templateUrl: 'views/play-marker.html',
         controller: 'PlayMarkerCtrl'

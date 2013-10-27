@@ -374,7 +374,7 @@ module.exports = function (grunt) {
           FOURSQUARE: '<%= yeoman.development.FOURSQUARE %>',
           OAUTHIO: '<%= yeoman.development.OAUTHIO %>',
           // Define the backend URL.
-          BACKEND_URL: 'http://10.0.0.133:3000'
+          BACKEND_URL: '<%= yeoman.development.BACKEND_URL %>'
         }
       }],
       production: [{
@@ -386,7 +386,7 @@ module.exports = function (grunt) {
           FOURSQUARE: '<%= yeoman.production.FOURSQUARE %>',
           OAUTHIO: '<%= yeoman.production.OAUTHIO %>',
           // Define the backend URL.
-          BACKEND_URL: 'http://public-education.herokuapp.com'
+          BACKEND_URL: '<%= yeoman.production.BACKEND_URL %>'
         }
       }]
     }

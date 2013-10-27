@@ -110,7 +110,7 @@ angular.module('publicEducationApp')
     };
 
     /**
-     * Set configuration.
+     * Observing states of add marker flow, to perform actions.
      */
     $scope.$watch('state', function() {
       // Initialize user when enter to credentials state.
