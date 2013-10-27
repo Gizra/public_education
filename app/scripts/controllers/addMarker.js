@@ -19,7 +19,14 @@ angular.module('publicEducationApp')
           marker: {
             lat: lat,
             lng: lng,
-            venue: null
+            venue: null,
+            icon: L.divIcon({
+              iconSize: [30, 35],
+              // Set the icon according to the playlist count.
+              html: '<div class="add-marker-icon"></div>',
+              // @todo: angular-leaflet fails without this one.
+              iconAnchor:   [15, 35]
+            })
           }
         };
 
@@ -146,13 +153,6 @@ angular.module('publicEducationApp')
     storage.bind($scope, 'text');
     storage.bind($scope, 'markers');
     storage.bind($scope, 'state', {defaultValue: 'mark'});
-
-    // Populate icons to the scope
-    angular.extend($scope, {icons: Leaflet.getIcons()});
-
-    console.log($scope.icons);
-
-
     $scope.backendUrl = BACKEND_URL;
 
   });
