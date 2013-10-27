@@ -83,7 +83,6 @@ angular.module('publicEducationApp')
 
           // @todo: Wathc only on playAllMarkers.
           scope.$watch('playerControl.playing', function(playing) {
-            console.log('Playing: ' + playing);
             if (playing) {
               // Audio is playing.
               return;
