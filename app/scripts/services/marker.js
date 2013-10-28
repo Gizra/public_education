@@ -52,8 +52,7 @@ angular.module('publicEducationApp')
             name: venue.name,
             lat: venue.lat,
             lng: venue.lng,
-            playList: [],
-            currentRecord: null
+            playList: []
           };
         }
 
