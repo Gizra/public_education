@@ -151,6 +151,7 @@ angular.module('publicEducationApp')
 
     // @todo: Move to init function?
     storage.bind($scope, 'center', {defaultValue: Leaflet.getCenter()});
+    $scope.center.zoom = 16;
     storage.bind($scope, 'text');
     storage.bind($scope, 'state', {defaultValue: 'mark'});
     $scope.markers = {};
