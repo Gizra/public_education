@@ -5,12 +5,21 @@ angular.module('publicEducationApp')
 
     angular.extend($scope, Leaflet.getDefaults());
     storage.bind($scope,'center', {defaultValue: Leaflet.getCenter()});
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(function(position) {
-        $scope.center.lat = position.coords.latitude;
-        $scope.center.lng = position.coords.longitude;
-      });
-    }
+
+    document.addEventListener('deviceready', $scope.onDeviceReady, false);
+
+    $scope.onDeviceReady = function() {
+      if (navigator.geolocation) {
+        getCurrentPosition(function(position) {
+          $scope.center.lat = position.coords.latitude;
+          $scope.center.lng = position.coords.longitude;
+        });
+      }
+    };
+
+//  console.log($window.geo);
+
+
 
     $scope.markers = {};
 
