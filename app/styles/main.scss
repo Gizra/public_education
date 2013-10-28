@@ -103,16 +103,16 @@ div.leaflet-div-icon {
     height: 51px;
 
     .icon-shadow {
-      background: url(../images/adding@2x.png) no-repeat bottom center;
+      background: url(../images/adding@2x.png) no-repeat center bottom;
       display: block;
       width: 30px;
-      height: 15px;
-      margin: 36px auto 0;
+      height: 12px;
+      margin: 38px auto 0;
       background-size: 100%;
     }
   }
 
-  &.map-static div.leaflet-div-icon {
+  &.map-moving div.leaflet-div-icon {
     background-position: 0 0;
 
     .icon-shadow {
