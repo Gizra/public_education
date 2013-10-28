@@ -1,30 +1,16 @@
 'use strict';
 
 angular.module('publicEducationApp')
-  .controller('ListMarkersCtrl', function ($scope, $window, Leaflet, storage, Marker, $location, $timeout, Phonegap, IS_MOBILE) {
+  .controller('ListMarkersCtrl', function ($scope, $window, Leaflet, storage, Marker, $location, $timeout, IS_MOBILE) {
 
     angular.extend($scope, Leaflet.getDefaults());
     storage.bind($scope,'center', {defaultValue: Leaflet.getCenter()});
-
-
-    $scope.onDeviceReady = function() {
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(function(position) {
-          $scope.center.lat = position.coords.latitude;
-          $scope.center.lng = position.coords.longitude;
-        });
-      }
-    };
-
-    if (Phonegap.isMobile.any()) {
-      // Devices.
-      document.addEventListener('deviceready', $scope.onDeviceReady, false);
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(function(position) {
+        $scope.center.lat = position.coords.latitude;
+        $scope.center.lng = position.coords.longitude;
+      });
     }
-    else {
-      // Web.
-      $scope.onDeviceReady();
-    }
-
 
     $scope.markers = {};
 
