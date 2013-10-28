@@ -96,24 +96,8 @@ angular.module('publicEducationApp')
           lng: venue.lng
         };
 
-
         // Set current record information to the cache
         this.data.markers[id].currentRecord = newMarker;
-        console.log('current record:', this.data.markers[id].currentRecord);
-
-//        {
-//          __v: null,
-//          _id: "526d231716b19d1a30000022"
-//          created: "2013-10-27T14:28:39.890Z"
-//          hash: "fba5c3f7593bc6e39bdd198be27f9e12"
-//          lat: 32.06621043669699
-//          lng: 34.765580892562866
-//          published: true
-//          src: "https://s3.amazonaws.com/PE-dev/1382884119955.wav"
-//          text: "Es un ajardon para visitar con la familia@!"
-//          user: Object
-//          venueId: "4e807c67f7904146bdb5213c"
-//        }
 
         return this.uploadingMarker(newMarker);
       },

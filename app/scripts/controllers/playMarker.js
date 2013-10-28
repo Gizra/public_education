@@ -37,6 +37,11 @@ angular.module('publicEducationApp')
 
       $scope.selectedMarker = $scope.markers[$scope.venueId];
       $scope.selectedMarker.currentRecord = $scope.selectedMarker.playList[0];
+      // @todo: mock the web version
+      if (!Phonegap.isMobile.any()) {
+        $scope.selectedMarker.currentRecord.src = 'https://s3.amazonaws.com/PE-dev/1382945564909.wav';
+      }
+
 
       console.log('$scope.selectedMarker.currentRecord', $scope.selectedMarker.currentRecord);
       // Needed to fill the playList of the component angular-audio-player.
