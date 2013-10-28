@@ -9,7 +9,8 @@
     },
     "RECORD_FLAGS": ["koc"],
     "IS_MOBILE": true,
-    "BACKEND_URL": "http://localhost:9000"
+    "BACKEND_URL": "http://localhost:9000",
+    "DUMMY_WAV_FILE": "https://s3.amazonaws.com/PE-dev/1382945564909.wav"
   },
   "production": {
     "FOURSQUARE": {
@@ -21,6 +22,7 @@
     },
     "RECORD_FLAGS": ["koc"],
     "IS_MOBILE": true,
-    "BACKEND_URL": "http://localhost:9000"
+    "BACKEND_URL": "http://localhost:9000",
+    "DUMMY_WAV_FILE": "https://s3.amazonaws.com/PE-dev/1382945564909.wav"
   }
 }

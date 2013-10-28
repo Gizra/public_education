@@ -52,7 +52,9 @@ angular.module('publicEducationApp')
             return;
           }
 
+
           scope.currentRecord = scope.playList[track];
+          console.log(scope.currentRecord.src);
 
           if (scope.isPhoneGap) {
             scope.playPhoneGap();

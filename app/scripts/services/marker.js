@@ -52,7 +52,8 @@ angular.module('publicEducationApp')
             name: venue.name,
             lat: venue.lat,
             lng: venue.lng,
-            playList: []
+            playList: [],
+            currentRecord: null
           };
         }
 
@@ -95,9 +96,6 @@ angular.module('publicEducationApp')
           lat: venue.lat,
           lng: venue.lng
         };
-
-        // Set current record information to the cache.
-        this.data.markers[id].currentRecord = newMarker;
 
         return this.uploadingMarker(newMarker);
       },
