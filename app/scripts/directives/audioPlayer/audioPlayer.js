@@ -47,12 +47,11 @@ angular.module('publicEducationApp')
         };
 
         scope.$watch('currentTrack', function(track, oldTrack) {
-          // We continue only with a valid track number or a playlist.
-          if (!scope.playList.length || track === undefined || track < 0) {
+          // Populate info of current record in the scope.
+          if (!scope.playList.length) {
             return;
           }
 
-          // Update currentRecord.
           scope.currentRecord = scope.playList[track];
 
           if (scope.isPhoneGap) {
@@ -69,7 +68,7 @@ angular.module('publicEducationApp')
             }
 
           }
-        }, true);
+        });
 
 
         if (!scope.isPhoneGap) {
