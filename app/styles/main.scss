@@ -68,6 +68,10 @@ body{
   color: #ffffff;
 }
 
+.leaflet-container {
+    background: #444;
+}
+
 div.leaflet-div-icon {
   border: 0;
   background: url(../images/marker@2x.png) no-repeat;
@@ -574,7 +578,8 @@ div.leaflet-div-icon {
       margin-left: -1.25em;
     }
 
-    .play {
+    .play,
+    .pause {
       height: 4em;
       width: 4em;
       background: url(../images/play-rec@2x.png) center center no-repeat;
@@ -582,6 +587,10 @@ div.leaflet-div-icon {
       left: 50%;
       margin-left: -2.56em;
       margin-top: 0;
+    }
+
+    .pause {
+      background-image: url(../images/pause-rec@2x.png);
     }
 
     .pause {
@@ -662,10 +671,3 @@ div.leaflet-div-icon {
     }
   }
 }
-
-
-
-
-
-
-
