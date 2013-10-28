@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('publicEducationApp')
-  .service('Marker', function Marker($q, $http, $timeout, BACKEND_URL, Phonegap, md5) {
+  .service('Marker', function Marker($q, $http, $timeout, BACKEND_URL, RECORD_FLAGS, Phonegap, md5) {
 
     return {
 
@@ -18,7 +18,9 @@ angular.module('publicEducationApp')
       data: {
         markers: null,
         lastProcessingHash: null,
-        markersCacheTimestamp: null
+        markersCacheTimestamp: null,
+        playAllMarkers: false,
+        skipCacheNextInterval: false
       },
 
       /**
@@ -127,19 +129,25 @@ angular.module('publicEducationApp')
       gettingMarkers: function(skipCache) {
         var self = this;
         var defer = $q.defer();
-        skipCache = skipCache || false;
+        skipCache = skipCache || this.data.skipCacheNextInterval;
         var now = new Date().getTime();
 
 
-        if (this.data.markersCacheTimestamp && now < (this.data.markersCacheTimestamp + 60000) && !skipCache) {
+        if ((this.data.isPlayingAllMarkers || this.data.markersCacheTimestamp && now < (this.data.markersCacheTimestamp + 60000)) && !skipCache) {
           // Return markers from cache.
           defer.resolve(this.data.markers);
           return defer.promise;
         }
 
+        // Set skip cache next interval back to false.
+        this.data.skipCacheNextInterval = false;
+
         $http({
           method: 'GET',
-          url: BACKEND_URL + '/get-markers'
+          url: BACKEND_URL + '/get-markers',
+          params: {
+            flags: RECORD_FLAGS.join()
+          }
         }).success(function (data) {
           // Update the timestamp of the response from the server.
           self.data.markersCacheTimestamp = new Date().getTime();
@@ -250,6 +258,18 @@ angular.module('publicEducationApp')
        */
       setProcessing: function(hash) {
         this.data.lastProcessingHash = hash;
+      },
+
+      isPlayingAllMarkers: function() {
+        return this.data.playAllMarkers;
+      },
+
+      setPlayingAllMarkers: function(value) {
+        this.data.playAllMarkers = value;
+      },
+
+      setSkipCacheNextInterval: function() {
+        this.data.skipCacheNextInterval = true;
       }
     };
   });

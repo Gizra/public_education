@@ -56,7 +56,16 @@ body{
     height: 58px;
     width: 64px;
   }
+}
 
+.footer {
+  position: absolute;
+  z-index: 99;
+  height: 100px;
+  bottom: 0;
+  opacity: 50%;
+  background: black;
+  color: #ffffff;
 }
 
 div.leaflet-div-icon {
@@ -415,12 +424,18 @@ div.leaflet-div-icon {
 }
 
 .completed-wrapper {
-  border-radius: 5px;
-  background: rgba(0, 0, 0, 0.7);
-  margin: 10%;
-  height: 80%;
-  width: 80%;
-  position: relative;
+  height: 100%;
+
+  .completed-modal {
+    border-radius: 5px;
+    background: rgba(0, 0, 0, 0.7);
+    margin: 10%;
+    height: 80%;
+    width: 80%;
+    position: absolute;
+    top: 0%;
+    left: 0%;
+  }
 
   .confirmation-message {
     padding: 70px 5% 0;
@@ -563,6 +578,16 @@ div.leaflet-div-icon {
       height: 4em;
       width: 4em;
       background: url(../images/play-rec@2x.png) center center no-repeat;
+      background-size: 50%; //retina
+      left: 50%;
+      margin-left: -2.56em;
+      margin-top: 0;
+    }
+
+    .pause {
+      height: 4em;
+      width: 4em;
+      background: url(../images/fwd@2x.png) center center no-repeat;
       background-size: 50%; //retina
       left: 50%;
       margin-left: -2.56em;

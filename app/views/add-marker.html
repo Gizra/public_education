@@ -91,27 +91,32 @@
 
 <!-- COMPLETE -->
 <div  class="completed-wrapper" ng-show="state == 'completed'">
+  <leaflet center="center" markers="markers" defaults="defaults" ></leaflet>
+  <a href="#/" ng-click="setState('mark')" class="dark-overlay"></a>
 
-  <div>
-    <a href="#/" ng-click="setState('mark')" class="close">X Close</a>
+  <div class="completed-modal">
+    <div>
+      <a href="#/" ng-click="setState('mark')" class="close">X Close</a>
+    </div>
+
+    <div class="confirmation-message">
+      <p>
+        <strong>Thanks!</strong>
+      </p>
+      <p>
+        Your command has been recorded.
+      </p>
+      <p>
+        now, go tell your friends!
+      </p>
+    </div>
+    <ul class="share-btns">
+      <li><a href="#" class="share-tw">Share on Twitter</a></li>
+      <li><a href="#" class="share-fb">Share on Facebook</a></li>
+      <li><a href="#" class="share-email">Send as in an email</a></li>
+      <li><a href="#" class="share-link">Link to this command</a></li>
+    </ul>
   </div>
 
-  <div class="confirmation-message">
-    <p>
-      <strong>Thanks!</strong>
-    </p>
-    <p>
-      Your command has been recorded.
-    </p>
-    <p>
-      now, go tell your friends!
-    </p>
-  </div>
-  <ul class="share-btns">
-    <li><a href="#" class="share-tw">Share on Twitter</a></li>
-    <li><a href="#" class="share-fb">Share on Facebook</a></li>
-    <li><a href="#" class="share-email">Send as in an email</a></li>
-    <li><a href="#" class="share-link">Link to this command</a></li>
-  </ul>
 </div>
 <!-- .../END COMPLETE -->

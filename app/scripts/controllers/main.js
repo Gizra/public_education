@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('publicEducationApp')
-  .controller('ListMarkersCtrl', function ($scope, Leaflet, storage, Marker, $location, $timeout) {
+  .controller('ListMarkersCtrl', function ($scope, Leaflet, storage, Marker, $location, $timeout, IS_MOBILE) {
 
     angular.extend($scope, Leaflet.getDefaults());
     storage.bind($scope,'center', {defaultValue: Leaflet.getCenter()});
@@ -13,6 +13,26 @@ angular.module('publicEducationApp')
     }
 
     $scope.markers = {};
+
+    $scope.playAllMarkers = function() {
+      Marker.setPlayingAllMarkers(true);
+      $scope.redirectToFirstVenue();
+    };
+
+
+    $scope.$watch('markers', function() {
+      if (Marker.isPlayingAllMarkers()) {
+        $scope.redirectToFirstVenue();
+      }
+    });
+
+    $scope.redirectToFirstVenue = function() {
+      // Redirect to the first venueId.
+      angular.forEach($scope.markers, function(marker, key) {
+        $location.path('/play-marker/' + key);
+      });
+    };
+
 
     // Get markers.
     var getMarkers = function() {
@@ -48,6 +68,5 @@ angular.module('publicEducationApp')
       $location.path('/play-marker/' + args.markerName);
     });
 
-
-
+    $scope.isMobile = IS_MOBILE;
   });

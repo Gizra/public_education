@@ -373,6 +373,8 @@ module.exports = function (grunt) {
           ENV: 'development',
           FOURSQUARE: '<%= yeoman.development.FOURSQUARE %>',
           OAUTHIO: '<%= yeoman.development.OAUTHIO %>',
+          RECORD_FLAGS: '<%= yeoman.development.RECORD_FLAGS %>',
+          IS_MOBILE: '<%= yeoman.development.IS_MOBILE %>',
           // Define the backend URL.
           BACKEND_URL: '<%= yeoman.development.BACKEND_URL %>'
         }
@@ -385,6 +387,8 @@ module.exports = function (grunt) {
           ENV: 'production',
           FOURSQUARE: '<%= yeoman.production.FOURSQUARE %>',
           OAUTHIO: '<%= yeoman.production.OAUTHIO %>',
+          RECORD_FLAGS: '<%= yeoman.production.RECORD_FLAGS %>',
+          IS_MOBILE: '<%= yeoman.production.IS_MOBILE %>',
           // Define the backend URL.
           BACKEND_URL: '<%= yeoman.production.BACKEND_URL %>'
         }

@@ -4,7 +4,7 @@
       <a ng-href="#/add-marker">Add marker</a>
     </div>
     <div>
-      <a ng-href="#/" class="close">Close</a>
+      <a ng-href="#/" ng-click="PlayingAllMarkers()" class="close">Close</a>
     </div>
   </div>
 </div>
@@ -29,7 +29,7 @@
     </div>
     <div class="action expand" ng-click="toggleEditMode()"> </div>
     <div class="recording-content">
-      <audio-player play-list="playList" current-record="selectedMarker.currentRecord"></audio-player>
+      <audio-player play-list="playList" current-record="selectedMarker.currentRecord" play-list-finished="playListFinished"></audio-player>
 
       <p class="record-text"> {{ selectedMarker.currentRecord.text }}</p>
 
