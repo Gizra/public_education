@@ -5,13 +5,18 @@ angular.module('publicEducationApp', [
     'angular-audio-player',
     'angularLocalStorage',
     'leaflet-directive',
-    'angular-md5'
+    'angular-md5',
+    'btford.phonegap.ready',
+    'btford.phonegap.geolocation'
   ])
   .config(function ($routeProvider, $httpProvider) {
     $routeProvider
+//      .when('/', {
+//        templateUrl: 'views/main.html',
+//        controller: 'ListMarkersCtrl'
       .when('/', {
-        templateUrl: 'views/main.html',
-        controller: 'ListMarkersCtrl'
+        templateUrl: 'views/testPhonegap.html',
+        controller: 'TestphonegapCtrl'
       })
       .when('/add-marker', {
         templateUrl: 'views/add-marker.html',
@@ -24,6 +29,10 @@ angular.module('publicEducationApp', [
       .when('/login', {
         templateUrl: 'views/login.html',
         controller: 'loginCtrl'
+      })
+      .when('/testPhonegap', {
+        templateUrl: 'views/testPhonegap.html',
+        controller: 'TestphonegapCtrl'
       })
       .otherwise({
         redirectTo: '/'

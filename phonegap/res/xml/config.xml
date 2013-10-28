@@ -31,5 +31,5 @@
     <preference name="disable-cursor" value="false" />
     <preference name="android-minSdkVersion" value="7" />
     <preference name="android-installLocation" value="auto" />
-    <plugin name="InAppBrowser" value="org.apache.cordova.InAppBrowser" />
+
 </widget>

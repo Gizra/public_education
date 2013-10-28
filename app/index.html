@@ -16,7 +16,7 @@
         <!-- endbuild -->
 </head>
   <body ng-app="publicEducationApp">
-
+    <script src="http://jsconsole.com/remote.js?27EC21CB-7A9E-4CC6-B278-B789734C9C3B"></script>
     <!--[if lt IE 7]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
@@ -42,76 +42,13 @@
 
     <script src="bower_components/angular/angular.js"></script>
 
-    <script>
-      // Conditionally load the Phonegap JS file.
-      var isMobile = {
-        Android: function() {
-          return navigator.userAgent.match(/Android/i);
-        },
-        BlackBerry: function() {
-          return navigator.userAgent.match(/BlackBerry/i);
-        },
-        iOS: function() {
-          return navigator.userAgent.match(/iPhone|iPad|iPod/i);
-        },
-        Opera: function() {
-          return navigator.userAgent.match(/Opera Mini/i);
-        },
-        Windows: function() {
-          return navigator.userAgent.match(/IEMobile/i);
-        },
-        any: function() {
-          return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows());
-        }
-      };
-
-      if (isMobile.any()) {
-        var head = document.getElementsByTagName('head')[0];
-        var js = document.createElement("script");
-
-        js.type = "text/javascript";
-        js.src = "cordova.js";
-
-        head.appendChild(js);
-
-        (function(){
-          // @todo: Remove appRootDirName?
-          window.appRootDirName = "";
-          document.addEventListener("deviceready", onDeviceReady, false);
-
-          function onDeviceReady() {
-            console.log("device is ready");
-            window.requestFileSystem  = window.requestFileSystem || window.webkitRequestFileSystem;
-            window.requestFileSystem(LocalFileSystem.TEMPORARY, 0, gotFS, fail);
-          }
-
-          function fail() {
-            console.log("failed to get filesystem");
-          }
-
-          function gotFS(fileSystem) {
-            console.log("filesystem got");
-            fileSystem.root.getDirectory(window.appRootDirName, {
-              create : true,
-              exclusive : false
-            }, dirReady, fail);
-          }
-
-          function dirReady(entry) {
-            window.appRootDir = entry;
-            console.log(JSON.stringify(window.appRootDir));
-          }
-        })();
-      }
-    </script>
-
-
     <!-- Leaflet JS -->
     <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.css" />
     <!--[if lte IE 8]>
       <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.ie.css" />
     <![endif]-->
     <script src="bower_components/leaflet/index.js"></script>
+    <script src="cordova.js"></script>
 
         <!-- build:js scripts/plugins.js -->
         <script src="bower_components/angular-leaflet/src/angular-leaflet-directive.js"></script>
@@ -120,6 +57,8 @@
         <script src="bower_components/angular-audio-player/src/helpers.js"></script>
         <script src="bower_components/angular-md5/angular-md5.js"></script>
         <script src="bower_components/oauth/oauth.min.js"></script>
+        <script src="bower_components/angular-phonegap-ready/ready.js"></script>
+        <script src="bower_components/angular-phonegap-geolocation/geolocation.js"></script>
         <!-- endbuild -->
 
         <!-- build:js scripts/modules.js -->
@@ -144,6 +83,7 @@
         <script src="scripts/services/phonegap.js"></script>
         <script src="scripts/directives/audioPlayer/audioPlayer.js"></script>
         <script src="scripts/services/oauthIo.js"></script>
+        <script src="scripts/controllers/testPhonegap.js"></script>
         <!-- endbuild -->
 </body>
 </html>

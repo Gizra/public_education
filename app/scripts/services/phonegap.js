@@ -3,28 +3,86 @@
 angular.module('publicEducationApp')
   .service('Phonegap', function Phonegap($http) {
 
+    console.log(navigator);
+
+    // Validate if is mobile the device.
+    var isMobile = {
+      Android: function() {
+        return navigator.userAgent.match(/Android/i);
+      },
+      BlackBerry: function() {
+        return navigator.userAgent.match(/BlackBerry/i);
+      },
+      iOS: function() {
+        return navigator.userAgent.match(/iPhone|iPad|iPod/i);
+      },
+      Opera: function() {
+        return navigator.userAgent.match(/Opera Mini/i);
+      },
+      Windows: function() {
+        return navigator.userAgent.match(/IEMobile/i);
+      },
+      any: function() {
+        return (this.Android() || this.BlackBerry() || this.iOS() || this.Opera() || this.Windows());
+      }
+    };
+
+    // Initialize.
+    if (isMobile.any()) {
+
+//      var head = document.getElementsByTagName('head')[0];
+//      var js = document.createElement('script');
+//
+//      js.type = 'text/javascript';
+//      js.src = 'cordova.js';
+//
+//      head.appendChild(js);
+//
+//      console.log('head', head);
+
+//      (function(){
+//
+//        // @todo: Remove appRootDirName?
+//        window.appRootDirName = "";
+//        document.addEventListener("deviceready", onDeviceReady, false);
+//
+//        function onDeviceReady() {
+//          console.log("device is ready");
+//
+//          // Testing investigation.
+//          // http://stackoverflow.com/questions/1673579/location-permission-alert-on-iphone-with-phonegap
+//          navigator.geolocation.getCurrentPosition(function(position) {
+//            console.log('geolocation work');
+//            console.log('timestamp: ', position.timestamp);
+//          }, function(err) {
+//            console.log('geolocation error: ', err);
+//          });
+//          window.requestFileSystem  = window.requestFileSystem || window.webkitRequestFileSystem;
+//          window.requestFileSystem(LocalFileSystem.TEMPORARY, 0, gotFS, fail);
+//        }
+//
+//        function fail() {
+//          console.log("failed to get filesystem");
+//        }
+//
+//        function gotFS(fileSystem) {
+//          console.log("filesystem got");
+//          fileSystem.root.getDirectory(window.appRootDirName, {
+//            create : true,
+//            exclusive : false
+//          }, dirReady, fail);
+//        }
+//
+//        function dirReady(entry) {
+//          window.appRootDir = entry;
+//          console.log(JSON.stringify(window.appRootDir));
+//        }
+//      })();
+    }
+
     return {
 
-      isMobile: {
-        Android: function() {
-          return navigator.userAgent.match(/Android/i);
-        },
-        BlackBerry: function() {
-          return navigator.userAgent.match(/BlackBerry/i);
-        },
-        iOS: function() {
-          return navigator.userAgent.match(/iPhone|iPad|iPod/i);
-        },
-        Opera: function() {
-          return navigator.userAgent.match(/Opera Mini/i);
-        },
-        Windows: function() {
-          return navigator.userAgent.match(/IEMobile/i);
-        },
-        any: function() {
-          return (this.Android() || this.BlackBerry() || this.iOS() || this.Opera() || this.Windows());
-        }
-      },
+      isMobile: this.isMobile,
 
       /**
        * Get FileUploadOptions in Phonegap or a mock object if outside of a
@@ -113,3 +171,57 @@ angular.module('publicEducationApp')
       }
     };
   });
+
+
+/*
+
+ if (isMobile.any()) {
+ var head = document.getElementsByTagName('head')[0];
+ var js = document.createElement("script");
+
+ js.type = "text/javascript";
+ js.src = "cordova.js";
+
+ head.appendChild(js);
+
+ (function(){
+
+ // @todo: Remove appRootDirName?
+ window.appRootDirName = "";
+ document.addEventListener("deviceready", onDeviceReady, false);
+
+ function onDeviceReady() {
+ console.log("device is ready");
+
+ // Testing investigation.
+ // http://stackoverflow.com/questions/1673579/location-permission-alert-on-iphone-with-phonegap
+ navigator.geolocation.getCurrentPosition(function(position) {
+ console.log('geolocation work');
+ console.log('timestamp: ', position.timestamp);
+ }, function(err) {
+ console.log('geolocation error: ', err);
+ });
+ window.requestFileSystem  = window.requestFileSystem || window.webkitRequestFileSystem;
+ window.requestFileSystem(LocalFileSystem.TEMPORARY, 0, gotFS, fail);
+ }
+
+ function fail() {
+ console.log("failed to get filesystem");
+ }
+
+ function gotFS(fileSystem) {
+ console.log("filesystem got");
+ fileSystem.root.getDirectory(window.appRootDirName, {
+ create : true,
+ exclusive : false
+ }, dirReady, fail);
+ }
+
+ function dirReady(entry) {
+ window.appRootDir = entry;
+ console.log(JSON.stringify(window.appRootDir));
+ }
+ })();
+ }
+
+  */
