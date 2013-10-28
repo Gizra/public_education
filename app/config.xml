@@ -48,5 +48,8 @@
   <gap:splash gap:platform="ios" height="768" src="res/screen/ios/screen-ipad-landscape.png" width="1024" />
   <gap:splash gap:platform="winphone" src="res/screen/windows-phone/screen-portrait.jpg" />
   <plugin name="InAppBrowser" value="CDVInAppBrowser" />
+  <feature name="Geolocation">
+    <param name="ios-package" value="CDVLocation" />
+  </feature>
   <access origin="*" />
 </widget>
