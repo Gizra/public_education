@@ -14,11 +14,11 @@ angular.module('publicEducationApp')
 
     $scope.updateMarker = function(lat, lng) {
       var icon = $window.L.divIcon({
-        iconSize: [30, 35],
+        iconSize: [34, 52],
         // Set the icon according to the playlist count.
-        html: '<div class="marker-icon"></div>',
+        html: '<span class="icon-shadow"></span>',
         // @todo: angular-leaflet fails without this one.
-        iconAnchor:   [15, 35]
+        iconAnchor:   [17, 48]
       });
 
       if ($scope.center.zoom >= 16) {

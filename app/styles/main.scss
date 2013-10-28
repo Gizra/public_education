@@ -49,11 +49,11 @@ body{
   z-index: 99;
 
   a {
-    background: url(../images/Add_btn@2x.png) no-repeat;
-    background-size: contain;
+    background: url(../images/add-btn.png) no-repeat 5px 10px;
+    background-size: 50%;
     text-indent: -99999px;
     display: block;
-    height: 58px;
+    height: 64px;
     width: 64px;
   }
 }
@@ -68,13 +68,17 @@ body{
   color: #ffffff;
 }
 
+.leaflet-container {
+    background: #444;
+}
+
 div.leaflet-div-icon {
   border: 0;
   background: url(../images/marker@2x.png) no-repeat;
+  background-size: contain;
   display: block;
   height: 30px;
   width: 35px;
-  background-size: contain;
 
   .marker-icon {
     background: red;
@@ -88,7 +92,33 @@ div.leaflet-div-icon {
     right: -2px;
     @include border-radius(18px, 18px);
   }
+}
 
+.add {
+  div.leaflet-div-icon {
+    background: url(../images/adding@2x.png) no-repeat;
+    background-position: 0 8px;
+    background-size: contain;
+    width: 46px;
+    height: 51px;
+
+    .icon-shadow {
+      background: url(../images/adding@2x.png) no-repeat bottom center;
+      display: block;
+      width: 30px;
+      height: 15px;
+      margin: 36px auto 0;
+      background-size: 100%;
+    }
+  }
+
+  &.map-static div.leaflet-div-icon {
+    background-position: 0 0;
+
+    .icon-shadow {
+      background: none;
+    }
+  }
 }
 
 // Add marker page
@@ -115,16 +145,16 @@ div.leaflet-div-icon {
   right: 0;
   top: 0;
   display: block;
-  background: url(../images/close@2x.png);
+  background: url(../images/close@2x.png) center center no-repeat;
+  background-size: contain;
   height: 32px;
   width: 32px;
-  background-size: contain;
   text-indent: -999999px;
   z-index: 999999;
 }
 
 .leaflet-control-container .leaflet-top {
-  top: 140px;
+  display: none;
 }
 
 .bottom-bar {
@@ -534,15 +564,16 @@ div.leaflet-div-icon {
 .recording-content {
   background: #0d0d0d;
   height: 100%;
-  padding: 1em 5% 6.5em;
+  padding: 1em 5% 5em;
   position: relative;
   border-top: $gray-text 2px solid;
   margin-top: 0.75em;
 
   p {
-    //margin: 0;
-    //font-size: 1em;
-    line-height: 2em;
+    font-size: 1.5em;
+    line-height: 1.3em;
+    font-weight: 700;
+    margin: 0.25em 0;
   }
 
   .edit-text {
@@ -574,7 +605,8 @@ div.leaflet-div-icon {
       margin-left: -1.25em;
     }
 
-    .play {
+    .play,
+    .pause {
       height: 4em;
       width: 4em;
       background: url(../images/play-rec@2x.png) center center no-repeat;
@@ -585,13 +617,7 @@ div.leaflet-div-icon {
     }
 
     .pause {
-      height: 4em;
-      width: 4em;
-      background: url(../images/fwd@2x.png) center center no-repeat;
-      background-size: 50%; //retina
-      left: 50%;
-      margin-left: -2.56em;
-      margin-top: 0;
+      background-image: url(../images/pause-rec@2x.png);
     }
 
     .fwd {
@@ -600,6 +626,13 @@ div.leaflet-div-icon {
       right: 15%;
       margin-right: -1.25em;
     }
+  }
+
+  .track-info {
+    text-align: center;
+    color: $recorder;
+    font-size: 0.8em;
+    padding-top: 0.5em;
   }
 
   .flag {
@@ -662,10 +695,3 @@ div.leaflet-div-icon {
     }
   }
 }
-
-
-
-
-
-
-
