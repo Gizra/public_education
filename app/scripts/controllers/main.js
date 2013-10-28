@@ -16,7 +16,7 @@ angular.module('publicEducationApp')
       }
     };
 
-    if (Phonegap.isMobile.any()) {
+    if (IS_MOBILE) {
       // Devices.
       document.addEventListener('deviceready', $scope.onDeviceReady, false);
     }
