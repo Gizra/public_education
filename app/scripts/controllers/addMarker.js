@@ -19,7 +19,14 @@ angular.module('publicEducationApp')
           marker: {
             lat: lat,
             lng: lng,
-            venue: null
+            venue: null,
+            icon: L.divIcon({
+              iconSize: [30, 35],
+              // Set the icon according to the playlist count.
+              html: '<div class="add-marker-icon"></div>',
+              // @todo: angular-leaflet fails without this one.
+              iconAnchor:   [15, 35]
+            })
           }
         };
 

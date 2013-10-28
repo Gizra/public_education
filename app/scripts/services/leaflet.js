@@ -1,7 +1,8 @@
 'use strict';
 
 angular.module('publicEducationApp')
-  .service('Leaflet', function Leaflet() {
+  .service('Leaflet', function Leaflet($window) {
+    var L = $window.L;
 
     return {
 
@@ -13,6 +14,13 @@ angular.module('publicEducationApp')
             lng: 28.9869,
             zoom: 16
           },
+          icon: L.divIcon({
+            iconSize: [30, 35],
+            // Set the icon according to the playlist count.
+            html: '<div class="add-marker-icon"></div>',
+            // @todo: angular-leaflet fails without this one.
+            iconAnchor:   [15, 35]
+          })
         },
         markers: {},
         marker: null
@@ -38,6 +46,15 @@ angular.module('publicEducationApp')
 
       setCenter: function(center) {
         this.data.leaflet.center = center;
+      },
+
+      /**
+       * Return L.Icon object with the custom icon.
+       *
+       * @returns {*}
+       */
+      getIcon: function() {
+        return this.data.leaflet.icon;
       }
     };
 
