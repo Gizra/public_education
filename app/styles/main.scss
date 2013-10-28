@@ -93,6 +93,14 @@ div.leaflet-div-icon {
     @include border-radius(18px, 18px);
   }
 
+  .add-marker-icon {
+    background: url(../images/Add_btn@2x.png) no-repeat;
+    background-size: 50%;
+    width: 46px;
+    height: 51px;
+    position: absolute;
+  }
+
 }
 
 // Add marker page
