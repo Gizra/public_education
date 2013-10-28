@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('publicEducationApp')
-  .controller('ListMarkersCtrl', function ($scope, Leaflet, storage, Marker, $location, $timeout, IS_MOBILE) {
+  .controller('ListMarkersCtrl', function ($scope, $window, Leaflet, storage, Marker, $location, $timeout, IS_MOBILE) {
 
     angular.extend($scope, Leaflet.getDefaults());
     storage.bind($scope,'center', {defaultValue: Leaflet.getCenter()});
@@ -39,7 +39,7 @@ angular.module('publicEducationApp')
       Marker.gettingMarkers().then(function(data) {
 
         angular.forEach(data, function(marker, key) {
-          marker.icon = L.divIcon({
+          marker.icon = $window.L.divIcon({
             iconSize: [30, 35],
             // Set the icon according to the playlist count.
             html: '<div class="marker-icon">' + marker.playList.length + '</div>',

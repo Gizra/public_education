@@ -2,7 +2,6 @@
 
 angular.module('publicEducationApp')
   .service('Leaflet', function Leaflet() {
-
     return {
 
       // Private variable to hold the state.
@@ -12,7 +11,7 @@ angular.module('publicEducationApp')
             lat: 41.0383,
             lng: 28.9869,
             zoom: 16
-          },
+          }
         },
         markers: {},
         marker: null
