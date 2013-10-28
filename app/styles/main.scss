@@ -112,7 +112,7 @@ div.leaflet-div-icon {
     }
   }
 
-  &.map-moving div.leaflet-div-icon {
+  &.mapmoving div.leaflet-div-icon {
     background-position: 0 0;
 
     .icon-shadow {
@@ -220,11 +220,11 @@ div.leaflet-div-icon {
   background-image: -webkit-radial-gradient(50% 89%, rgba(255,255,255,0.00) 21%, rgba(0,0,0,0.07) 89%), url(../images/grid-paper-lines.png);
   background-image: -ms-radial-gradient(50% 89%, rgba(255,255,255,0.00) 21%, rgba(0,0,0,0.07) 89%), url(../images/grid-paper-lines.png);
   background-image: radial-gradient(50% 89%, rgba(255,255,255,0.00) 21%, rgba(0,0,0,0.07) 89%), url(../images/grid-paper-lines.png);
-  @media 
-    only screen and (-webkit-min-device-pixel-ratio: 2), 
-    only screen and (-moz-min-device-pixel-ratio: 2), 
-    only screen and (-o-min-device-pixel-ratio: 2/1), 
-    only screen and (min-device-pixel-ratio: 2), 
+  @media
+    only screen and (-webkit-min-device-pixel-ratio: 2),
+    only screen and (-moz-min-device-pixel-ratio: 2),
+    only screen and (-o-min-device-pixel-ratio: 2/1),
+    only screen and (min-device-pixel-ratio: 2),
     only screen and (min-resolution: 2dppx)
   {
     background-image: -o-radial-gradient(50% 89%, rgba(255,255,255,0.00) 21%, rgba(0,0,0,0.07) 89%), url(../images/grid-paper-lines@2x.png);
