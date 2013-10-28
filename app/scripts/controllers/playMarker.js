@@ -35,6 +35,7 @@ angular.module('publicEducationApp')
         $location.path('/');
       }
 
+      // Set the current record, need it to play cached markers.
       $scope.selectedMarker = $scope.markers[$scope.venueId];
       $scope.selectedMarker.currentRecord = $scope.selectedMarker.playList[0];
       // @todo: mock the web version

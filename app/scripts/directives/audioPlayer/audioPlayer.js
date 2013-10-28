@@ -47,9 +47,7 @@ angular.module('publicEducationApp')
         };
 
         scope.$watch('currentTrack', function(track, oldTrack) {
-
-
-          // Populate info of current record in the scope.
+          // We continue only with a valid track number or a playlist.
           if (!scope.playList.length || track === undefined || track < 0) {
             return;
           }
