@@ -96,7 +96,7 @@ angular.module('publicEducationApp')
           lng: venue.lng
         };
 
-        // Set current record information to the cache
+        // Set current record information to the cache.
         this.data.markers[id].currentRecord = newMarker;
 
         return this.uploadingMarker(newMarker);
