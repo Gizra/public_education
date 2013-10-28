@@ -50,7 +50,7 @@ body{
 
   a {
     background: url(../images/add-btn.png) no-repeat 5px 10px;
-    background-size: 50%;
+    background-size: 46px 51px;
     text-indent: -99999px;
     display: block;
     height: 64px;
@@ -520,6 +520,8 @@ div.leaflet-div-icon {
     float: left;
     margin: 0.6em;
     border: 2px solid #9B9B9B;
+    background: url(../images/user-profile@2x.png) center center;
+    background-size: 45px 45px;
   }
 
   .venue-name {
