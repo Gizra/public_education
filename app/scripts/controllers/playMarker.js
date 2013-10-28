@@ -42,16 +42,12 @@ angular.module('publicEducationApp')
         $scope.selectedMarker.currentRecord.src = 'https://s3.amazonaws.com/PE-dev/1382945564909.wav';
       }
 
-
-      console.log('$scope.selectedMarker.currentRecord', $scope.selectedMarker.currentRecord);
       // Needed to fill the playList of the component angular-audio-player.
       angular.forEach($scope.selectedMarker.playList, function(value) {
         // Push the new items to the play list.
         $scope.playList.push(value);
         $scope.user = $scope.selectedMarker.user;
       });
-
-      console.log('$scope.playList', $scope.playList);
 
       $scope.center = {
         lat: $scope.selectedMarker.lat,

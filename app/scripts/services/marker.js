@@ -137,16 +137,12 @@ angular.module('publicEducationApp')
           self.data.markersCacheTimestamp = new Date().getTime();
 
           // Check if resolve cache or server data.
-          if (true) { //if (self.isProcessing(data)) {
-            console.log('cache');
-            console.log(self.data.markers);
+          if (self.isProcessing(data)) {
             defer.resolve(self.data.markers);
           }
           else {
-            console.log('server');
             // Update cache.
             self.data.markers = data;
-            console.log(data);
             defer.resolve(data);
           }
         });

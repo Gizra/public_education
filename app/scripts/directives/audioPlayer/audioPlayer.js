@@ -55,8 +55,6 @@ angular.module('publicEducationApp')
           }
 
           scope.currentRecord = scope.playList[track];
-          console.log('++++', scope.currentRecord);
-          // console.log('++++', scope.currentRecord, track, oldTrack, scope.currentTrack);
 
           if (scope.isPhoneGap) {
             scope.playPhoneGap();
