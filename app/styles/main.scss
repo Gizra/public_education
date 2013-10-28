@@ -49,11 +49,11 @@ body{
   z-index: 99;
 
   a {
-    background: url(../images/Add_btn@2x.png) no-repeat;
-    background-size: contain;
+    background: url(../images/Add_btn@2x.png) no-repeat 5px 10px;
+    background-size: 50%;
     text-indent: -99999px;
     display: block;
-    height: 58px;
+    height: 64px;
     width: 64px;
   }
 }
@@ -119,16 +119,16 @@ div.leaflet-div-icon {
   right: 0;
   top: 0;
   display: block;
-  background: url(../images/close@2x.png);
+  background: url(../images/close@2x.png) center center no-repeat;
+  background-size: 50%;
   height: 32px;
   width: 32px;
-  background-size: contain;
   text-indent: -999999px;
   z-index: 999999;
 }
 
 .leaflet-control-container .leaflet-top {
-  top: 140px;
+  display: none;
 }
 
 .bottom-bar {
@@ -538,15 +538,16 @@ div.leaflet-div-icon {
 .recording-content {
   background: #0d0d0d;
   height: 100%;
-  padding: 1em 5% 6.5em;
+  padding: 1em 5% 5em;
   position: relative;
   border-top: $gray-text 2px solid;
   margin-top: 0.75em;
 
   p {
-    //margin: 0;
-    //font-size: 1em;
-    line-height: 2em;
+    font-size: 1.5em;
+    line-height: 1.3em;
+    font-weight: 700;
+    margin: 0.25em 0;
   }
 
   .edit-text {
@@ -593,22 +594,19 @@ div.leaflet-div-icon {
       background-image: url(../images/pause-rec@2x.png);
     }
 
-    .pause {
-      height: 4em;
-      width: 4em;
-      background: url(../images/fwd@2x.png) center center no-repeat;
-      background-size: 50%; //retina
-      left: 50%;
-      margin-left: -2.56em;
-      margin-top: 0;
-    }
-
     .fwd {
       background: url(../images/fwd@2x.png) center center no-repeat;
       background-size: 50%; //retina
       right: 15%;
       margin-right: -1.25em;
     }
+  }
+
+  .track-info {
+    text-align: center;
+    color: $recorder;
+    font-size: 0.8em;
+    padding-top: 0.5em;
   }
 
   .flag {
