@@ -3,14 +3,6 @@
 angular.module('publicEducationApp')
   .service('Phonegap', function Phonegap($http, $window) {
 
-    if ($window.deviceReady) {
-      $window.geo = navigator.geolocation;
-      console.log('ready', $window.geo);
-    } else {
-      console.log('not ready');
-    }
-
-
     return {
 
       isMobile: {

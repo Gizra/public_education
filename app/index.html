@@ -84,7 +84,6 @@
             console.log("device is ready");
             window.requestFileSystem  = window.requestFileSystem || window.webkitRequestFileSystem;
             window.requestFileSystem(LocalFileSystem.TEMPORARY, 0, gotFS, fail);
-            window.deviceReady = true;
           }
 
           function fail() {
