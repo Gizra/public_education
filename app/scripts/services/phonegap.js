@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('publicEducationApp')
-  .service('Phonegap', function Phonegap($http, $window) {
+  .service('Phonegap', function Phonegap($http) {
 
     return {
 
