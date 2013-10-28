@@ -21,7 +21,7 @@ angular.module('publicEducationApp')
       document.addEventListener('deviceready', $scope.onDeviceReady, false);
     }
     else {
-      // Web
+      // Web.
       $scope.onDeviceReady();
     }
 
