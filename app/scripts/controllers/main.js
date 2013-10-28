@@ -1,11 +1,10 @@
 'use strict';
 
 angular.module('publicEducationApp')
-  .controller('ListMarkersCtrl', function ($scope, $window, Leaflet, storage, Marker, $location, $timeout, Phonegap, IS_MOBILE) {
+  .controller('ListMarkersCtrl', function ($scope, $window, Leaflet, storage, Marker, $location, $timeout, IS_MOBILE) {
 
     angular.extend($scope, Leaflet.getDefaults());
     storage.bind($scope,'center', {defaultValue: Leaflet.getCenter()});
-
 
     $scope.onDeviceReady = function() {
       if (navigator.geolocation) {
@@ -24,7 +23,6 @@ angular.module('publicEducationApp')
       // Web.
       $scope.onDeviceReady();
     }
-
 
     $scope.markers = {};
 

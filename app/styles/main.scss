@@ -42,7 +42,6 @@ body{
   width: 100%;
 }
 
-
 // Home page
 .add-marker-wrapper {
   position: absolute;
@@ -50,7 +49,7 @@ body{
 
   a {
     background: url(../images/add-btn.png) no-repeat 5px 10px;
-    background-size: 50%;
+    background-size: 46px 51px;
     text-indent: -99999px;
     display: block;
     height: 64px;
@@ -58,18 +57,48 @@ body{
   }
 }
 
-.footer {
-  position: absolute;
-  z-index: 99;
-  height: 100px;
-  bottom: 0;
-  opacity: 50%;
-  background: black;
-  color: #ffffff;
+.locate-me {
+  
+  a {
+    display: block;
+    position: absolute;
+    z-index: 99;
+    height: 35px;
+    width: 35px;
+    bottom: 10px;
+    right: 10px;
+    background: url(../images/locate-me@2x.png) no-repeat;
+    background-size: 35px;
+    color: rgba(0,0,0,0);
+  }
 }
 
+.cycle {
+  position: absolute;
+  z-index: 99;
+  height: 35px;
+  width: 35px;
+  bottom: 10px;
+  left: 10px;
+  background: url(../images/cycle@2x.png) no-repeat;
+  background-size: 35px;
+
+  a {
+    display: block;
+    height: 35px;
+    background: url(../images/cycle-play-pause@2x.png) no-repeat center left;
+    background-size: 58px 35px;
+    color: rgba(0,0,0,0);
+
+    &.pause-cycle {
+      background-position: center right;
+    }
+  }
+}
+
+.angular-leaflet-map,
 .leaflet-container {
-    background: #444;
+    background: #000;
 }
 
 div.leaflet-div-icon {
@@ -520,6 +549,8 @@ div.leaflet-div-icon {
     float: left;
     margin: 0.6em;
     border: 2px solid #9B9B9B;
+    background: url(../images/user-profile@2x.png) center center;
+    background-size: 45px 45px;
   }
 
   .venue-name {
