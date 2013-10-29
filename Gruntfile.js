@@ -359,6 +359,26 @@ module.exports = function (grunt) {
       },
       src: ['**']
     },
+    preprocess: {
+      mobile: {
+        src: 'app/index.html',
+        dest: '<%= yeoman.app %>/index.html',
+        options: {
+          context: {
+            MOBILE: true
+          }
+        }
+      },
+      web: {
+        src: 'app/index.html',
+        dest: '<%= yeoman.app %>/index.html',
+        options: {
+          context: {
+            WEB: true
+          }
+        }
+      }
+    },
     ngconstant: {
       options: {
         space: '  '
@@ -397,6 +417,8 @@ module.exports = function (grunt) {
 
   });
 
+  grunt.loadNpmTasks('grunt-preprocess');
+
   grunt.registerTask('server', function (target) {
     if (target === 'dist') {
       return grunt.task.run(['build', 'open', 'connect:dist:keepalive']);
@@ -424,6 +446,7 @@ module.exports = function (grunt) {
   grunt.registerTask('build', [
     'clean:dist',
     'ngconstant:production',
+    'preprocess:web',
     'useminPrepare',
     'concurrent:dist',
     'autoprefixer',
@@ -436,6 +459,24 @@ module.exports = function (grunt) {
     'uglify',
     'rev',
     'usemin'
+  ]);
+
+  grunt.registerTask('mobile', [
+    'clean:dist',
+    'ngconstant:production',
+    'preprocess:mobile',
+    'useminPrepare',
+    'concurrent:dist',
+    'autoprefixer',
+    'concat',
+    'copy:dist',
+    // Remove "cdnify" as phonehap doesn't like the URL provided.
+    // 'cdnify',
+    'ngmin',
+    'cssmin',
+    // 'uglify',
+    'rev',
+    'usemin',
   ]);
 
   grunt.registerTask('default', [

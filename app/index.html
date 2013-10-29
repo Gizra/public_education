@@ -41,38 +41,9 @@
 
     <script src="bower_components/angular/angular.js"></script>
 
-    <script>
-      // Conditionally load the Phonegap JS file.
-      var isMobile = {
-        Android: function() {
-          return navigator.userAgent.match(/Android/i);
-        },
-        BlackBerry: function() {
-          return navigator.userAgent.match(/BlackBerry/i);
-        },
-        iOS: function() {
-          return navigator.userAgent.match(/iPhone|iPad|iPod/i);
-        },
-        Opera: function() {
-          return navigator.userAgent.match(/Opera Mini/i);
-        },
-        Windows: function() {
-          return navigator.userAgent.match(/IEMobile/i);
-        },
-        any: function() {
-          return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows());
-        }
-      };
-
-      if (isMobile.any()) {
-        var head = document.getElementsByTagName('head')[0];
-        var js = document.createElement("script");
-
-        js.type = "text/javascript";
-        js.src = "cordova.js";
-
-        head.appendChild(js);
-
+    <!-- @ifdef MOBILE -->
+      <script src="cordova.js"></script>
+      <script>
         (function(){
           // @todo: Remove appRootDirName?
           window.appRootDirName = "";
@@ -102,9 +73,8 @@
             console.log(JSON.stringify(window.appRootDir));
           }
         })();
-      }
-    </script>
-
+      </script>
+    <!-- @endif -->
 
     <!-- Leaflet JS -->
     <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.css" />
