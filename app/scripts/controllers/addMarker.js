@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('publicEducationApp')
-  .controller('AddMarkerCtrl', function ($scope, $location, Leaflet, Foursquare, storage, User, Marker, BACKEND_URL, OAuthIo) {
+  .controller('AddMarkerCtrl', function ($scope, $location, $window, Leaflet, Foursquare, storage, User, Marker, BACKEND_URL, OAuthIo) {
      /**
      * Update the map's center, and get the venue name from FourSquare.
      *
@@ -13,16 +13,24 @@ angular.module('publicEducationApp')
     });
 
     $scope.updateMarker = function(lat, lng) {
+      var icon = $window.L.divIcon({
+        iconSize: [34, 52],
+        // Set the icon according to the playlist count.
+        html: '<span class="icon-shadow"></span>',
+        // @todo: angular-leaflet fails without this one.
+        iconAnchor:   [17, 48]
+      });
+
       if ($scope.center.zoom >= 16) {
 
         $scope.markers = {
           marker: {
             lat: lat,
             lng: lng,
-            venue: null
+            venue: null,
+            icon: icon
           }
         };
-
 
         if (!$scope.mapIsMoving) {
           Foursquare.gettingVenue(lat, lng).then(function(data) {
@@ -143,8 +151,9 @@ angular.module('publicEducationApp')
 
     // @todo: Move to init function?
     storage.bind($scope, 'center', {defaultValue: Leaflet.getCenter()});
+    $scope.center.zoom = 16;
     storage.bind($scope, 'text');
-    storage.bind($scope, 'markers');
     storage.bind($scope, 'state', {defaultValue: 'mark'});
+    $scope.markers = {};
     $scope.backendUrl = BACKEND_URL;
   });
