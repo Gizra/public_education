@@ -391,7 +391,7 @@ module.exports = function (grunt) {
           RECORD_FLAGS: '<%= yeoman.production.RECORD_FLAGS %>',
           IS_MOBILE: '<%= yeoman.production.IS_MOBILE %>',
           // Define the backend URL.
-          BACKEND_URL: '<%= yeoman.production.BACKEND_URL %>'.
+          BACKEND_URL: '<%= yeoman.production.BACKEND_URL %>',
           DUMMY_WAV_FILE: '<%= yeoman.production.DUMMY_WAV_FILE %>'
         }
       }]
