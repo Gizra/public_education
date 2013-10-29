@@ -21,9 +21,14 @@ angular.module('publicEducationApp')
     $scope.editMode = Marker.isPlayingAllMarkers();
     $scope.actualPage = $location.absUrl();
 
-    $scope.PlayingAllMarkers = function() {
+    $scope.stopPlayingAndCycle = function() {
+      // Stop the cycle, if it was enabled.
       Marker.setPlayingAllMarkers(false);
+
+      $scope.stopPlaying = true;
     };
+
+    $scope.stopPlaying = false;
 
     // Geting markers.
     Marker.gettingMarkers().then(function(data) {
