@@ -8,7 +8,7 @@ module.exports = function(grunt) {
             },
             dist: {
                 files: {
-                    'dist/<%= pkg.name %>.min.js': ['dist/angular-leaflet-directive.ngmin.js']
+                    'dist/<%= pkg.name %>.min.js': ['src/angular-leaflet-directive.js']
                 }
             }
         },
@@ -60,6 +60,8 @@ module.exports = function(grunt) {
         karma: {
             unit: {
                 configFile: 'config/karma.conf.js',
+                //autoWatch: true
+                //singleRun: false
             },
             e2e: {
                 configFile: 'config/karma-e2e.conf.js'
@@ -72,20 +74,10 @@ module.exports = function(grunt) {
                 browsers: ['PhantomJS']
             }
         },
-        ngmin: {
-            directives: {
-                expand: true,
-                cwd: 'src',
-                src: ['angular-leaflet-directive.js'],
-                dest: 'dist',
-                ext: '.ngmin.js',
-                flatten: 'src/'
-            }
-        },
         watch: {
             source: {
                 files: ['src/angular-leaflet-directive.js', 'test/unit/*.js', 'test/e2e/*.js'],
-                tasks: [ 'karma:background:run', 'jshint', 'ngmin', 'uglify' ]
+                tasks: [ 'karma:background:run', 'jshint', 'uglify' ]
             },
             grunt: {
                 files: ['Gruntfile.js'],
@@ -99,7 +91,6 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-connect');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-karma');
-    grunt.loadNpmTasks('grunt-ngmin');
 
     grunt.registerTask('test:e2e', ['connect:testserver', 'karma:e2e']);
     grunt.registerTask('test', ['karma:unit', 'test:e2e']);
