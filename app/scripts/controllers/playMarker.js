@@ -25,10 +25,10 @@ angular.module('publicEducationApp')
       // Stop the cycle, if it was enabled.
       Marker.setPlayingAllMarkers(false);
 
-      $scope.stopPlay = true;
+      $scope.stopPlaying = true;
     };
 
-    $scope.stopPlay = false;
+    $scope.stopPlaying = false;
 
     // Geting markers.
     Marker.gettingMarkers().then(function(data) {

@@ -9,7 +9,7 @@ angular.module('publicEducationApp')
         playList: '=playList',
         currentRecord: '=currentRecord',
         playListFinished: '=playListFinished',
-        stopPlay: '=stopPlay'
+        stopPlaying: '=stopPlaying'
       },
       link: function postLink(scope) {
         scope.isPhoneGap = Phonegap.isMobile.any();
@@ -32,9 +32,9 @@ angular.module('publicEducationApp')
         };
 
         if (scope.isPhoneGap) {
-          scope.$watch('stopPlay', function(stopPlay) {
-            console.log(stopPlay);
-            if (!stopPlay || !scope.mediaPlayer) {
+          scope.$watch('stopPlaying', function(stopPlaying) {
+            console.log(stopPlaying);
+            if (!stopPlaying || !scope.mediaPlayer) {
               return;
             }
             scope.mediaPlayer.stop();
