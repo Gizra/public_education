@@ -33,7 +33,6 @@ angular.module('publicEducationApp')
 
         if (scope.isPhoneGap) {
           scope.$watch('stopPlaying', function(stopPlaying) {
-            console.log(stopPlaying);
             if (!stopPlaying || !scope.mediaPlayer) {
               return;
             }
