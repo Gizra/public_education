@@ -48,16 +48,18 @@ angular.module('publicEducationApp')
 
         scope.$watch('currentTrack', function(track, oldTrack) {
           // Populate info of current record in the scope.
-          if (!scope.playList.length) {
+          if (!scope.playList.length || track === undefined || track < 0) {
             return;
           }
 
           scope.currentRecord = scope.playList[track];
+          console.log(oldTrack, track, scope.playList);
 
           if (scope.isPhoneGap) {
             scope.playPhoneGap();
           }
           else if (oldTrack > 0) {
+
             scope.play = true;
             // HTML <audio> tag.
             if (oldTrack < track) {
