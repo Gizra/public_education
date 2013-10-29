@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('publicEducationApp')
-  .controller('PlayMarkerCtrl', function ($scope, $routeParams, $location, storage, Marker, Leaflet, Phonegap, $window) {
+  .controller('PlayMarkerCtrl', function ($scope, $routeParams, $location, storage, Marker, Leaflet, Phonegap, $window, DUMMY_WAV_FILE) {
 
     $scope.venueId = $routeParams.venueId;
     angular.extend($scope, {
@@ -34,7 +34,14 @@ angular.module('publicEducationApp')
         $location.path('/');
       }
 
+      console.log($scope.markers[$scope.venueId].playList[0].src);
       $scope.selectedMarker = $scope.markers[$scope.venueId];
+
+      // If in web, set the source file of last marker cached with DUMMY_WAV_FILE sound.
+      if (!Phonegap.isMobile.any()) {
+        $scope.selectedMarker.playList[0].src = DUMMY_WAV_FILE;
+      }
+      console.log($scope.markers[$scope.venueId].playList[0].src);
 
       // Needed to fill the playList of the component angular-audio-player.
       angular.forEach($scope.selectedMarker.playList, function(value) {

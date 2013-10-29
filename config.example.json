@@ -9,7 +9,8 @@
     },
     "RECORD_FLAGS": ["koc"],
     "IS_MOBILE": true,
-    "BACKEND_URL": "http://localhost:9000"
+    "BACKEND_URL": "http://localhost:9000",
+    "DUMMY_WAV_FILE": "http://www.wavsource.com/snds_2013-10-27_4075717104816583/people/men/check_out_whats_new.wav"
   },
   "production": {
     "FOURSQUARE": {
@@ -21,6 +22,7 @@
     },
     "RECORD_FLAGS": ["koc"],
     "IS_MOBILE": true,
-    "BACKEND_URL": "http://localhost:9000"
+    "BACKEND_URL": "http://localhost:9000",
+    "DUMMY_WAV_FILE": "http://www.wavsource.com/snds_2013-10-27_4075717104816583/people/men/check_out_whats_new.wav"
   }
 }
