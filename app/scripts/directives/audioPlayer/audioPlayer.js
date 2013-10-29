@@ -8,7 +8,8 @@ angular.module('publicEducationApp')
       scope: {
         playList: '=playList',
         currentRecord: '=currentRecord',
-        playListFinished: '=playListFinished'
+        playListFinished: '=playListFinished',
+        stopPlay: '=stopPlay'
       },
       link: function postLink(scope) {
         scope.isPhoneGap = Phonegap.isMobile.any();
@@ -29,6 +30,16 @@ angular.module('publicEducationApp')
           scope.play = !scope.play;
           scope.playerControl.playPause();
         };
+
+        if (scope.isPhoneGap) {
+          scope.$watch('stopPlay', function(stopPlay) {
+            console.log(stopPlay);
+            if (!stopPlay || !scope.mediaPlayer) {
+              return;
+            }
+            scope.mediaPlayer.stop();
+          });
+        }
 
         /**
          * Play an item in PhoneGap devices.
