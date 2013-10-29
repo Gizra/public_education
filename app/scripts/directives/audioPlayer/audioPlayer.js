@@ -31,26 +31,35 @@ angular.module('publicEducationApp')
         };
 
         /**
-         * Play an item in PhoneGap devices.
+         * Play and pause a record in PhoneGap devices.
+         *
+         * @param pause
+         *  true: Pause the current record.
+         *  false Continue playing the current record.
          */
-        scope.playPhoneGap = function() {
+        scope.playPhoneGap = function(pause) {
 
-          if (scope.play) {
-            scope.play = false;
-            scope.mediaPlayer.pause();
+          if (pause) {
+            if (scope.play) {
+              scope.mediaPlayer.pause();
+            }
+            else {
+              scope.mediaPlayer.play();
+            }
+            scope.play = !scope.play;
+            return;
           }
-          else {
-            scope.mediaPlayer = Phonegap.getMedia(scope.currentRecord.src, function onSuccess() {
-              // If play was successful, skip to the next track, if it exists.
-              scope.$apply(function () {
-                if (scope.currentTrack +1 < scope.playList.length) {
-                  ++scope.currentTrack;
-                }
-              });
+
+          scope.mediaPlayer = Phonegap.getMedia(scope.currentRecord.src, function onSuccess() {
+            // If play was successful, skip to the next track, if it exists.
+            scope.$apply(function () {
+              if (scope.currentTrack +1 < scope.playList.length) {
+                ++scope.currentTrack;
+              }
             });
-            scope.play = true;
-            scope.mediaPlayer.play();
-          }
+          });
+          scope.play = true;
+          scope.mediaPlayer.play();
         };
 
         scope.$watch('currentTrack', function(track, oldTrack) {
