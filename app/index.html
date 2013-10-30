@@ -76,6 +76,10 @@
       </script>
     <!-- @endif -->
 
+    <!-- @ifdef WEB -->
+    <script src="bower_components/oauth/oauth.min.js"></script>
+    <!-- @endif -->
+
     <!-- Leaflet JS -->
     <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.css" />
     <!--[if lte IE 8]>
@@ -89,7 +93,6 @@
         <script src="bower_components/angular-audio-player/dist/angular-audio-player.js"></script>
         <script src="bower_components/angular-audio-player/src/helpers.js"></script>
         <script src="bower_components/angular-md5/angular-md5.js"></script>
-        <script src="bower_components/oauth/oauth.min.js"></script>
         <!-- endbuild -->
 
         <!-- build:js scripts/modules.js -->
