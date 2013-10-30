@@ -362,7 +362,7 @@ module.exports = function (grunt) {
     preprocess: {
       mobile: {
         src: 'app/index.html',
-        dest: '<%= yeoman.app %>/index.html',
+        dest: '<%= yeoman.dist %>/index.html',
         options: {
           context: {
             MOBILE: true
@@ -371,8 +371,9 @@ module.exports = function (grunt) {
       },
       web: {
         src: 'app/index.html',
-        dest: '<%= yeoman.app %>/index.html',
+        dest: '<%= yeoman.dist %>/index.html',
         options: {
+          inline: true,
           context: {
             WEB: true
           }
@@ -446,7 +447,6 @@ module.exports = function (grunt) {
   grunt.registerTask('build', [
     'clean:dist',
     'ngconstant:production',
-    'preprocess:web',
     'useminPrepare',
     'concurrent:dist',
     'autoprefixer',
@@ -458,13 +458,13 @@ module.exports = function (grunt) {
     'cssmin',
     'uglify',
     'rev',
-    'usemin'
+    'usemin',
+    'preprocess:web'
   ]);
 
   grunt.registerTask('mobile', [
     'clean:dist',
     'ngconstant:production',
-    'preprocess:mobile',
     'useminPrepare',
     'concurrent:dist',
     'autoprefixer',
@@ -474,9 +474,10 @@ module.exports = function (grunt) {
     // 'cdnify',
     'ngmin',
     'cssmin',
-    // 'uglify',
+    'uglify',
     'rev',
     'usemin',
+    'preprocess:mobile'
   ]);
 
   grunt.registerTask('default', [
