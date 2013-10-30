@@ -40,9 +40,6 @@ angular.module('publicEducationApp')
       }
       $scope.selectedMarker = $scope.markers[$scope.venueId];
 
-      console.log($scope.selectedMarker.playList[0].src);
-
-
       // Needed to fill the playList of the component angular-audio-player.
       angular.forEach($scope.selectedMarker.playList, function(value) {
         // Push the new items to the play list.

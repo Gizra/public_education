@@ -10,7 +10,7 @@
     "RECORD_FLAGS": ["koc"],
     "IS_MOBILE": true,
     "BACKEND_URL": "http://localhost:9000",
-    "DUMMY_WAV_FILE": "http://www.pacdv.com/sounds/voices/no-6.wav"
+    "DUMMY_WAV_FILE": "http://www.pacdv.com/sounds/voices/nice-work.wav"
   },
   "production": {
     "FOURSQUARE": {
@@ -23,6 +23,6 @@
     "RECORD_FLAGS": ["koc"],
     "IS_MOBILE": true,
     "BACKEND_URL": "http://localhost:9000",
-    "DUMMY_WAV_FILE": "http://www.pacdv.com/sounds/voices/no-6.wav"
+    "DUMMY_WAV_FILE": "http://www.pacdv.com/sounds/voices/nice-work.wav"
   }
 }
