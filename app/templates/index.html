@@ -41,7 +41,47 @@
 
     <script src="bower_components/angular/angular.js"></script>
 
+
+    <!-- @ifdef MOBILE -->
+    <script src="cordova.js"></script>
+    <script>
+      (function(){
+        // @todo: Remove appRootDirName?
+        window.appRootDirName = "";
+
+        document.addEventListener("deviceready", onDeviceReady, false);
+
+        function onDeviceReady() {
+          console.log("device is ready");
+          window.requestFileSystem  = window.requestFileSystem || window.webkitRequestFileSystem;
+          window.requestFileSystem(LocalFileSystem.TEMPORARY, 0, gotFS, fail);
+        }
+
+        function fail() {
+          console.log("failed to get filesystem");
+        }
+
+        function gotFS(fileSystem) {
+          console.log("filesystem got");
+          fileSystem.root.getDirectory(window.appRootDirName, {
+            create : true,
+            exclusive : false
+          }, dirReady, fail);
+        }
+
+        function dirReady(entry) {
+          window.appRootDir = entry;
+          console.log(JSON.stringify(window.appRootDir));
+        }
+      })();
+    </script>
+    <!-- @endif -->
+
+    <!-- @ifdef WEB -->
     <script src="bower_components/oauth/oauth.min.js"></script>
+    <!-- @endif -->
+
+
     <!-- Leaflet JS -->
     <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.css" />
     <!--[if lte IE 8]>

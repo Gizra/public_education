@@ -370,20 +370,18 @@ module.exports = function (grunt) {
         }
       },
       mobile: {
-        src: 'app/templates/index.html',
+        src: '<%= yeoman.app %>/templates/index.html',
         dest: '<%= yeoman.dist %>/index.html',
         options: {
-          inline: true,
           context: {
             MOBILE: true
           }
         }
       },
       web: {
-        src: 'app/templates/index.html',
+        src: '<%= yeoman.app %>/templates/index.html',
         dest: '<%= yeoman.dist %>/index.html',
         options: {
-          inline: true,
           context: {
             WEB: true
           }
