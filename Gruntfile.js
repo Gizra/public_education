@@ -284,6 +284,7 @@ module.exports = function (grunt) {
             'images/{,*/}*.{gif,webp}',
             'styles/fonts/*',
             'config.xml',
+            'CNAME',
             'cordova.js',
             'cordova_plugins.js'
           ]
