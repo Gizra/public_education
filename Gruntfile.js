@@ -360,17 +360,27 @@ module.exports = function (grunt) {
       src: ['**']
     },
     preprocess: {
+      development: {
+        src: 'app/templates/index.html',
+        dest: '<%= yeoman.app %>/index.html',
+        options: {
+          context: {
+            WEB: true
+          }
+        }
+      },
       mobile: {
-        src: 'app/index.html',
+        src: 'app/templates/index.html',
         dest: '<%= yeoman.dist %>/index.html',
         options: {
+          inline: true,
           context: {
             MOBILE: true
           }
         }
       },
       web: {
-        src: 'app/index.html',
+        src: 'app/templates/index.html',
         dest: '<%= yeoman.dist %>/index.html',
         options: {
           inline: true,
@@ -428,6 +438,7 @@ module.exports = function (grunt) {
     grunt.task.run([
       'clean:server',
       'ngconstant:development',
+      'preprocess:development',
       'concurrent:server',
       'autoprefixer',
       'connect:livereload',
