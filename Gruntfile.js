@@ -458,8 +458,8 @@ module.exports = function (grunt) {
     'cssmin',
     'uglify',
     'rev',
-    'usemin',
-    'preprocess:web'
+    'preprocess:web',
+    'usemin'
   ]);
 
   grunt.registerTask('mobile', [
@@ -476,8 +476,8 @@ module.exports = function (grunt) {
     'cssmin',
     'uglify',
     'rev',
+    'preprocess:mobile',
     'usemin',
-    'preprocess:mobile'
   ]);
 
   grunt.registerTask('default', [
