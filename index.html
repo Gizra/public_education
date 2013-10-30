@@ -8,10 +8,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title></title>
     <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
 
-        <link rel="stylesheet" href="styles/a99fe08b.main.css">
+        <link rel="stylesheet" href="styles/534b6288.main.css">
 </head>
   <body ng-app="publicEducationApp">
     <!--[if lt IE 7]>
@@ -39,81 +39,19 @@
 
     <script src="bower_components/angular/angular.js"></script>
 
-    <script>
-      // Conditionally load the Phonegap JS file.
-      var isMobile = {
-        Android: function() {
-          return navigator.userAgent.match(/Android/i);
-        },
-        BlackBerry: function() {
-          return navigator.userAgent.match(/BlackBerry/i);
-        },
-        iOS: function() {
-          return navigator.userAgent.match(/iPhone|iPad|iPod/i);
-        },
-        Opera: function() {
-          return navigator.userAgent.match(/Opera Mini/i);
-        },
-        Windows: function() {
-          return navigator.userAgent.match(/IEMobile/i);
-        },
-        any: function() {
-          return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows());
-        }
-      };
 
-      if (isMobile.any()) {
-        var head = document.getElementsByTagName('head')[0];
-        var js = document.createElement("script");
-
-        js.type = "text/javascript";
-        js.src = "cordova.js";
-
-        head.appendChild(js);
-
-        (function(){
-          // @todo: Remove appRootDirName?
-          window.appRootDirName = "";
-          document.addEventListener("deviceready", onDeviceReady, false);
-
-          function onDeviceReady() {
-            console.log("device is ready");
-            window.requestFileSystem  = window.requestFileSystem || window.webkitRequestFileSystem;
-            window.requestFileSystem(LocalFileSystem.TEMPORARY, 0, gotFS, fail);
-          }
-
-          function fail() {
-            console.log("failed to get filesystem");
-          }
-
-          function gotFS(fileSystem) {
-            console.log("filesystem got");
-            fileSystem.root.getDirectory(window.appRootDirName, {
-              create : true,
-              exclusive : false
-            }, dirReady, fail);
-          }
-
-          function dirReady(entry) {
-            window.appRootDir = entry;
-            console.log(JSON.stringify(window.appRootDir));
-          }
-        })();
-      }
-    </script>
-
-
+    <script src="bower_components/oauth/oauth.min.js"></script>
     <!-- Leaflet JS -->
-    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.css">
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.css" />
     <!--[if lte IE 8]>
       <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.ie.css" />
     <![endif]-->
     <script src="bower_components/leaflet/index.js"></script>
 
-        <script src="scripts/4ab586ce.plugins.js"></script>
+        <script src="scripts/a75c7c25.plugins.js"></script>
 
         <script src="scripts/6b865daa.modules.js"></script>
 
-        <script src="scripts/625dea3f.scripts.js"></script>
+        <script src="scripts/91eb318f.scripts.js"></script>
 </body>
 </html>

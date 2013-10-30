@@ -4,6 +4,11 @@
 
 <leaflet center="center" markers="markers" defaults="defaults"></leaflet>
 
-<div ng-hide="isMobile" class="footer">
-  <a href="" ng-click="playAllMarkers()">Start cycle</a>
+<div class="locate-me">
+  <a href="#">Locate me</a>
+</div>
+
+<div ng-hide="isMobile" class="cycle">
+  <a href="#" ng-click="playAllMarkers()" class="play-cycle">Play cycle</a>
+  <a href="#" ng-click="playAllMarkers()" class="pause-cycle hide">Pause cycle</a>
 </div>
