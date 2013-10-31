@@ -372,7 +372,7 @@ module.exports = function (grunt) {
       },
       mobile: {
         src: '<%= yeoman.app %>/templates/index.html',
-        dest: '<%= yeoman.dist %>/index.html',
+        dest: '<%= yeoman.app %>/index.html',
         options: {
           context: {
             MOBILE: true
@@ -381,7 +381,7 @@ module.exports = function (grunt) {
       },
       web: {
         src: '<%= yeoman.app %>/templates/index.html',
-        dest: '<%= yeoman.dist %>/index.html',
+        dest: '<%= yeoman.app %>/index.html',
         options: {
           context: {
             WEB: true
@@ -406,7 +406,8 @@ module.exports = function (grunt) {
           RECORD_FLAGS: '<%= yeoman.development.RECORD_FLAGS %>',
           IS_MOBILE: '<%= yeoman.development.IS_MOBILE %>',
           // Define the backend URL.
-          BACKEND_URL: '<%= yeoman.development.BACKEND_URL %>'
+          BACKEND_URL: '<%= yeoman.development.BACKEND_URL %>',
+          DUMMY_WAV_FILE: '<%= yeoman.development.DUMMY_WAV_FILE %>'
         }
       }],
       production: [{
@@ -420,7 +421,8 @@ module.exports = function (grunt) {
           RECORD_FLAGS: '<%= yeoman.production.RECORD_FLAGS %>',
           IS_MOBILE: '<%= yeoman.production.IS_MOBILE %>',
           // Define the backend URL.
-          BACKEND_URL: '<%= yeoman.production.BACKEND_URL %>'
+          BACKEND_URL: '<%= yeoman.production.BACKEND_URL %>',
+          DUMMY_WAV_FILE: '<%= yeoman.production.DUMMY_WAV_FILE %>'
         }
       }]
     }
@@ -457,6 +459,7 @@ module.exports = function (grunt) {
   grunt.registerTask('build', [
     'clean:dist',
     'ngconstant:production',
+    'preprocess:web',
     'useminPrepare',
     'concurrent:dist',
     'autoprefixer',
@@ -468,13 +471,13 @@ module.exports = function (grunt) {
     'cssmin',
     'uglify',
     'rev',
-    'preprocess:web',
     'usemin'
   ]);
 
   grunt.registerTask('mobile', [
     'clean:dist',
     'ngconstant:production',
+    'preprocess:mobile',
     'useminPrepare',
     'concurrent:dist',
     'autoprefixer',
@@ -486,8 +489,7 @@ module.exports = function (grunt) {
     'cssmin',
     'uglify',
     'rev',
-    'preprocess:mobile',
-    'usemin',
+    'usemin'
   ]);
 
   grunt.registerTask('default', [
