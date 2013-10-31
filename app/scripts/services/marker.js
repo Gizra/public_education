@@ -43,7 +43,6 @@ angular.module('publicEducationApp')
        */
       addMarker: function(venue, text, file, location, user) {
         var id = venue.id;
-        var defer;
 
         this.data.markers = this.data.markers || {};
 
@@ -97,14 +96,13 @@ angular.module('publicEducationApp')
           lng: venue.lng
         };
 
-        defer = this.uploadingMarker(newMarker);
-
+        // Mock the web application.
         if (!IS_MOBILE) {
           // Set dummy sound for the first sound of the playList to mock the web, on cached new markers.
           this.data.markers[id].playList[0].src = DUMMY_WAV_FILE;
         }
 
-        return defer;
+        return this.uploadingMarker(newMarker);
       },
 
       /**
