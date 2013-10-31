@@ -50,7 +50,7 @@ angular.module('publicEducationApp')
       $scope.center = {
         lat: $scope.selectedMarker.lat,
         lng: $scope.selectedMarker.lng,
-        zoom: 16
+        zoom: 18
       };
     });
 

@@ -284,6 +284,7 @@ module.exports = function (grunt) {
             'images/{,*/}*.{gif,webp}',
             'styles/fonts/*',
             'config.xml',
+            'CNAME',
             'cordova.js',
             'cordova_plugins.js'
           ]
@@ -359,6 +360,35 @@ module.exports = function (grunt) {
       },
       src: ['**']
     },
+    preprocess: {
+      development: {
+        src: 'app/templates/index.html',
+        dest: '<%= yeoman.app %>/index.html',
+        options: {
+          context: {
+            WEB: true
+          }
+        }
+      },
+      mobile: {
+        src: '<%= yeoman.app %>/templates/index.html',
+        dest: '<%= yeoman.dist %>/index.html',
+        options: {
+          context: {
+            MOBILE: true
+          }
+        }
+      },
+      web: {
+        src: '<%= yeoman.app %>/templates/index.html',
+        dest: '<%= yeoman.dist %>/index.html',
+        options: {
+          context: {
+            WEB: true
+          }
+        }
+      }
+    },
     ngconstant: {
       options: {
         space: '  '
@@ -399,6 +429,8 @@ module.exports = function (grunt) {
 
   });
 
+  grunt.loadNpmTasks('grunt-preprocess');
+
   grunt.registerTask('server', function (target) {
     if (target === 'dist') {
       return grunt.task.run(['build', 'open', 'connect:dist:keepalive']);
@@ -407,6 +439,7 @@ module.exports = function (grunt) {
     grunt.task.run([
       'clean:server',
       'ngconstant:development',
+      'preprocess:development',
       'concurrent:server',
       'autoprefixer',
       'connect:livereload',
@@ -437,7 +470,26 @@ module.exports = function (grunt) {
     'cssmin',
     'uglify',
     'rev',
+    'preprocess:web',
     'usemin'
+  ]);
+
+  grunt.registerTask('mobile', [
+    'clean:dist',
+    'ngconstant:production',
+    'useminPrepare',
+    'concurrent:dist',
+    'autoprefixer',
+    'concat',
+    'copy:dist',
+    // Remove "cdnify" as phonehap doesn't like the URL provided.
+    // 'cdnify',
+    'ngmin',
+    'cssmin',
+    'uglify',
+    'rev',
+    'preprocess:mobile',
+    'usemin',
   ]);
 
   grunt.registerTask('default', [
