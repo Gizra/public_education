@@ -203,7 +203,7 @@ module.exports = function (grunt) {
       }
     },
     useminPrepare: {
-      html: '<%= yeoman.app %>/index.html',
+      html: '<%= yeoman.app %>/templates/index.html',
       options: {
         dest: '<%= yeoman.dist %>'
       }
