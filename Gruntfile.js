@@ -188,8 +188,8 @@ module.exports = function (grunt) {
     // not used since Uglify task does concat,
     // but still available if needed
     /*concat: {
-      dist: {}
-    },*/
+     dist: {}
+     },*/
     rev: {
       dist: {
         files: {
@@ -252,14 +252,14 @@ module.exports = function (grunt) {
       dist: {
         options: {
           /*removeCommentsFromCDATA: true,
-          // https://github.com/yeoman/grunt-usemin/issues/44
-          //collapseWhitespace: true,
-          collapseBooleanAttributes: true,
-          removeAttributeQuotes: true,
-          removeRedundantAttributes: true,
-          useShortDoctype: true,
-          removeEmptyAttributes: true,
-          removeOptionalTags: true*/
+           // https://github.com/yeoman/grunt-usemin/issues/44
+           //collapseWhitespace: true,
+           collapseBooleanAttributes: true,
+           removeAttributeQuotes: true,
+           removeRedundantAttributes: true,
+           useShortDoctype: true,
+           removeEmptyAttributes: true,
+           removeOptionalTags: true*/
         },
         files: [{
           expand: true,
@@ -372,7 +372,7 @@ module.exports = function (grunt) {
       },
       mobile: {
         src: '<%= yeoman.app %>/templates/index.html',
-        dest: '<%= yeoman.dist %>/index.html',
+        dest: '<%= yeoman.app %>/index.html',
         options: {
           context: {
             MOBILE: true
@@ -381,7 +381,7 @@ module.exports = function (grunt) {
       },
       web: {
         src: '<%= yeoman.app %>/templates/index.html',
-        dest: '<%= yeoman.dist %>/index.html',
+        dest: '<%= yeoman.app %>/index.html',
         options: {
           context: {
             WEB: true
@@ -475,6 +475,7 @@ module.exports = function (grunt) {
   grunt.registerTask('mobile', [
     'clean:dist',
     'ngconstant:production',
+    'preprocess:mobile',
     'useminPrepare',
     'concurrent:dist',
     'autoprefixer',
@@ -486,8 +487,7 @@ module.exports = function (grunt) {
     'cssmin',
     'uglify',
     'rev',
-    'preprocess:mobile',
-    'usemin',
+    'usemin'
   ]);
 
   grunt.registerTask('default', [
