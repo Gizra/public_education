@@ -551,6 +551,11 @@ div.leaflet-div-icon {
     border: 2px solid #9B9B9B;
     background: url(../images/user-profile@2x.png) center center;
     background-size: 45px 45px;
+    overflow: hidden;
+
+    img {
+      width: 2em;
+    }
   }
 
   .venue-name {
