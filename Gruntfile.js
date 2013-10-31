@@ -459,6 +459,7 @@ module.exports = function (grunt) {
   grunt.registerTask('build', [
     'clean:dist',
     'ngconstant:production',
+    'preprocess:web',
     'useminPrepare',
     'concurrent:dist',
     'autoprefixer',
@@ -470,7 +471,6 @@ module.exports = function (grunt) {
     'cssmin',
     'uglify',
     'rev',
-    'preprocess:web',
     'usemin'
   ]);
 
@@ -489,7 +489,7 @@ module.exports = function (grunt) {
     'cssmin',
     'uglify',
     'rev',
-    'usemin',
+    'usemin'
   ]);
 
   grunt.registerTask('default', [
