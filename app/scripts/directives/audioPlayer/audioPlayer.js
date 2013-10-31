@@ -11,6 +11,7 @@ angular.module('publicEducationApp')
         playListFinished: '=playListFinished'
       },
       link: function postLink(scope) {
+
         scope.isPhoneGap = Phonegap.isMobile.any();
 
         scope.previous = function() {
@@ -44,6 +45,7 @@ angular.module('publicEducationApp')
               scope.mediaPlayer.pause();
             }
             else {
+
               scope.mediaPlayer.play();
             }
             scope.play = !scope.play;
@@ -56,7 +58,14 @@ angular.module('publicEducationApp')
               if (scope.currentTrack +1 < scope.playList.length) {
                 ++scope.currentTrack;
               }
-            });
+            },
+              function(error) {
+                scope.mediaError = error;
+              },
+              function(status) {
+                console.log('status: ', status);
+                scope.mediaStatus = status;
+              });
           });
           scope.play = true;
           scope.mediaPlayer.play();
