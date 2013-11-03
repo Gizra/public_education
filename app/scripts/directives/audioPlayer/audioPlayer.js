@@ -41,19 +41,41 @@ angular.module('publicEducationApp')
         }
 
         /**
+         * Load media source in phoneGap object
+         */
+        scope.loadMedia = function() {
+          scope.mediaPlayer = Phonegap.getMedia(scope.currentRecord.src,
+            function onSuccess() {
+
+              // If play was successful, skip to the next track, if it exists.
+              scope.$apply(function () {
+                if (scope.currentTrack +1 < scope.playList.length) {
+                  ++scope.currentTrack;
+                }
+              });
+
+            },
+            function onError(error) {
+              console.log(error);
+            },
+            function onStatus(status) {
+              scope.mediaStatus = status;
+              console.log(scope.mediaStatus);
+            });
+        };
+
+        /**
          * Play an item in PhoneGap devices.
          */
         scope.playPhoneGap = function() {
-          scope.mediaPlayer = Phonegap.getMedia(scope.currentRecord.src, function onSuccess() {
-            // If play was successful, skip to the next track, if it exists.
-            scope.$apply(function () {
-              if (scope.currentTrack +1 < scope.playList.length) {
-                ++scope.currentTrack;
-              }
-            });
-          });
-          scope.play = true;
-          scope.mediaPlayer.play();
+          if (scope.mediaPlayer === undefined) {
+            scope.loadMedia();
+          }
+
+          if (scope.mediaStatus !== 2) {
+            scope.play = true;
+            scope.mediaPlayer.play();
+          }
         };
 
         scope.$watch('currentTrack', function(track, oldTrack) {
