@@ -59,8 +59,9 @@ body{
 }
 
 .locate-me {
-  
-  a {
+
+  div {
+    cursor: pointer;
     display: block;
     position: absolute;
     z-index: 99;
