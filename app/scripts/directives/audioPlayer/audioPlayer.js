@@ -12,6 +12,7 @@ angular.module('publicEducationApp')
         stopPlaying: '=stopPlaying'
       },
       link: function postLink(scope) {
+
         scope.isPhoneGap = Phonegap.isMobile.any();
 
         scope.previous = function() {
@@ -61,13 +62,19 @@ angular.module('publicEducationApp')
               console.log(error);
             },
             function onStatus(status) {
-              scope.$apply(function() {
-                scope.mediaStatus = status;
-              });
 
-              console.log(scope.mediaStatus);
+              // scope.mediaStatus = status;
+              if (!scope.$$phase) {
+                scope.$apply(function() {
+                  scope.mediaStatus = status;
+                });
+              }
+
+              console.log(status);
               // We need to invoke the digest.
               // $rootScope.$digest();
+
+
             });
         };
 

@@ -7,7 +7,8 @@ angular.module('publicEducationApp', [
     'leaflet-directive',
     'angular-md5'
   ])
-  .config(function ($routeProvider, $httpProvider) {
+  .config(function ($routeProvider, $httpProvider, $compileProvider) {
+    $compileProvider.urlSanitizationWhitelist(/^\s*(https?|ftp|mailto|file|content|filesystem:chrome-extension):/);
     $routeProvider
       .when('/', {
         templateUrl: 'views/main.html',
