@@ -284,6 +284,7 @@ module.exports = function (grunt) {
             'images/{,*/}*.{gif,webp}',
             'styles/fonts/*',
             'config.xml',
+            'CNAME',
             'cordova.js',
             'cordova_plugins.js'
           ]
@@ -359,6 +360,35 @@ module.exports = function (grunt) {
       },
       src: ['**']
     },
+    preprocess: {
+      development: {
+        src: 'app/templates/index.html',
+        dest: '<%= yeoman.app %>/index.html',
+        options: {
+          context: {
+            WEB: true
+          }
+        }
+      },
+      mobile: {
+        src: '<%= yeoman.app %>/templates/index.html',
+        dest: '<%= yeoman.app %>/index.html',
+        options: {
+          context: {
+            MOBILE: true
+          }
+        }
+      },
+      web: {
+        src: '<%= yeoman.app %>/templates/index.html',
+        dest: '<%= yeoman.app %>/index.html',
+        options: {
+          context: {
+            WEB: true
+          }
+        }
+      }
+    },
     ngconstant: {
       options: {
         space: '  '
@@ -376,7 +406,8 @@ module.exports = function (grunt) {
           RECORD_FLAGS: '<%= yeoman.development.RECORD_FLAGS %>',
           IS_MOBILE: '<%= yeoman.development.IS_MOBILE %>',
           // Define the backend URL.
-          BACKEND_URL: '<%= yeoman.development.BACKEND_URL %>'
+          BACKEND_URL: '<%= yeoman.development.BACKEND_URL %>',
+          DUMMY_WAV_FILE: '<%= yeoman.development.DUMMY_WAV_FILE %>'
         }
       }],
       production: [{
@@ -390,12 +421,15 @@ module.exports = function (grunt) {
           RECORD_FLAGS: '<%= yeoman.production.RECORD_FLAGS %>',
           IS_MOBILE: '<%= yeoman.production.IS_MOBILE %>',
           // Define the backend URL.
-          BACKEND_URL: '<%= yeoman.production.BACKEND_URL %>'
+          BACKEND_URL: '<%= yeoman.production.BACKEND_URL %>',
+          DUMMY_WAV_FILE: '<%= yeoman.production.DUMMY_WAV_FILE %>'
         }
       }]
     }
 
   });
+
+  grunt.loadNpmTasks('grunt-preprocess');
 
   grunt.registerTask('server', function (target) {
     if (target === 'dist') {
@@ -405,6 +439,7 @@ module.exports = function (grunt) {
     grunt.task.run([
       'clean:server',
       'ngconstant:development',
+      'preprocess:development',
       'concurrent:server',
       'autoprefixer',
       'connect:livereload',
@@ -424,6 +459,25 @@ module.exports = function (grunt) {
   grunt.registerTask('build', [
     'clean:dist',
     'ngconstant:production',
+    'preprocess:web',
+    'useminPrepare',
+    'concurrent:dist',
+    'autoprefixer',
+    'concat',
+    'copy:dist',
+    // Remove "cdnify" as phonehap doesn't like the URL provided.
+    // 'cdnify',
+    'ngmin',
+    'cssmin',
+    'uglify',
+    'rev',
+    'usemin'
+  ]);
+
+  grunt.registerTask('mobile', [
+    'clean:dist',
+    'ngconstant:production',
+    'preprocess:mobile',
     'useminPrepare',
     'concurrent:dist',
     'autoprefixer',

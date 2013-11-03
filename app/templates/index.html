@@ -41,69 +41,45 @@
 
     <script src="bower_components/angular/angular.js"></script>
 
+
+    <!-- @ifdef MOBILE -->
+    <script src="cordova.js"></script>
     <script>
-      // Conditionally load the Phonegap JS file.
-      var isMobile = {
-        Android: function() {
-          return navigator.userAgent.match(/Android/i);
-        },
-        BlackBerry: function() {
-          return navigator.userAgent.match(/BlackBerry/i);
-        },
-        iOS: function() {
-          return navigator.userAgent.match(/iPhone|iPad|iPod/i);
-        },
-        Opera: function() {
-          return navigator.userAgent.match(/Opera Mini/i);
-        },
-        Windows: function() {
-          return navigator.userAgent.match(/IEMobile/i);
-        },
-        any: function() {
-          return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows());
+      (function(){
+        // @todo: Remove appRootDirName?
+        window.appRootDirName = "";
+
+        document.addEventListener("deviceready", onDeviceReady, false);
+
+        function onDeviceReady() {
+          console.log("device is ready");
+          window.requestFileSystem  = window.requestFileSystem || window.webkitRequestFileSystem;
+          window.requestFileSystem(LocalFileSystem.TEMPORARY, 0, gotFS, fail);
         }
-      };
 
-      if (isMobile.any()) {
-        var head = document.getElementsByTagName('head')[0];
-        var js = document.createElement("script");
+        function fail() {
+          console.log("failed to get filesystem");
+        }
 
-        js.type = "text/javascript";
-        js.src = "cordova.js";
+        function gotFS(fileSystem) {
+          console.log("filesystem got");
+          fileSystem.root.getDirectory(window.appRootDirName, {
+            create : true,
+            exclusive : false
+          }, dirReady, fail);
+        }
 
-        head.appendChild(js);
-
-        (function(){
-          // @todo: Remove appRootDirName?
-          window.appRootDirName = "";
-
-          document.addEventListener("deviceready", onDeviceReady, false);
-
-          function onDeviceReady() {
-            console.log("device is ready");
-            window.requestFileSystem  = window.requestFileSystem || window.webkitRequestFileSystem;
-            window.requestFileSystem(LocalFileSystem.TEMPORARY, 0, gotFS, fail);
-          }
-
-          function fail() {
-            console.log("failed to get filesystem");
-          }
-
-          function gotFS(fileSystem) {
-            console.log("filesystem got");
-            fileSystem.root.getDirectory(window.appRootDirName, {
-              create : true,
-              exclusive : false
-            }, dirReady, fail);
-          }
-
-          function dirReady(entry) {
-            window.appRootDir = entry;
-            console.log(JSON.stringify(window.appRootDir));
-          }
-        })();
-      }
+        function dirReady(entry) {
+          window.appRootDir = entry;
+          console.log(JSON.stringify(window.appRootDir));
+        }
+      })();
     </script>
+    <!-- @endif -->
+
+    <!-- @ifdef WEB -->
+    <script src="bower_components/oauth/oauth.min.js"></script>
+    <!-- @endif -->
 
 
     <!-- Leaflet JS -->
@@ -119,7 +95,6 @@
         <script src="bower_components/angular-audio-player/dist/angular-audio-player.js"></script>
         <script src="bower_components/angular-audio-player/src/helpers.js"></script>
         <script src="bower_components/angular-md5/angular-md5.js"></script>
-        <script src="bower_components/oauth/oauth.min.js"></script>
         <!-- endbuild -->
 
         <!-- build:js scripts/modules.js -->

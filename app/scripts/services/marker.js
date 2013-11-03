@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('publicEducationApp')
-  .service('Marker', function Marker($q, $http, $timeout, BACKEND_URL, RECORD_FLAGS, Phonegap, md5) {
+  .service('Marker', function Marker($q, $http, $timeout, BACKEND_URL, RECORD_FLAGS, Phonegap, md5, IS_MOBILE, DUMMY_WAV_FILE) {
 
     return {
 
@@ -95,6 +95,12 @@ angular.module('publicEducationApp')
           lat: venue.lat,
           lng: venue.lng
         };
+
+        // Mock the web application.
+        if (!IS_MOBILE) {
+          // Set dummy sound for the first sound of the playList to mock the web, on cached new markers.
+          this.data.markers[id].playList[0].src = DUMMY_WAV_FILE;
+        }
 
         return this.uploadingMarker(newMarker);
       },

@@ -20,7 +20,7 @@ phonegap local plugin add https://github.com/oauth-io/oauth-phonegap.git
 npm install
 bower install
 
-# Build into www folder.
-grunt build
+# Build into www folder as mobile.
+grunt mobile
 
 echo "Done. Use 'phonegap run ios' or 'phonegap run android' or 'grunt server'"
