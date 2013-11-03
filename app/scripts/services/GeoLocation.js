@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('publicEducationApp')
-  .service('Geolocation', function Geolocation($q) {
+  .service('Geolocation', function Geolocation($q, $window, $rootScope) {
 
   return {
     // Private variable to hold the state.
@@ -14,12 +14,13 @@ angular.module('publicEducationApp')
       var defer = $q.defer();
 
       if (!navigator.geolocation) {
-        defer.reject();
+        defer.reject('no geolocation');
+        return defer.promise;
       }
 
       var self = this;
 
-      navigator.geolocation.getCurrentPosition(function(position) {
+      $window.navigator.geolocation.getCurrentPosition(function(position) {
         var data = {
           lat: position.coords.latitude,
           lng: position.coords.longitude
@@ -27,6 +28,9 @@ angular.module('publicEducationApp')
 
         self.data.position = data;
         defer.resolve(data);
+
+        // We need to invoke the digest.
+        $rootScope.$digest();
       });
 
       return defer.promise;
