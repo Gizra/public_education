@@ -38,8 +38,6 @@ angular.module('publicEducationApp')
             }
             if (scope.mediaStatus === 2) {
               scope.mediaPlayer.stop();
-              // We need to invoke the digest.
-              $rootScope.$digest();
             }
           });
         }
@@ -65,6 +63,8 @@ angular.module('publicEducationApp')
             function onStatus(status) {
               scope.mediaStatus = status;
               console.log(scope.mediaStatus);
+              // We need to invoke the digest.
+              $rootScope.$digest();
             });
         };
 
