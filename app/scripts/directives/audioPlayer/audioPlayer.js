@@ -73,10 +73,8 @@ angular.module('publicEducationApp')
             scope.loadMedia();
           }
 
-          if (scope.mediaStatus !== 2) {
-            scope.play = true;
-            scope.mediaPlayer.play();
-          }
+          scope.play = true;
+          scope.mediaPlayer.play();
         };
 
         // Initialize the property to stop playList.
