@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('publicEducationApp')
-  .directive('audioPlayer', function (Phonegap, $rootScope, $timeout) {
+  .directive('audioPlayer', function (Phonegap) {
     return {
       templateUrl: 'scripts/directives/audioPlayer/audioPlayer.html',
       restrict: 'E',
@@ -38,8 +38,9 @@ angular.module('publicEducationApp')
               return;
             }
 
+            // Stop playing the playList, when finish the last sound.
             scope.stopPlaying = true;
-            
+
           });
         }
 
@@ -75,6 +76,7 @@ angular.module('publicEducationApp')
           }
         };
 
+
         scope.stopPlaying = false;
 
         scope.$watch('currentTrack', function(track, oldTrack) {
@@ -83,6 +85,7 @@ angular.module('publicEducationApp')
             return;
           }
 
+          // Avoid to continue playing the playList
           if (scope.stopPlaying) {
             return;
           }
