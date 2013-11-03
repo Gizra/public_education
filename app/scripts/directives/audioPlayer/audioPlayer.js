@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('publicEducationApp')
-  .directive('audioPlayer', function (Phonegap) {
+  .directive('audioPlayer', function (Phonegap, $rootScope) {
     return {
       templateUrl: 'scripts/directives/audioPlayer/audioPlayer.html',
       restrict: 'E',
@@ -38,6 +38,8 @@ angular.module('publicEducationApp')
             }
             if (scope.mediaStatus === 2) {
               scope.mediaPlayer.stop();
+              // We need to invoke the digest.
+              $rootScope.$digest();
             }
           });
         }
