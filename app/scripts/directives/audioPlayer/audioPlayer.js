@@ -61,10 +61,13 @@ angular.module('publicEducationApp')
               console.log(error);
             },
             function onStatus(status) {
-              scope.mediaStatus = status;
+              scope.$apply(function() {
+                scope.mediaStatus = status;
+              });
+
               console.log(scope.mediaStatus);
               // We need to invoke the digest.
-              $rootScope.$digest();
+              // $rootScope.$digest();
             });
         };
 
