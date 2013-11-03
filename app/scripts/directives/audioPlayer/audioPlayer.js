@@ -32,6 +32,9 @@ angular.module('publicEducationApp')
           scope.playerControl.playPause();
         };
 
+        /**
+         * Observe the event 'stopPlaying'.
+         */
         if (scope.isPhoneGap) {
           scope.$watch('stopPlaying', function(stopPlaying) {
             if (!stopPlaying || !scope.mediaPlayer) {
@@ -76,7 +79,7 @@ angular.module('publicEducationApp')
           }
         };
 
-
+        // Initialize the property to stop playList.
         scope.stopPlaying = false;
 
         scope.$watch('currentTrack', function(track, oldTrack) {
