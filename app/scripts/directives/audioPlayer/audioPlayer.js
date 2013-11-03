@@ -37,9 +37,9 @@ angular.module('publicEducationApp')
             if (!stopPlaying || !scope.mediaPlayer) {
               return;
             }
-            if (scope.mediaStatus === 2) {
-              scope.mediaPlayer.stop();
-            }
+
+            scope.stopPlaying = true;
+            
           });
         }
 
@@ -58,18 +58,6 @@ angular.module('publicEducationApp')
                 }
               });
 
-            },
-            function onError(error) {
-              console.log(error);
-            },
-            function onStatus(status) {
-
-              scope.mediaStatus = status;
-              console.log(status);
-
-              // We need to invoke the digest.
-              $rootScope.$digest();
-
             });
         };
 
@@ -87,9 +75,15 @@ angular.module('publicEducationApp')
           }
         };
 
+        scope.stopPlaying = false;
+
         scope.$watch('currentTrack', function(track, oldTrack) {
           // We continue only with a valid track number or a playlist.
           if (!scope.playList.length || track === undefined || track < 0) {
+            return;
+          }
+
+          if (scope.stopPlaying) {
             return;
           }
 
