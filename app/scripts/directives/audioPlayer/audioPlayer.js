@@ -47,11 +47,11 @@ angular.module('publicEducationApp')
           });
         }
 
-        /**
-         * Load media source in phoneGap object
-         */
-        scope.loadMedia = function() {
 
+        /**
+         * Play an item in PhoneGap devices.
+         */
+        scope.playPhoneGap = function() {
           scope.mediaPlayer = Phonegap.getMedia(scope.currentRecord.src,
             function onSuccess() {
 
@@ -63,13 +63,6 @@ angular.module('publicEducationApp')
               });
 
             });
-        };
-
-        /**
-         * Play an item in PhoneGap devices.
-         */
-        scope.playPhoneGap = function() {
-          scope.loadMedia();
 
           scope.play = true;
           scope.mediaPlayer.play();
