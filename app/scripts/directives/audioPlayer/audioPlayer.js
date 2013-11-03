@@ -69,9 +69,7 @@ angular.module('publicEducationApp')
          * Play an item in PhoneGap devices.
          */
         scope.playPhoneGap = function() {
-          if (scope.mediaPlayer === undefined) {
-            scope.loadMedia();
-          }
+          scope.loadMedia();
 
           scope.play = true;
           scope.mediaPlayer.play();
