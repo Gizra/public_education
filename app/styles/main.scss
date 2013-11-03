@@ -22,6 +22,7 @@ body{
   margin: 0;
   font-family: $sans;
   font-size: 16px;
+  background: #333;
 
   // @media
   // (-webkit-min-device-pixel-ratio: 2),
@@ -92,6 +93,10 @@ body{
 
     &.pause-cycle {
       background-position: center right;
+    }
+
+    &.hide {
+      display: none;
     }
   }
 }
@@ -730,4 +735,85 @@ div.leaflet-div-icon {
       }
     }
   }
+}
+
+#site-meta {
+  display: block;
+  position: absolute;
+  width: 100%;
+  bottom: 10%;
+  left: 50%;
+  max-height: 80%;
+  width: 600px;
+  margin-left: -300px;
+  background: rgba(0,0,0,0.5);
+  color: #fff;
+  z-index: 10;
+  padding-bottom: 1em;
+  overflow: scroll;
+
+  @media screen and (max-width: 600px) {
+    width: 100%;
+    margin: 0;
+    left: 0;
+  }
+
+  @media screen and (max-width: 700px) {
+      display: none;
+  }
+
+  header {
+    margin: 1em;
+  }
+
+  h1 {
+    color: red;
+    margin: 0;
+    //margin-left: 1.3em;
+  }
+
+  p.subheading {
+    font-family: Georgia, serif;
+    font-style: italic;
+    color: #fff;
+    font-size: 1.2em;
+    line-height: 1.5em;
+    margin: 0.5em 0;
+  }
+
+  a {
+    text-decoration: none;
+    color: red;
+  }
+
+  .close {
+    position: absolute;
+  }
+
+  .work-desc {
+
+    blockquote {
+      font-family: Georgia, serif;
+      font-style: italic;
+      color: $gray-text;
+    }
+
+    display: none;
+    color: lighten($gray-text, 20%);
+    max-width: 600px;
+    margin: 1em 1em 4em;
+    font-size: 1.2em;
+    line-height: 1.5em;
+  }
+
+  &.showDetails {
+
+    .work-desc {
+      display: block;
+    }
+  }
+}
+
+.hide {
+  display: none;
 }
