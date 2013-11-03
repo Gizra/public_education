@@ -36,7 +36,9 @@ angular.module('publicEducationApp')
             if (!stopPlaying || !scope.mediaPlayer) {
               return;
             }
-            scope.mediaPlayer.stop();
+            if (scope.mediaStatus === 2) {
+              scope.mediaPlayer.stop();
+            }
           });
         }
 
