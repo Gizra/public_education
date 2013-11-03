@@ -47,6 +47,7 @@ angular.module('publicEducationApp')
          * Load media source in phoneGap object
          */
         scope.loadMedia = function() {
+
           scope.mediaPlayer = Phonegap.getMedia(scope.currentRecord.src,
             function onSuccess() {
 
@@ -63,13 +64,11 @@ angular.module('publicEducationApp')
             },
             function onStatus(status) {
 
-              $timeout(function(){
-                scope.mediaStatus = status;
-                console.log(status);
+              scope.mediaStatus = status;
+              console.log(status);
 
-                // We need to invoke the digest.
-                $rootScope.$digest();
-              }, 1000);
+              // We need to invoke the digest.
+              $rootScope.$digest();
 
             });
         };
