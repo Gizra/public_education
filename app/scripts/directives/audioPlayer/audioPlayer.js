@@ -8,7 +8,8 @@ angular.module('publicEducationApp')
       scope: {
         playList: '=playList',
         currentRecord: '=currentRecord',
-        playListFinished: '=playListFinished'
+        playListFinished: '=playListFinished',
+        stopPlaying: '=stopPlaying'
       },
       link: function postLink(scope) {
 
@@ -32,12 +33,26 @@ angular.module('publicEducationApp')
         };
 
         /**
-         * Play and pause a record in PhoneGap devices.
+         * Observe the event 'stopPlaying'.
+         */
+        if (scope.isPhoneGap) {
+          scope.$watch('stopPlaying', function(stopPlaying) {
+            if (!stopPlaying || !scope.mediaPlayer) {
+              return;
+            }
+
+            // Stop playing the playList, when finish the last sound.
+            scope.stopPlaying = true;
+
+          });
+        }
+
+
+        /* Play and pause a record in PhoneGap devices.
          *
          * @param pause
          *  true: Pause the current record.
          *  false Continue playing the current record.
-         */
         scope.playPhoneGap = function(pause) {
 
           if (pause) {
@@ -51,29 +66,33 @@ angular.module('publicEducationApp')
             scope.play = !scope.play;
             return;
           }
+          scope.mediaPlayer = Phonegap.getMedia(scope.currentRecord.src,
+            function onSuccess() {
 
-          scope.mediaPlayer = Phonegap.getMedia(scope.currentRecord.src, function onSuccess() {
-            // If play was successful, skip to the next track, if it exists.
-            scope.$apply(function () {
-              if (scope.currentTrack +1 < scope.playList.length) {
-                ++scope.currentTrack;
-              }
-            },
-              function(error) {
-                scope.mediaError = error;
-              },
-              function(status) {
-                console.log('status: ', status);
-                scope.mediaStatus = status;
+              // If play was successful, skip to the next track, if it exists.
+              scope.$apply(function () {
+                if (scope.currentTrack +1 < scope.playList.length) {
+                  ++scope.currentTrack;
+                }
               });
-          });
+
+            });
+
           scope.play = true;
           scope.mediaPlayer.play();
         };
 
+        // Initialize the property to stop playList.
+        scope.stopPlaying = false;
+
         scope.$watch('currentTrack', function(track, oldTrack) {
           // We continue only with a valid track number or a playlist.
           if (!scope.playList.length || track === undefined || track < 0) {
+            return;
+          }
+
+          // Avoid to continue playing the playList
+          if (scope.stopPlaying) {
             return;
           }
 

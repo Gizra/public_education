@@ -2,7 +2,8 @@
 
 angular.module('publicEducationApp')
   .controller('AddMarkerCtrl', function ($scope, $location, $window, Leaflet, Foursquare, storage, User, Marker, BACKEND_URL, OAuthIo) {
-     /**
+
+    /**
      * Update the map's center, and get the venue name from FourSquare.
      *
      * The marker is always in the center of the map, and visible only if the
