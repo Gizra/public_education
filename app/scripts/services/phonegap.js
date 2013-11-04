@@ -89,9 +89,9 @@ angular.module('publicEducationApp')
        *
        * @returns {*}
        */
-      getMedia: function(file, onSuccess, onError) {
+      getMedia: function(file, onSuccess, onError, mediaStatus) {
         if (typeof cordova !== 'undefined') {
-          return new Media(file, onSuccess, onError);
+          return new Media(file, onSuccess, onError, mediaStatus);
         }
 
         // Not inside Phonegap, return a mock object.
