@@ -1,12 +1,14 @@
 'use strict';
 
 angular.module('publicEducationApp')
-  .directive('addMarker', function () {
+  .directive('addMarker', function ($location) {
     return {
-      template: '<div></div>',
+      templateUrl: 'scripts/directives/addMarker/addMarker.html',
       restrict: 'E',
-      link: function postLink(scope, element, attrs) {
-        element.text('this is the addMarker directive');
+      controller: function($scope) {
+        $scope.addMarker = function() {
+          $location.path('/add-marker');
+        };
       }
     };
   });
