@@ -56,17 +56,20 @@ angular.module('publicEducationApp')
          */
         scope.playPhoneGap = function(pause) {
 
+          // Realize pause and resume action.
           if (pause) {
             if (scope.play) {
               scope.mediaPlayer.pause();
             }
             else {
-
               scope.mediaPlayer.play();
             }
             scope.play = !scope.play;
+            console.log(scope.play, 'play?');
             return;
           }
+
+
           scope.mediaPlayer = Phonegap.getMedia(scope.currentRecord.src,
             function onSuccess() {
 
@@ -79,7 +82,7 @@ angular.module('publicEducationApp')
 
             });
 
-          scope.play = true;
+
           scope.mediaPlayer.play();
         };
 
@@ -100,11 +103,11 @@ angular.module('publicEducationApp')
           // Update currentRecord.
           scope.currentRecord = scope.playList[track];
 
+          scope.play = true;
           if (scope.isPhoneGap) {
             scope.playPhoneGap();
           }
           else if (oldTrack > 0) {
-            scope.play = true;
             // HTML <audio> tag.
             if (oldTrack < track) {
               scope.playerControl.next();
@@ -150,7 +153,7 @@ angular.module('publicEducationApp')
           });
 
           // Initialize the play property.
-          scope.play = true;
+          // scope.play = true;
         }
 
         /**
