@@ -16,12 +16,24 @@ angular.module('publicEducationApp')
         scope.isPhoneGap = Phonegap.isMobile.any();
 
         scope.previous = function() {
+          // Pause before change record.
+          if (scope.isPhoneGap) {
+            scope.play = false;
+            scope.mediaPlayer.pause();
+          }
+
           if (scope.currentTrack > 0) {
             --scope.currentTrack;
           }
         };
 
         scope.next = function() {
+          // Pause before change record.
+          if (scope.isPhoneGap) {
+            scope.play = false;
+            scope.mediaPlayer.pause();
+          }
+
           if (scope.currentTrack < scope.playList.length - 1) {
             ++scope.currentTrack;
           }
@@ -102,8 +114,9 @@ angular.module('publicEducationApp')
 
           // Update currentRecord.
           scope.currentRecord = scope.playList[track];
-
+          // Set play state.
           scope.play = true;
+
           if (scope.isPhoneGap) {
             scope.playPhoneGap();
           }
