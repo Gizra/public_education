@@ -53,6 +53,7 @@ angular.module('publicEducationApp')
          * @param pause
          *  true: Pause the current record.
          *  false Continue playing the current record.
+         */
         scope.playPhoneGap = function(pause) {
 
           if (pause) {
