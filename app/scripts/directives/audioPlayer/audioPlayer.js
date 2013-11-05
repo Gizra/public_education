@@ -18,8 +18,8 @@ angular.module('publicEducationApp')
         scope.previous = function() {
           // Pause before change record.
           if (scope.isPhoneGap) {
-            scope.play = false;
-            scope.mediaPlayer.pause();
+            scope.mediaPlayer.stop();
+            scope.mediaPlayer.release();
           }
 
           if (scope.currentTrack > 0) {
@@ -30,8 +30,8 @@ angular.module('publicEducationApp')
         scope.next = function() {
           // Pause before change record.
           if (scope.isPhoneGap) {
-            scope.play = false;
-            scope.mediaPlayer.pause();
+            scope.mediaPlayer.stop();
+            scope.mediaPlayer.release();
           }
 
           if (scope.currentTrack < scope.playList.length - 1) {
@@ -82,7 +82,7 @@ angular.module('publicEducationApp')
           }
 
           // Release resources if not need the last record first.
-          if (scope.mediaPlayer) {
+          if (scope.mediaPlayer !== undefined) {
             scope.mediaPlayer.stop();
             scope.mediaPlayer.release();
           }
