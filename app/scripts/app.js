@@ -2,7 +2,7 @@
 
 angular.module('publicEducationApp', [
     'config',
-    'angular-audio-player',
+    'audioPlayer',
     'angularLocalStorage',
     'leaflet-directive',
     'angular-md5'
