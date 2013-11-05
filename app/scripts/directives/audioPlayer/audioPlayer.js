@@ -81,6 +81,11 @@ angular.module('publicEducationApp')
             return;
           }
 
+          // Release resources if not need the last record first.
+          if (scope.mediaPlayer) {
+            scope.mediaPlayer.stop();
+            scope.mediaPlayer.release();
+          }
 
           scope.mediaPlayer = Phonegap.getMedia(scope.currentRecord.src,
             function onSuccess() {
@@ -93,7 +98,6 @@ angular.module('publicEducationApp')
               });
 
             });
-
 
           scope.mediaPlayer.play();
         };
