@@ -47,7 +47,7 @@ body{
 .add-marker-wrapper {
   position: absolute;
   z-index: 99;
-  @media screen and (max-width: 600px) {top: 30px;}
+  @media screen and (max-width: 600px) {top: 20px;}
 
   a {
     background: url(../images/add-btn.png) no-repeat 5px 10px;
@@ -263,14 +263,14 @@ div.leaflet-div-icon {
   background: #FFFDF7 url(../images/grid-paper-lines.png);
  
   @media
-  /*
+  
   only screen and (-webkit-min-device-pixel-ratio: 2),
   only screen and (-moz-min-device-pixel-ratio: 2),
   only screen and (-o-min-device-pixel-ratio: 2/1),
   only screen and (min-device-pixel-ratio: 2),
   only screen and (min-resolution: 2dppx) 
-  */
-  screen and (max-width: 600px) 
+  
+  //screen and (max-width: 600px) 
   {
     padding-top: 20px;
     background: #FFFDF7 url(../images/grid-paper-lines@2x.png) 0px 7px;
