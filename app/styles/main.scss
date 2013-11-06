@@ -187,7 +187,7 @@ div.leaflet-div-icon {
   height: 32px;
   width: 32px;
   text-indent: -999999px;
-  z-index: 999999;
+  z-index: 100;
 }
 
 .leaflet-control-container .leaflet-top {
@@ -595,9 +595,15 @@ div.leaflet-div-icon {
 .edit-mode {
   width:100%;
   opacity: 0.9;
-  z-index: 99;
+  z-index: 1000;
   background: rgba(0,0,0,0.7);
   color: white;
+  position:fixed !important;
+  position:absolute;
+  top:0;
+  right:0;
+  bottom:0;
+  left:0;
 
   .action {
     display: block;
@@ -623,6 +629,7 @@ div.leaflet-div-icon {
     line-height: 1.3em;
     font-weight: 700;
     margin: 0.25em 0;
+    text-align: center;
   }
 
   .edit-text {
@@ -746,7 +753,7 @@ div.leaflet-div-icon {
 }
 
 #site-meta {
-  display: block;
+  display: none;
   position: absolute;
   width: 100%;
   bottom: 10%;
@@ -789,6 +796,10 @@ div.leaflet-div-icon {
     margin: 0.5em 0;
   }
 
+  p.installation {
+    display: none;
+  }
+
   a {
     text-decoration: none;
     color: red;
@@ -822,6 +833,100 @@ div.leaflet-div-icon {
   }
 }
 
+#site-meta.play-marker-meta {
+  display: none;
+}
+
 .hide {
   display: none;
+}
+
+$metabar: 192px;
+
+/* Unique settings for the 1090x1920px display */
+
+@media screen
+and (max-width:  1080px)
+and (min-width:  1080px)
+and (max-height: 1920px)
+and (min-height: 1920px)
+{
+  body{
+    margin-bottom: $metabar;
+    overflow: hidden;
+  }
+  .container {
+    margin-bottom: 10%;
+    height: 90%;
+  }
+
+  #site-meta,
+  #site-meta.play-marker-meta {
+    display: block;
+    height: $metabar;
+    display: fixed;
+    bottom: 0;
+    background: red;
+    width: 100%;
+    left: 0;
+    margin: 0;
+    padding: 0;
+    z-index: 9999999;
+
+    .close {
+      display: none;
+    }
+
+    header {
+      
+      margin: 0;
+
+      h1 {
+        font-weight: 700;
+        font-size: 48px;
+        color: #FFFFFF;
+        line-height: 42px;
+        width: 200px;
+        float: left;
+        padding: 50px 40px;
+        margin: 0;
+      }
+
+      p.subheading {
+        display: none;
+      }
+
+      p.installation {
+        display: block;
+        float: left;
+        width: 760px;
+        font-family: "Helvetica Neue", Helvetica, Arial, sans;
+        font-family: Helvetica;
+        font-size: 24px;
+        line-height: 28px;
+        font-style: normal;
+        padding: 80px 0 60px 40px;
+        margin: 0;
+        background: url(../images/qr.png) 95% center no-repeat ;
+
+        a {
+          text-decoration: none;
+          color: #fff;
+          font-weight: 700;
+        }
+      }
+    }
+
+
+  }
+
+  .cycle,
+  .locate-me div {
+    bottom: $metabar+10px;
+  }
+
+  .bottom-bar {
+    bottom: $metabar;
+  }
+
 }

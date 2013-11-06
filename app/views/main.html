@@ -1,12 +1,14 @@
- <div id="site-meta" ng-hide="closeMeta" ng-class="{showDetails: showDetails}">
- 	<a href class="close" ng-click="closeMeta = ! closeMeta">close</a> 
- 	<header>
+<div id="site-meta" ng-hide="closeMeta" ng-class="{showDetails: showDetails}">
+	<a href class="close" ng-click="closeMeta = ! closeMeta">close</a> 
+	<header>
 	  <h1>Public Education</h1>
 	  <p class="subheading">Recorded audio commands voiced and bestowed by the people on the people.<br>
-	  Geocached anywhere on the map. <a href class="more" ng-click="showDetails = ! showDetails">read more</a></p> 
-  	</header>
+	  Geocached anywhere on the map. <a href class="more" ng-click="showDetails = ! showDetails">read more</a></p>
+	  <p class="installation">Record your commands and add them to the map<br>
+		Download for iPhone or Android @ <a href="http://pe.mushon.com">pe.mushon.com</a></p>
+	</header>
 
-  <div class="work-desc">
+	<div class="work-desc">
 	  <blockquote>
 	    <p>“In a cross-cultural comparison, the average number of commands (an indicator of behavioral control) issued by Turkish mothers was 14.5 per minute in a community sample of Turkish parents, whereas this number ranged between 1.5 and 9 per minute among the mothers of Head Start children, the mothers of children with ADHD, and the mothers who were referred to family protective services in the U.S.”</p>
 	    <cite>—Dr. Nazli Baydar, Running head: Parental Control and Externalizing Behaviors</cite>
@@ -31,16 +33,16 @@
 </div>
 
 <div class="add-marker-wrapper">
-  <a href="#/add-marker">Add Marker</a>
+	<a href="#/add-marker">Add Marker</a>
 </div>
 
 <leaflet center="center" markers="markers" defaults="defaults"></leaflet>
 
 <div class="locate-me">
-  <div ng-click="getCurrentPosition()">Locate me</div>
+	<div ng-click="getCurrentPosition()">Locate me</div>
 </div>
 
 <div ng-hide="isMobile" class="cycle">
-  <a href="#" ng-click="playAllMarkers()" class="play-cycle">Play cycle</a>
-  <a href="#" ng-click="playAllMarkers()" class="pause-cycle hide">Pause cycle</a>
+	<a href="#" ng-click="playAllMarkers()" class="play-cycle">Play cycle</a>
+	<a href="#" ng-click="playAllMarkers()" class="pause-cycle hide">Pause cycle</a>
 </div>
