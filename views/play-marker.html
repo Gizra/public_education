@@ -1,17 +1,15 @@
 <div class="actions-wrapper">
   <div class="actions-icons">
-    <div class="add-marker-wrapper">
-      <a ng-href="#/add-marker">Add marker</a>
-    </div>
+    <add-marker></add-marker>
     <div>
-      <a ng-href="#/" ng-click="PlayingAllMarkers()" class="close">Close</a>
+      <a ng-href="#/" ng-click="stopPlayingAndCycle()" class="close">Close</a>
     </div>
   </div>
 </div>
 
 <div class="map-wrapper">
   <leaflet center="center" markers="markers" defaults="defaults"></leaflet>
-  <a ng-href="#/" class="dark-overlay"></a>
+  <a ng-click="stopPlayingAndCycle()" ng-href="#/" class="dark-overlay"></a>
   <!-- Placeholder audio marker to float above the map -->
   <div class="placemark-big"></div>
 </div>
@@ -29,7 +27,7 @@
     </div>
     <div class="action expand" ng-click="toggleEditMode()"> </div>
     <div class="recording-content">
-      <audio-player play-list="playList" current-record="selectedMarker.currentRecord" play-list-finished="playListFinished"></audio-player>
+      <audio-player play-list="playList" current-record="selectedMarker.currentRecord" play-list-finished="playListFinished" stop-playing="stopPlaying"></audio-player>
 
       <p class="record-text"> {{ selectedMarker.currentRecord.text }}</p>
 

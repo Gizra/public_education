@@ -2,7 +2,7 @@
   "author": "mrgamer",
   "name": "angular-audio-player",
   "description": "AngularJS Directive that wraps an <audio> tag exposing handy events and selectors to customize your audio player.",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "homepage": "https://github.com/mrgamer/angular-audio-player",
   "repository": {
     "type": "git",
@@ -20,13 +20,16 @@
     "grunt": "latest",
     "grunt-contrib-uglify": "latest",
     "grunt-contrib-jshint": "latest",
-    "grunt-contrib-copy": "latest",
     "grunt-contrib-watch": "~0.5.3",
     "grunt-contrib-concat": "~0.3.0",
     "grunt-karma": "latest",
     "grunt-git-describe": "latest",
     "jasmine-node": "latest",
     "karma": "latest",
-    "grunt-contrib-connect": "~0.5.0"
+    "grunt-contrib-connect": "~0.5.0",
+    "grunt-html2js": "~0.1.8",
+    "grunt-contrib-clean": "~0.5.0",
+    "grunt-md2html": "~0.1.4",
+    "highlight.js": "~7.4.0"
   }
 }
