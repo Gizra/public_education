@@ -80,7 +80,7 @@ module.exports = function (grunt) {
       options: {
         port: 9000,
         // Change this to '0.0.0.0' to access the server from outside.
-        hostname: 'localhost'
+        hostname: '10.0.0.133'
       },
       livereload: {
         options: {
@@ -115,7 +115,7 @@ module.exports = function (grunt) {
     },
     open: {
       server: {
-        url: 'http://localhost:<%= connect.options.port %>'
+        url: 'http://10.0.0.133:<%= connect.options.port %>'
       }
     },
     clean: {
@@ -407,7 +407,8 @@ module.exports = function (grunt) {
           IS_MOBILE: '<%= yeoman.development.IS_MOBILE %>',
           // Define the backend URL.
           BACKEND_URL: '<%= yeoman.development.BACKEND_URL %>',
-          DUMMY_WAV_FILE: '<%= yeoman.development.DUMMY_WAV_FILE %>'
+          DUMMY_WAV_FILE: '<%= yeoman.development.DUMMY_WAV_FILE %>',
+          URL_STORE: '<%= yeoman.development.URL_STORE %>'
         }
       }],
       production: [{
@@ -422,7 +423,8 @@ module.exports = function (grunt) {
           IS_MOBILE: '<%= yeoman.production.IS_MOBILE %>',
           // Define the backend URL.
           BACKEND_URL: '<%= yeoman.production.BACKEND_URL %>',
-          DUMMY_WAV_FILE: '<%= yeoman.production.DUMMY_WAV_FILE %>'
+          DUMMY_WAV_FILE: '<%= yeoman.production.DUMMY_WAV_FILE %>',
+          URL_STORE: '<%= yeoman.production.URL_STORE %>'
         }
       }]
     }
