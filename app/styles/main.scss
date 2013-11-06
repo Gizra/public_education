@@ -47,6 +47,7 @@ body{
 .add-marker-wrapper {
   position: absolute;
   z-index: 99;
+  @media screen and (max-width: 600px) {top: 20px;}
 
   a {
     background: url(../images/add-btn.png) no-repeat 5px 10px;
@@ -169,6 +170,7 @@ div.leaflet-div-icon {
   background: $dark-pane;
   color: $instructions;
   font-weight: bold;
+  @media screen and (max-width: 600px) {padding-top: 20px;}
 
   div {
     padding: 3%;
@@ -178,7 +180,7 @@ div.leaflet-div-icon {
 .close {
   position: fixed;
   right: 0;
-  top: 0;
+  @media screen and (max-width: 600px) {top: 15px;}
   display: block;
   background: url(../images/close@2x.png) center center no-repeat;
   background-size: contain;
@@ -239,6 +241,15 @@ div.leaflet-div-icon {
 
 /*  Form  */
 
+.form-wrapper {
+  height: 100%;
+  background-image: -o-radial-gradient(50% 89%, rgba(255,255,255,0.00) 21%, rgba(0,0,0,0.07) 89%);
+  background-image: -moz-radial-gradient(50% 89%, rgba(255,255,255,0.00) 21%, rgba(0,0,0,0.07) 89%);
+  background-image: -webkit-radial-gradient(50% 89%, rgba(255,255,255,0.00) 21%, rgba(0,0,0,0.07) 89%);
+  background-image: -ms-radial-gradient(50% 89%, rgba(255,255,255,0.00) 21%, rgba(0,0,0,0.07) 89%);
+  background-image: radial-gradient(50% 89%, rgba(255,255,255,0.00) 21%, rgba(0,0,0,0.07) 89%);
+}
+
 .command-form {
   font-size: 1.5em;
   line-height: 45px;
@@ -249,26 +260,22 @@ div.leaflet-div-icon {
   height: 100%;
   padding: 0.55em 5%;
   border: 0;
-  background: #FFFDF7;
-  background-image: -o-radial-gradient(50% 89%, rgba(255,255,255,0.00) 21%, rgba(0,0,0,0.07) 89%), url(../images/grid-paper-lines.png);
-  background-image: -moz-radial-gradient(50% 89%, rgba(255,255,255,0.00) 21%, rgba(0,0,0,0.07) 89%), url(../images/grid-paper-lines.png);
-  background-image: -webkit-radial-gradient(50% 89%, rgba(255,255,255,0.00) 21%, rgba(0,0,0,0.07) 89%), url(../images/grid-paper-lines.png);
-  background-image: -ms-radial-gradient(50% 89%, rgba(255,255,255,0.00) 21%, rgba(0,0,0,0.07) 89%), url(../images/grid-paper-lines.png);
-  background-image: radial-gradient(50% 89%, rgba(255,255,255,0.00) 21%, rgba(0,0,0,0.07) 89%), url(../images/grid-paper-lines.png);
+  background: #FFFDF7 url(../images/grid-paper-lines.png);
+ 
   @media
-    only screen and (-webkit-min-device-pixel-ratio: 2),
-    only screen and (-moz-min-device-pixel-ratio: 2),
-    only screen and (-o-min-device-pixel-ratio: 2/1),
-    only screen and (min-device-pixel-ratio: 2),
-    only screen and (min-resolution: 2dppx)
+  
+  only screen and (-webkit-min-device-pixel-ratio: 2),
+  only screen and (-moz-min-device-pixel-ratio: 2),
+  only screen and (-o-min-device-pixel-ratio: 2/1),
+  only screen and (min-device-pixel-ratio: 2),
+  only screen and (min-resolution: 2dppx) 
+  
+  //screen and (max-width: 600px) 
   {
-    background-image: -o-radial-gradient(50% 89%, rgba(255,255,255,0.00) 21%, rgba(0,0,0,0.07) 89%), url(../images/grid-paper-lines@2x.png);
-    background-image: -moz-radial-gradient(50% 89%, rgba(255,255,255,0.00) 21%, rgba(0,0,0,0.07) 89%), url(../images/grid-paper-lines@2x.png);
-    background-image: -webkit-radial-gradient(50% 89%, rgba(255,255,255,0.00) 21%, rgba(0,0,0,0.07) 89%), url(../images/grid-paper-lines@2x.png);
-    background-image: -ms-radial-gradient(50% 89%, rgba(255,255,255,0.00) 21%, rgba(0,0,0,0.07) 89%), url(../images/grid-paper-lines@2x.png);
-    background-image: radial-gradient(50% 89%, rgba(255,255,255,0.00) 21%, rgba(0,0,0,0.07) 89%), url(../images/grid-paper-lines@2x.png);
+    padding-top: 20px;
+    background: #FFFDF7 url(../images/grid-paper-lines@2x.png) 0px 7px;
+    background-size: 8px,45px;
   }
-  //background-size: 50%; //retina
 }
 
 .info-wrapper {
@@ -674,7 +681,7 @@ div.leaflet-div-icon {
     text-align: center;
     color: $recorder;
     font-size: 0.8em;
-    padding-top: 0.5em;
+    padding-top: 1.5em;
   }
 
   .flag {
