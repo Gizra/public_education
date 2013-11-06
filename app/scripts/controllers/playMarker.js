@@ -2,7 +2,6 @@
 
 angular.module('publicEducationApp')
   .controller('PlayMarkerCtrl', function ($scope, $routeParams, $location, storage, Marker, Leaflet, Phonegap, $window) {
-
     $scope.venueId = $routeParams.venueId;
     angular.extend($scope, {
       selectedMarker: {
@@ -47,12 +46,6 @@ angular.module('publicEducationApp')
         $scope.playList.push(value);
         $scope.user = $scope.selectedMarker.user;
       });
-
-      $scope.center = {
-        lat: $scope.selectedMarker.lat,
-        lng: $scope.selectedMarker.lng,
-        zoom: 18
-      };
     });
 
     $scope.playListFinished = false;
