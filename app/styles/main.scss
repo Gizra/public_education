@@ -135,21 +135,23 @@ div.leaflet-div-icon {
 // @todo It's possible show use icon with css, reseting the parent div.leaflet-div-icon
 // background images without creating a new class div.leaflet-div-icon-current.
 
-div.leaflet-div-icon-current {
+div.marker-icon-current {
   border: 0;
-  background: url(../images/urhere@2x.png) no-repeat;
-  background-size: contain;
+  background: url(../images/urhere@2x.png) no-repeat center center;
+  background-size: 30px 30px;
   display: block;
-  height: 30px;
-  width: 35px;
-
-  .marker-icon-current {
-    background: transparent;
-    font-size: 0;
-    color: #fff;
-  }
+  height: 30px !important;
+  width: 30px !important;
+  color: transparent;
+  font-size: 0;
+  -webkit-animation:spin 4s linear infinite;
+  -moz-animation:spin 4s linear infinite;
+  animation:spin 4s linear infinite;
 }
 
+@-moz-keyframes spin { 100% { -moz-transform: rotate(360deg); } }
+@-webkit-keyframes spin { 100% { -webkit-transform: rotate(360deg); } }
+@keyframes spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } }
 
 
 .add {
