@@ -5,21 +5,21 @@ angular.module('publicEducationApp')
     return {
       templateUrl: 'scripts/directives/addMarker/addMarker.html',
       restrict: 'E',
-      scope:true,
-      controller: function($scope) {
+      scope: true,
+      link: function postLink(scope) {
 
         // Set the store url in each device.
-        // It's needed set the specific application url info in the config.json file.
+        // It's needed set the specific application url info in the config.json
+        // file.
         if (!IS_MOBILE && Phonegap.isMobile.iOS()) {
-          $scope.url = URL_STORE.iOS;
+          scope.url = URL_STORE.iOS;
         }
         else if (Phonegap.isMobile.Android()) {
-          $scope.url = URL_STORE.android;
+          scope.url = URL_STORE.android;
         }
         else {
-          $scope.url = '#/add-marker';
+          scope.url = '#/add-marker';
         }
-
       }
     };
   });
