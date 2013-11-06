@@ -2,6 +2,7 @@
 
 angular.module('publicEducationApp')
   .controller('PlayMarkerCtrl', function ($scope, $routeParams, $location, storage, Marker, Leaflet, Phonegap, $window) {
+
     $scope.venueId = $routeParams.venueId;
     angular.extend($scope, {
       selectedMarker: {
