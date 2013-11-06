@@ -36,6 +36,21 @@
 	<a href="#/add-marker">Add Marker</a>
 </div>
 
+<div class="modal install" ng-hide="true">
+    <div>
+      <a href="#/" ng-click="setState('mark')" class="close">X Close</a>
+    </div>
+
+    <div class="modal-message">
+      <p>
+        To record a message please download the free Public Education app for your Apple or Android device
+      </p>
+    </div>
+    <a href="https://itunes.apple.com/il/app/public-education/id734648426?mt=8" class="btn-install btn-app-store">Available on the App Store</a>
+    <a href="#" class="btn-install btn-google-play">Available on the App Store</a>
+    
+  </div>
+
 <leaflet center="center" markers="markers" defaults="defaults"></leaflet>
 
 <div class="locate-me">

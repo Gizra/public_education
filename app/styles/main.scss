@@ -180,7 +180,7 @@ div.leaflet-div-icon {
 }
 
 .close {
-  position: fixed;
+  position: absolute;
   right: 0;
   @media screen and (max-width: 600px) {top: 15px;}
   display: block;
@@ -510,29 +510,56 @@ div.leaflet-div-icon {
 
 .completed-wrapper {
   height: 100%;
+}
 
-  .completed-modal {
-    border-radius: 5px;
-    background: rgba(0, 0, 0, 0.7);
-    margin: 10%;
-    height: 80%;
-    width: 80%;
-    position: absolute;
-    top: 0%;
-    left: 0%;
+.modal {
+  border-radius: 5px;
+  background: rgba(0, 0, 0, 0.7);
+  margin: 10%;
+  height: 80%;
+  width: 80%;
+  position: absolute;
+  top: 0%;
+  left: 0%;
+  z-index: 100;
+
+  .close {
+    top: 0;
   }
 
-  .confirmation-message {
-    padding: 70px 5% 0;
-    background: url(../images/confirmation@2x.png) center 40px no-repeat;
-    background-size: 45px; //retina
+  .modal-message {
+    padding: 20px 5% 0;
     text-align: center;
     color: $gray-text;
+    line-height: 1.4em;
 
     strong {
       color: $success;
     }
   }
+
+  &.thanks .modal-message {
+    margin-top: 70px;
+    background: url(../images/confirmation@2x.png) center 40px no-repeat;
+    background-size: 45px; //retina
+  }
+
+  a.btn-install {
+    width: 195px;
+    height: 67px;
+    display: block;
+    background: url(../images/btn-app-store@2x.png);
+    background-size: 195px 67px;
+    margin: 20px auto 0;
+    text-indent: -9999999em;
+    overflow: hidden;
+
+    &.btn-google-play {
+      background: url(../images/btn-google-play@2x.png);
+      background-size: 195px 67px;
+    }
+  }
+  
 }
 
 /* Play mode */
