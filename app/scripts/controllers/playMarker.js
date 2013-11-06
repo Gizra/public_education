@@ -47,12 +47,6 @@ angular.module('publicEducationApp')
         $scope.playList.push(value);
         $scope.user = $scope.selectedMarker.user;
       });
-
-      $scope.center = {
-        lat: $scope.selectedMarker.lat,
-        lng: $scope.selectedMarker.lng,
-        zoom: 18
-      };
     });
 
     $scope.playListFinished = false;

@@ -19,7 +19,21 @@ angular.module('publicEducationApp', [
       })
       .when('/play-marker/:venueId', {
         templateUrl: 'views/play-marker.html',
-        controller: 'PlayMarkerCtrl'
+        controller: 'PlayMarkerCtrl',
+        resolve: {
+          centerMap: ['Leaflet', 'Marker', '$route', function(Leaflet, Marker, $route) {
+            // Geting venue information.
+            Marker.gettingMarkers().then(function(data) {
+              var lat, lng, zoom;
+              lat = data[$route.current.params.venueId].lat;
+              lng = data[$route.current.params.venueId].lng;
+              zoom = 18;
+
+              // Set center before execute controller.
+              Leaflet.setCenter({lat: lat, lng: lng, zoom: zoom});
+            });
+          }]
+        }
       })
       .when('/login', {
         templateUrl: 'views/login.html',
