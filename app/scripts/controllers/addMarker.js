@@ -119,22 +119,6 @@ angular.module('publicEducationApp')
     };
 
     /**
-     * Observing states of add marker flow, to perform actions.
-     */
-    $scope.$watch('state', function() {
-      // Initialize user when enter to credentials state.
-      if ($scope.state === 'credentials') {
-        // Default values of a user.
-        $scope.user = {
-          username: '',
-          name: 'Anonymous',
-          photo: '',
-          provider: null
-        };
-      }
-    });
-
-    /**
      * Login user in a specific provider OAuth (Facebook) and save the marker and related record.
      *
      * @param provider
@@ -149,12 +133,29 @@ angular.module('publicEducationApp')
       });
     };
 
+    $scope.$watch('state', function(state) {
+      if (state === 'credentials' && !!$scope.user.username) {
+        // Upload the data and save marker.
+        $scope.onRecorded();
+      }
+    });
+
 
     // @todo: Move to init function?
     storage.bind($scope, 'center', {defaultValue: Leaflet.getCenter()});
     $scope.center.zoom = 16;
     storage.bind($scope, 'text');
     storage.bind($scope, 'state', {defaultValue: 'mark'});
+
+    // Default values of a user.
+    var user = {
+      username: '',
+      name: 'Anonymous',
+      photo: '',
+      provider: null
+    };
+    storage.bind($scope, 'user', {defaultValue: user});
+
     $scope.markers = {};
     $scope.backendUrl = BACKEND_URL;
   });
