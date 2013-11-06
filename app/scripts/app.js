@@ -19,6 +19,21 @@ angular.module('publicEducationApp', [
       })
       .when('/play-marker/:venueId', {
         templateUrl: 'views/play-marker.html',
+        resolve: {
+          // Set the map's center before execute controller, so the "old center"
+          // and "center" in Leaflet are not the same.
+          centerMap: ['Leaflet', 'Marker', '$route', function(Leaflet, Marker, $route) {
+            // Geting venue information.
+            Marker.gettingMarkers().then(function(data) {
+              var lat, lng, zoom;
+              lat = data[$route.current.params.venueId].lat;
+              lng = data[$route.current.params.venueId].lng;
+              zoom = 18;
+
+              Leaflet.setCenter({lat: lat, lng: lng, zoom: zoom});
+            });
+          }]
+        },
         controller: 'PlayMarkerCtrl'
       })
       .when('/login', {
