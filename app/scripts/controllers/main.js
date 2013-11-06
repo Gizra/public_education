@@ -65,6 +65,22 @@ angular.module('publicEducationApp')
 
           $scope.markers[key] = marker;
         });
+
+        // Set Current position marker.
+        $scope.markers.current = {};
+        $scope.markers.current.name = 'Current Position';
+        $scope.markers.current.lat = $scope.center.lat;
+        $scope.markers.current.lng = $scope.center.lng;
+        // Set icon current position.
+        $scope.markers.current.icon = $window.L.divIcon({
+          iconSize: [30, 35],
+          // Set the icon according to the playlist count.
+          html: '<div class="marker-icon-current">current</div>',
+          // @todo: angular-leaflet fails without this one.
+          iconAnchor:   [15, 35]
+        });
+
+        // @todo: create a directive? or look for a best way with css?
       })
         // Refresh markers each minute, after data was received.
         .then($timeout(getMarkers, 60000).resolve);

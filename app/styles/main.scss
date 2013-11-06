@@ -128,7 +128,29 @@ div.leaflet-div-icon {
     right: -2px;
     @include border-radius(18px, 18px);
   }
+
+
 }
+
+// @todo It's possible show use icon with css, reseting the parent div.leaflet-div-icon
+// background images without creating a new class div.leaflet-div-icon-current.
+
+div.leaflet-div-icon-current {
+  border: 0;
+  background: url(../images/urhere@2x.png) no-repeat;
+  background-size: contain;
+  display: block;
+  height: 30px;
+  width: 35px;
+
+  .marker-icon-current {
+    background: transparent;
+    font-size: 0;
+    color: #fff;
+  }
+}
+
+
 
 .add {
   div.leaflet-div-icon {
