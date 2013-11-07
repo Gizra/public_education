@@ -5,6 +5,15 @@ angular.module('publicEducationApp')
 
     angular.extend($scope, Leaflet.getDefaults());
     storage.bind($scope,'center', {defaultValue: Leaflet.getCenter()});
+    $scope.markers = {};
+    $scope.marker = {};
+    $scope.marker.lat = $scope.center.lat;
+    $scope.marker.lng = $scope.center.lng;
+    // Set icon current position.
+    $scope.marker.icon = $window.L.icon({
+      iconUrl: '../images/urhere@2x.png',
+      iconSize: [80, 80]
+    });
 
 
     $scope.getCurrentPosition = function() {
@@ -12,6 +21,11 @@ angular.module('publicEducationApp')
         $scope.center.lat = data.lat;
         $scope.center.lng = data.lng;
         $scope.center.zoom = 16;
+
+        // Set Current position marker. By using "marker" instead of "markers" we
+        // assure it's going to be the first marker in the list.
+        $scope.marker.lat = $scope.center.lat;
+        $scope.marker.lng = $scope.center.lng;
       });
     };
 
@@ -27,8 +41,6 @@ angular.module('publicEducationApp')
       }
     }
 
-
-    $scope.markers = {};
 
     $scope.playAllMarkers = function() {
       Marker.setPlayingAllMarkers(true);
@@ -65,6 +77,8 @@ angular.module('publicEducationApp')
 
           $scope.markers[key] = marker;
         });
+
+        // @todo: create a directive? or look for a best way with css?
       })
         // Refresh markers each minute, after data was received.
         .then($timeout(getMarkers, 60000).resolve);

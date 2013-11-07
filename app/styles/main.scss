@@ -131,9 +131,12 @@ div.leaflet-div-icon {
     right: -2px;
     @include border-radius(18px, 18px);
   }
+
+
 }
 
 .add {
+
   div.leaflet-div-icon {
     background: url(../images/adding@2x.png) no-repeat;
     background-position: 0 8px;
@@ -264,16 +267,16 @@ div.leaflet-div-icon {
   padding: 0.55em 5%;
   border: 0;
   background: #FFFDF7 url(../images/grid-paper-lines.png);
- 
+
   @media
-  
+
   only screen and (-webkit-min-device-pixel-ratio: 2),
   only screen and (-moz-min-device-pixel-ratio: 2),
   only screen and (-o-min-device-pixel-ratio: 2/1),
   only screen and (min-device-pixel-ratio: 2),
-  only screen and (min-resolution: 2dppx) 
-  
-  //screen and (max-width: 600px) 
+  only screen and (min-resolution: 2dppx)
+
+  //screen and (max-width: 600px)
   {
     padding-top: 20px;
     background: #FFFDF7 url(../images/grid-paper-lines@2x.png) 0px 7px;

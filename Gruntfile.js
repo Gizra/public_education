@@ -407,7 +407,9 @@ module.exports = function (grunt) {
           IS_MOBILE: '<%= yeoman.development.IS_MOBILE %>',
           // Define the backend URL.
           BACKEND_URL: '<%= yeoman.development.BACKEND_URL %>',
-          DUMMY_WAV_FILE: '<%= yeoman.development.DUMMY_WAV_FILE %>'
+          DUMMY_WAV_FILE: '<%= yeoman.development.DUMMY_WAV_FILE %>',
+          URL_STORE: '<%= yeoman.development.URL_STORE %>',
+          WEB_URL: '<%= yeoman.development.WEB_URL %>'
         }
       }],
       production: [{
@@ -422,7 +424,9 @@ module.exports = function (grunt) {
           IS_MOBILE: '<%= yeoman.production.IS_MOBILE %>',
           // Define the backend URL.
           BACKEND_URL: '<%= yeoman.production.BACKEND_URL %>',
-          DUMMY_WAV_FILE: '<%= yeoman.production.DUMMY_WAV_FILE %>'
+          DUMMY_WAV_FILE: '<%= yeoman.production.DUMMY_WAV_FILE %>',
+          URL_STORE: '<%= yeoman.production.URL_STORE %>',
+          WEB_URL: '<%= yeoman.production.WEB_URL %>'
         }
       }]
     }

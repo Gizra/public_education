@@ -10,7 +10,12 @@
     "RECORD_FLAGS": ["koc"],
     "IS_MOBILE": true,
     "BACKEND_URL": "http://localhost:9000",
-    "DUMMY_WAV_FILE": "http://www.pacdv.com/sounds/voices/nice-work.wav"
+    "DUMMY_WAV_FILE": "http://www.pacdv.com/sounds/voices/nice-work.wav",
+    "URL_STORE": {
+      "iOS": "https://itunes.apple.com/app/chrome/id535886823?mt=8",
+      "android" : "https://play.google.com/store/apps/details?id=com.android.chrome"
+    },
+    "WEB_URL": "http://pe.mushon.com"
   },
   "production": {
     "FOURSQUARE": {
@@ -23,6 +28,11 @@
     "RECORD_FLAGS": ["koc"],
     "IS_MOBILE": true,
     "BACKEND_URL": "http://localhost:9000",
-    "DUMMY_WAV_FILE": "http://www.pacdv.com/sounds/voices/nice-work.wav"
+    "DUMMY_WAV_FILE": "http://www.pacdv.com/sounds/voices/nice-work.wav",
+    "URL_STORE": {
+      "iOS": "https://itunes.apple.com/app/chrome/id535886823?mt=8",
+      "android" : "https://play.google.com/store/apps/details?id=com.android.chrome"
+    },
+    "WEB_URL": "http://pe.mushon.com"
   }
 }
