@@ -88,12 +88,13 @@ angular.module('publicEducationApp')
 
         // Add the venue information to the uploaded marker, so we can create
         // a Venue record if it doesn't exist yet, without re-calling
-        // FourSquare.
+        // FourSquare. The lat-lng are from the original place they were
+        // captured, and the venue ID is an md5() of the lat-lng.
         newMarker.venue = {
-          venueId: venue.id,
+          venueId: md5.createHash(angular.toJson(location, false)),
           name: venue.name,
-          lat: venue.lat,
-          lng: venue.lng
+          lat: location.lat,
+          lng: location.lng
         };
 
         // Mock the web application.
