@@ -1,4 +1,5 @@
-<div id="site-meta" ng-hide="closeMeta" ng-class="{showDetails: showDetails}">
+<!-- SITE-META -->
+<div id="site-meta" ng-hide="closeMeta" ng-class="{show-details: showDetails}" ng-show="!isMobile">
 	<a href class="close" ng-click="closeMeta = ! closeMeta">close</a> 
 	<header>
 	  <h1>Public Education</h1>
@@ -31,14 +32,19 @@
 	  	<a href="http://twitter.com/pubedapp" target="_blank">@PubEdApp</a> or pubedapp (at) Gmail.com</p>
 	</div>
 </div>
+<!-- END SITE-META -->
 
 <div class="add-marker-wrapper">
+	<!-- TODO: use ng-show and ng-hide with isMobile to toggle between these two:
+	<a href ng-click="setState('install')">Add Marker</a>
+	-->
 	<a href="#/add-marker">Add Marker</a>
 </div>
 
-<div class="modal install" ng-hide="true">
+<!-- INSTALL -->
+<div class="modal install" ng-show="state == 'install'">
     <div>
-      <a href="#/" ng-click="setState('mark')" class="close">X Close</a>
+      <a href="#/" ng-click="setState('main')" class="close">X Close</a>
     </div>
 
     <div class="modal-message">
@@ -47,9 +53,9 @@
       </p>
     </div>
     <a href="https://itunes.apple.com/il/app/public-education/id734648426?mt=8" class="btn-install btn-app-store">Available on the App Store</a>
-    <a href="#" class="btn-install btn-google-play">Available on the App Store</a>
-    
-  </div>
+    <a href="#" class="btn-install btn-google-play">Available on the App Store</a>    
+</div>
+<!-- END INSTALL -->
 
 <leaflet center="center" markers="markers" defaults="defaults"></leaflet>
 

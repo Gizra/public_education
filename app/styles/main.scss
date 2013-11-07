@@ -25,6 +25,7 @@ body{
   font-family: $sans;
   font-size: 16px;
   background: #333;
+  overflow: hidden;
 
   // @media
   // (-webkit-min-device-pixel-ratio: 2),
@@ -792,7 +793,6 @@ div.leaflet-div-icon {
 }
 
 #site-meta {
-  display: none;
   position: absolute;
   width: 100%;
   bottom: 10%;
@@ -804,7 +804,7 @@ div.leaflet-div-icon {
   color: #fff;
   z-index: 10;
   padding-bottom: 1em;
-  overflow: scroll;
+  overflow: hidden;
 
   @media screen and (max-width: 600px) {
     width: 100%;
@@ -864,7 +864,8 @@ div.leaflet-div-icon {
     line-height: 1.5em;
   }
 
-  &.showDetails {
+  &.show-details {
+    overflow: scroll;
 
     .work-desc {
       display: block;
