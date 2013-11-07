@@ -42,7 +42,7 @@ angular.module('publicEducationApp')
        *   Optional; The user object to associate the recording with.
        */
       addMarker: function(venue, text, file, location, user) {
-        var venueId = md5.createHash(angular.toJson(location, false));
+        var venueId = venue.id;
 
         this.data.markers = this.data.markers || {};
 
@@ -50,8 +50,8 @@ angular.module('publicEducationApp')
           // Add the venue data.
           this.data.markers[venueId] = {
             name: venue.name,
-            lat: location.lat,
-            lng: location.lng,
+            lat: venue.lat,
+            lng: venue.lng,
             playList: []
           };
         }
@@ -76,6 +76,7 @@ angular.module('publicEducationApp')
           unprocessed: true,
 
           // Pass the original 'lng' and 'lat' to the backend.
+          // @todo: Remove.
           location: location
         };
 
@@ -93,8 +94,8 @@ angular.module('publicEducationApp')
         newMarker.venue = {
           venueId: venueId,
           name: venue.name,
-          lat: location.lat,
-          lng: location.lng
+          lat: venue.lat,
+          lng: venue.lng
         };
 
         // Mock the web application.
