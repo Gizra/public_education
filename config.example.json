@@ -16,7 +16,8 @@
       "android" : "https://play.google.com/store/apps/details?id=com.android.chrome"
     },
     "URHERE_ICON": "https://raw.github.com/Gizra/public_education/master/app/images/urhere@2x.png",
-    "WEB_URL": "http://pe.mushon.com"
+    "CUSTOM_CSS" : "koc",
+    "WEB_URL" : "http://pe.mushon.com"
   },
   "production": {
     "FOURSQUARE": {
@@ -35,6 +36,7 @@
       "android" : "https://play.google.com/store/apps/details?id=com.android.chrome"
     },
     "URHERE_ICON": "https://raw.github.com/Gizra/public_education/master/app/images/urhere@2x.png",
+    "CUSTOM_CSS" : "koc",
     "WEB_URL": "http://pe.mushon.com"
   }
 }

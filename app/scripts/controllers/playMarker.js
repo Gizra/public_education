@@ -3,6 +3,9 @@
 angular.module('publicEducationApp')
   .controller('PlayMarkerCtrl', function ($scope, $routeParams, $location, storage, Marker, Leaflet, WEB_URL) {
 
+    // Apply custom css, if exist.
+    storage.bind($scope,'customCss', {defaultValue: 'reset-custom-css'});
+
     $scope.venueId = $routeParams.venueId;
     angular.extend($scope, {
       selectedMarker: {
