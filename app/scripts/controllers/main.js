@@ -3,6 +3,7 @@
 angular.module('publicEducationApp')
   .controller('ListMarkersCtrl', function ($scope, $window, Leaflet, storage, Marker, Geolocation, $location, $timeout, IS_MOBILE, $routeParams, CUSTOM_CSS) {
 
+    // Storage custom css information in the LocalStorage.
     storage.bind($scope,'isCustomCss', {defaultValue: false});
     storage.bind($scope,'customCss', {defaultValue: 'reset-custom-css'});
 
@@ -22,6 +23,8 @@ angular.module('publicEducationApp')
       $location.path('/');
     }
 
+
+    // Leaflet default values.
     angular.extend($scope, Leaflet.getDefaults());
     storage.bind($scope,'center', {defaultValue: Leaflet.getCenter()});
     $scope.markers = {};
