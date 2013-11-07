@@ -4,10 +4,22 @@ angular.module('publicEducationApp')
   .controller('ListMarkersCtrl', function ($scope, $window, Leaflet, storage, Marker, Geolocation, $location, $timeout, IS_MOBILE, $routeParams, CUSTOM_CSS) {
 
     storage.bind($scope,'isCustomCss', {defaultValue: false});
-    $scope.customCss = CUSTOM_CSS;
-    // Activate custom css.
-    if ($routeParams.class) {
+    storage.bind($scope,'customCss', {defaultValue: 'reset-custom-css'});
+
+    if ($routeParams.route === CUSTOM_CSS.route) {
+      // Activate custom css.
       $scope.isCustomCss = true;
+      $scope.customCss = $scope.customCss + ' ' +  CUSTOM_CSS.css;
+    }
+    else if ($routeParams.route === 'reset') {
+      // Return default values
+      $scope.isCustomCss = false;
+      $scope.customCss = 'reset-custom-css';
+    }
+
+    // Reset the the route to main view when activete/deactive a custom css..
+    if ($routeParams.route) {
+      $location.path('/');
     }
 
     angular.extend($scope, Leaflet.getDefaults());

@@ -13,6 +13,10 @@ angular.module('publicEducationApp', [
         templateUrl: 'views/main.html',
         controller: 'ListMarkersCtrl'
       })
+      .when('/custom-css/:route', {
+        templateUrl: 'views/main.html',
+        controller: 'ListMarkersCtrl'
+      })
       .when('/add-marker', {
         templateUrl: 'views/add-marker.html',
         controller: 'AddMarkerCtrl'
@@ -39,10 +43,6 @@ angular.module('publicEducationApp', [
       .when('/login', {
         templateUrl: 'views/login.html',
         controller: 'loginCtrl'
-      })
-      .when('/main/:class', {
-        templateUrl: 'views/main.html',
-        controller: 'listMarkersCtrl'
       })
       .otherwise({
         redirectTo: '/'
