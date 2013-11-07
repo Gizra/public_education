@@ -3,11 +3,11 @@
 angular.module('publicEducationApp')
   .controller('ListMarkersCtrl', function ($scope, $window, Leaflet, storage, Marker, Geolocation, $location, $timeout, IS_MOBILE, $routeParams, CUSTOM_CSS) {
 
-    $scope.isCustonCss = false;
+    storage.bind($scope,'isCustomCss', {defaultValue: false});
     $scope.customCss = CUSTOM_CSS;
     // Activate custom css.
     if ($routeParams.class) {
-      $scope.isCustonCss = true;
+      $scope.isCustomCss = true;
     }
 
     angular.extend($scope, Leaflet.getDefaults());
