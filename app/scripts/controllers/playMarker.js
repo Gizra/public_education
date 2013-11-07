@@ -19,7 +19,7 @@ angular.module('publicEducationApp')
     // Default values edit mode ng-class.
     $scope.classPlayerMode = 'playlist-info bottom-bar';
     $scope.actualPage = $location.absUrl();
-    storage.bind($scope,'editMode', {defaultValue: Marker.isPlayingAllMarkers()});
+    storage.bind($scope,'editMode', {defaultValue: false});
 
     $scope.stopPlayingAndCycle = function() {
       // Stop the cycle, if it was enabled.

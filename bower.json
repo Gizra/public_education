@@ -11,7 +11,7 @@
     "angular-resource": "~1.0.7",
     "angular-cookies": "~1.0.7",
     "angular-sanitize": "~1.0.7",
-    "angular-leaflet": "master",
+    "angular-leaflet": "~0.6.1",
     "leaflet": "http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.js",
     "angularLocalStorage": "~0.1.7",
     "angular-audio-player": "mrgamer/angular-audio-player#0.2.0",

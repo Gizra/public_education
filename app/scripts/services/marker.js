@@ -42,16 +42,16 @@ angular.module('publicEducationApp')
        *   Optional; The user object to associate the recording with.
        */
       addMarker: function(venue, text, file, location, user) {
-        var id = venue.id;
+        var venueId = md5.createHash(angular.toJson(location, false));
 
         this.data.markers = this.data.markers || {};
 
-        if (!this.data.markers[id]) {
+        if (!this.data.markers[venueId]) {
           // Add the venue data.
-          this.data.markers[id] = {
+          this.data.markers[venueId] = {
             name: venue.name,
-            lat: venue.lat,
-            lng: venue.lng,
+            lat: location.lat,
+            lng: location.lng,
             playList: []
           };
         }
@@ -83,23 +83,24 @@ angular.module('publicEducationApp')
         newMarker.hash = md5.createHash(angular.toJson(newMarker, false));
         this.setProcessing(newMarker.hash);
 
-        this.data.markers[id].playList = this.data.markers[id].playList || [];
-        this.data.markers[id].playList.unshift(newMarker);
+        this.data.markers[venueId].playList = this.data.markers[venueId].playList || [];
+        this.data.markers[venueId].playList.unshift(newMarker);
 
         // Add the venue information to the uploaded marker, so we can create
         // a Venue record if it doesn't exist yet, without re-calling
-        // FourSquare.
+        // FourSquare. The lat-lng are from the original place they were
+        // captured, and the venue ID is an md5() of the lat-lng.
         newMarker.venue = {
-          venueId: venue.id,
+          venueId: venueId,
           name: venue.name,
-          lat: venue.lat,
-          lng: venue.lng
+          lat: location.lat,
+          lng: location.lng
         };
 
         // Mock the web application.
         if (!IS_MOBILE) {
           // Set dummy sound for the first sound of the playList to mock the web, on cached new markers.
-          this.data.markers[id].playList[0].src = DUMMY_WAV_FILE;
+          this.data.markers[venueId].playList[0].src = DUMMY_WAV_FILE;
         }
 
         return this.uploadingMarker(newMarker);

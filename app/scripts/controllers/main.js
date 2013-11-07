@@ -9,6 +9,11 @@ angular.module('publicEducationApp')
     $scope.marker = {};
     $scope.marker.lat = $scope.center.lat;
     $scope.marker.lng = $scope.center.lng;
+    // Set icon current position.
+    $scope.marker.icon = $window.L.icon({
+      iconUrl: '../images/urhere@2x.png',
+      iconSize: [80, 80]
+    });
 
 
     $scope.getCurrentPosition = function() {
@@ -16,6 +21,11 @@ angular.module('publicEducationApp')
         $scope.center.lat = data.lat;
         $scope.center.lng = data.lng;
         $scope.center.zoom = 16;
+
+        // Set Current position marker. By using "marker" instead of "markers" we
+        // assure it's going to be the first marker in the list.
+        $scope.marker.lat = $scope.center.lat;
+        $scope.marker.lng = $scope.center.lng;
       });
 
 

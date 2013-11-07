@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('publicEducationApp')
-  .controller('AddMarkerCtrl', function ($scope, $location, $window, Leaflet, Foursquare, storage, User, Marker, BACKEND_URL, OAuthIo) {
+  .controller('AddMarkerCtrl', function ($scope, $location, $window, Leaflet, Geolocation, IS_MOBILE, Foursquare, storage, User, Marker, BACKEND_URL, OAuthIo) {
 
     /**
      * Update the map's center, and get the venue name from FourSquare.
@@ -119,22 +119,6 @@ angular.module('publicEducationApp')
     };
 
     /**
-     * Observing states of add marker flow, to perform actions.
-     */
-    $scope.$watch('state', function() {
-      // Initialize user when enter to credentials state.
-      if ($scope.state === 'credentials') {
-        // Default values of a user.
-        $scope.user = {
-          username: '',
-          name: 'Anonymous',
-          photo: '',
-          provider: null
-        };
-      }
-    });
-
-    /**
      * Login user in a specific provider OAuth (Facebook) and save the marker and related record.
      *
      * @param provider
@@ -149,12 +133,62 @@ angular.module('publicEducationApp')
       });
     };
 
+    $scope.$watch('state', function(state) {
+      if (state === 'credentials' && !!$scope.user.username) {
+        // Upload the data and save marker.
+        $scope.onRecorded();
+      }
+    });
+
 
     // @todo: Move to init function?
     storage.bind($scope, 'center', {defaultValue: Leaflet.getCenter()});
     $scope.center.zoom = 16;
     storage.bind($scope, 'text');
     storage.bind($scope, 'state', {defaultValue: 'mark'});
+
+    // Default values of a user.
+    var user = {
+      username: '',
+      name: 'Anonymous',
+      photo: '',
+      provider: null
+    };
+    storage.bind($scope, 'user', {defaultValue: user});
+
     $scope.markers = {};
     $scope.backendUrl = BACKEND_URL;
+
+
+
+    $scope.marker = {};
+    $scope.marker.lat = $scope.center.lat;
+    $scope.marker.lng = $scope.center.lng;
+    // Set icon current position.
+    $scope.marker.icon = $window.L.icon({
+      iconUrl: '../images/urhere@2x.png',
+      iconSize: [80, 80]
+    });
+
+
+    $scope.getCurrentPosition = function() {
+      Geolocation.gettingCurrentPosition().then(function(data) {
+        // Set Current position marker. By using "marker" instead of "markers" we
+        // assure it's going to be the first marker in the list.
+        $scope.marker.lat = data.lat;
+        $scope.marker.lng = data.lng;
+      });
+    };
+
+    if (!Geolocation.checkGotCurrentPosition()) {
+      Geolocation.setGotCurrentPosition();
+      if (IS_MOBILE) {
+        // Devices.
+        document.addEventListener('deviceready', $scope.getCurrentPosition, false);
+      }
+      else {
+        // Web.
+        $scope.getCurrentPosition();
+      }
+    }
   });
