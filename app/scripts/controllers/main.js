@@ -31,6 +31,11 @@ angular.module('publicEducationApp')
     $scope.marker = {};
     $scope.marker.lat = $scope.center.lat;
     $scope.marker.lng = $scope.center.lng;
+    // Set icon current position.
+    $scope.marker.icon = $window.L.icon({
+      iconUrl: '../images/urhere@2x.png',
+      iconSize: [80, 80]
+    });
 
 
     $scope.getCurrentPosition = function() {
@@ -38,21 +43,11 @@ angular.module('publicEducationApp')
         $scope.center.lat = data.lat;
         $scope.center.lng = data.lng;
         $scope.center.zoom = 16;
-      });
 
-
-      // Set Current position marker. By using "marker" instead of "markers" we
-      // assure it's going to be the first marker in the list.
-      $scope.marker = {};
-      $scope.marker.lat = $scope.center.lat;
-      $scope.marker.lng = $scope.center.lng;
-      // Set icon current position.
-      $scope.marker.icon = $window.L.divIcon({
-        iconSize: [30, 35],
-        // Set the icon according to the playlist count.
-        html: '<div class="marker-icon-current"></div>',
-        // @todo: angular-leaflet fails without this one.
-        iconAnchor:   [15, 35]
+        // Set Current position marker. By using "marker" instead of "markers" we
+        // assure it's going to be the first marker in the list.
+        $scope.marker.lat = $scope.center.lat;
+        $scope.marker.lng = $scope.center.lng;
       });
     };
 

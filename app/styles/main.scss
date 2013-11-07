@@ -155,22 +155,8 @@ div.leaflet-div-icon {
 
 }
 
-.leaflet-marker-pane {
-
-  div.leaflet-marker-icon:first-child {
-    background: url(../images/urhere@2x.png) no-repeat;
-    background-size: contain;
-    display: block;
-    height: 30px;
-    width: 35px;
-  }
-
-}
-
-
-
-
 .add {
+
   div.leaflet-div-icon {
     background: url(../images/adding@2x.png) no-repeat;
     background-position: 0 8px;
