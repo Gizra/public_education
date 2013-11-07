@@ -1,5 +1,5 @@
 /**
- * @license AngularJS v1.2.0-rc.3
+ * @license AngularJS v1.0.6
  * (c) 2010-2012 Google, Inc. http://angularjs.org
  * License: MIT
  *
@@ -29,7 +29,7 @@ angular.mock = {};
  * that there are several helper methods available which can be used in tests.
  */
 angular.mock.$BrowserProvider = function() {
-  this.$get = function() {
+  this.$get = function(){
     return new angular.mock.$Browser();
   };
 };
@@ -75,13 +75,6 @@ angular.mock.$Browser = function() {
   };
 
 
-  /**
-   * @name ngMock.$browser#defer.now
-   * @propertyOf ngMock.$browser
-   *
-   * @description
-   * Current milliseconds mock time.
-   */
   self.defer.now = 0;
 
 
@@ -125,6 +118,13 @@ angular.mock.$Browser = function() {
       self.deferredFns.shift().fn();
     }
   };
+  /**
+   * @name ngMock.$browser#defer.now
+   * @propertyOf ngMock.$browser
+   *
+   * @description
+   * Current milliseconds mock time.
+   */
 
   self.$$baseHref = '';
   self.baseHref = function() {
@@ -241,7 +241,7 @@ angular.mock.$ExceptionHandlerProvider = function() {
    *
    * @param {string} mode Mode of operation, defaults to `rethrow`.
    *
-   *   - `rethrow`: If any errors are passed into the handler in tests, it typically
+   *   - `rethrow`: If any errors are are passed into the handler in tests, it typically
    *                means that there is a bug in the application or test, so this mock will
    *                make these tests fail.
    *   - `log`: Sometimes it is desirable to test that an error is thrown, for this case the `log` mode stores an
@@ -293,32 +293,18 @@ angular.mock.$ExceptionHandlerProvider = function() {
  *
  */
 angular.mock.$LogProvider = function() {
-  var debug = true;
 
   function concat(array1, array2, index) {
     return array1.concat(Array.prototype.slice.call(array2, index));
   }
 
-  this.debugEnabled = function(flag) {
-	  if (angular.isDefined(flag)) {
-		  debug = flag;
-		  return this;
-	  } else {
-		  return debug;
-	  }
-  };
 
   this.$get = function () {
     var $log = {
       log: function() { $log.log.logs.push(concat([], arguments, 0)); },
       warn: function() { $log.warn.logs.push(concat([], arguments, 0)); },
       info: function() { $log.info.logs.push(concat([], arguments, 0)); },
-      error: function() { $log.error.logs.push(concat([], arguments, 0)); },
-      debug: function() {
-        if (debug) {
-          $log.debug.logs.push(concat([], arguments, 0));
-        }
-      }
+      error: function() { $log.error.logs.push(concat([], arguments, 0)); }
     };
 
     /**
@@ -336,75 +322,36 @@ angular.mock.$LogProvider = function() {
        * @propertyOf ngMock.$log
        *
        * @description
-       * Array of messages logged using {@link ngMock.$log#log}.
-       *
-       * @example
-       * <pre>
-       * $log.log('Some Log');
-       * var first = $log.log.logs.unshift();
-       * </pre>
+       * Array of logged messages.
        */
       $log.log.logs = [];
-      /**
-       * @ngdoc property
-       * @name ngMock.$log#info.logs
-       * @propertyOf ngMock.$log
-       *
-       * @description
-       * Array of messages logged using {@link ngMock.$log#info}.
-       *
-       * @example
-       * <pre>
-       * $log.info('Some Info');
-       * var first = $log.info.logs.unshift();
-       * </pre>
-       */
-      $log.info.logs = [];
       /**
        * @ngdoc property
        * @name ngMock.$log#warn.logs
        * @propertyOf ngMock.$log
        *
        * @description
-       * Array of messages logged using {@link ngMock.$log#warn}.
-       *
-       * @example
-       * <pre>
-       * $log.warn('Some Warning');
-       * var first = $log.warn.logs.unshift();
-       * </pre>
+       * Array of logged messages.
        */
       $log.warn.logs = [];
+      /**
+       * @ngdoc property
+       * @name ngMock.$log#info.logs
+       * @propertyOf ngMock.$log
+       *
+       * @description
+       * Array of logged messages.
+       */
+      $log.info.logs = [];
       /**
        * @ngdoc property
        * @name ngMock.$log#error.logs
        * @propertyOf ngMock.$log
        *
        * @description
-       * Array of messages logged using {@link ngMock.$log#error}.
-       *
-       * @example
-       * <pre>
-       * $log.log('Some Error');
-       * var first = $log.error.logs.unshift();
-       * </pre>
+       * Array of logged messages.
        */
       $log.error.logs = [];
-        /**
-       * @ngdoc property
-       * @name ngMock.$log#debug.logs
-       * @propertyOf ngMock.$log
-       *
-       * @description
-       * Array of messages logged using {@link ngMock.$log#debug}.
-       *
-       * @example
-       * <pre>
-       * $log.debug('Some Error');
-       * var first = $log.debug.logs.unshift();
-       * </pre>
-       */
-      $log.debug.logs = []
     };
 
     /**
@@ -417,7 +364,7 @@ angular.mock.$LogProvider = function() {
      */
     $log.assertEmpty = function() {
       var errors = [];
-      angular.forEach(['error', 'warn', 'info', 'log', 'debug'], function(logLevel) {
+      angular.forEach(['error', 'warn', 'info', 'log'], function(logLevel) {
         angular.forEach($log[logLevel].logs, function(log) {
           angular.forEach(log, function (logItem) {
             errors.push('MOCK $log (' + logLevel + '): ' + String(logItem) + '\n' + (logItem.stack || ''));
@@ -438,123 +385,10 @@ angular.mock.$LogProvider = function() {
 };
 
 
-/**
- * @ngdoc service
- * @name ngMock.$interval
- *
- * @description
- * Mock implementation of the $interval service.
- *
- * Use {@link ngMock.$interval#flush `$interval.flush(millis)`} to
- * move forward by `millis` milliseconds and trigger any functions scheduled to run in that
- * time.
- *
- * @param {function()} fn A function that should be called repeatedly.
- * @param {number} delay Number of milliseconds between each function call.
- * @param {number=} [count=0] Number of times to repeat. If not set, or 0, will repeat
- *   indefinitely.
- * @param {boolean=} [invokeApply=true] If set to `false` skips model dirty checking, otherwise
- *   will invoke `fn` within the {@link ng.$rootScope.Scope#$apply $apply} block.
- * @returns {promise} A promise which will be notified on each iteration.
- */
-angular.mock.$IntervalProvider = function() {
-  this.$get = ['$rootScope', '$q',
-       function($rootScope,   $q) {
-    var repeatFns = [],
-        nextRepeatId = 0,
-        now = 0;
-
-    var $interval = function(fn, delay, count, invokeApply) {
-      var deferred = $q.defer(),
-          promise = deferred.promise,
-          count = (angular.isDefined(count)) ? count : 0,
-          iteration = 0,
-          skipApply = (angular.isDefined(invokeApply) && !invokeApply);
-
-      promise.then(null, null, fn);
-
-      promise.$$intervalId = nextRepeatId;
-
-      function tick() {
-        deferred.notify(iteration++);
-
-        if (count > 0 && iteration >= count) {
-          var fnIndex;
-          deferred.resolve(iteration);
-
-          angular.forEach(repeatFns, function(fn, index) {
-            if (fn.id === promise.$$intervalId) fnIndex = index;
-          });
-
-          if (fnIndex !== undefined) {
-            repeatFns.splice(fnIndex, 1);
-          }
-        }
-
-        if (!skipApply) $rootScope.$apply();
-      };
-
-      repeatFns.push({
-        nextTime:(now + delay),
-        delay: delay,
-        fn: tick,
-        id: nextRepeatId,
-        deferred: deferred
-      });
-      repeatFns.sort(function(a,b){ return a.nextTime - b.nextTime;});
-
-      nextRepeatId++;
-      return promise;
-    };
-
-    $interval.cancel = function(promise) {
-      var fnIndex;
-
-      angular.forEach(repeatFns, function(fn, index) {
-        if (fn.id === promise.$$intervalId) fnIndex = index;
-      });
-
-      if (fnIndex !== undefined) {
-        repeatFns[fnIndex].deferred.reject('canceled');
-        repeatFns.splice(fnIndex, 1);
-        return true;
-      }
-
-      return false;
-    };
-
-    /**
-     * @ngdoc method
-     * @name ngMock.$interval#flush
-     * @methodOf ngMock.$interval
-     * @description
-     *
-     * Runs interval tasks scheduled to be run in the next `millis` milliseconds.
-     *
-     * @param {number=} millis maximum timeout amount to flush up until.
-     *
-     * @return {number} The amount of time moved forward.
-     */
-    $interval.flush = function(millis) {
-      now += millis;
-      while (repeatFns.length && repeatFns[0].nextTime <= now) {
-        var task = repeatFns[0];
-        task.fn();
-        task.nextTime += task.delay;
-        repeatFns.sort(function(a,b){ return a.nextTime - b.nextTime;});
-      }
-      return millis;
-    };
-
-    return $interval;
-  }];
-};
-
-
 (function() {
   var R_ISO8061_STR = /^(\d{4})-?(\d\d)-?(\d\d)(?:T(\d\d)(?:\:?(\d\d)(?:\:?(\d\d)(?:\.(\d{3}))?)?)?(Z|([+-])(\d\d):?(\d\d)))?$/;
 
-  function jsonStringToDate(string) {
+  function jsonStringToDate(string){
     var match;
     if (match = string.match(R_ISO8061_STR)) {
       var date = new Date(0),
@@ -622,7 +456,6 @@ angular.mock.$IntervalProvider = function() {
    * newYearInBratislava.getDate() => 1;
    * newYearInBratislava.getHours() => 0;
    * newYearInBratislava.getMinutes() => 0;
-   * newYearInBratislava.getSeconds() => 0;
    * </pre>
    *
    */
@@ -679,10 +512,6 @@ angular.mock.$IntervalProvider = function() {
       return self.date.getSeconds();
     };
 
-    self.getMilliseconds = function() {
-      return self.date.getMilliseconds();
-    };
-
     self.getTimezoneOffset = function() {
       return offset * 60;
     };
@@ -733,7 +562,7 @@ angular.mock.$IntervalProvider = function() {
     }
 
     //hide all methods not implemented in this mock that the Date prototype exposes
-    var unimplementedMethods = ['getUTCDay',
+    var unimplementedMethods = ['getMilliseconds', 'getUTCDay',
         'getYear', 'setDate', 'setFullYear', 'setHours', 'setMilliseconds',
         'setMinutes', 'setMonth', 'setSeconds', 'setTime', 'setUTCDate', 'setUTCFullYear',
         'setUTCHours', 'setUTCMilliseconds', 'setUTCMinutes', 'setUTCMonth', 'setUTCSeconds',
@@ -752,43 +581,6 @@ angular.mock.$IntervalProvider = function() {
   //make "tzDateInstance instanceof Date" return true
   angular.mock.TzDate.prototype = Date.prototype;
 })();
-
-angular.mock.animate = angular.module('mock.animate', ['ng'])
-
-  .config(['$provide', function($provide) {
-
-    $provide.decorator('$animate', function($delegate) {
-      var animate = {
-        queue : [],
-        enabled : $delegate.enabled,
-        flushNext : function(name) {
-          var tick = animate.queue.shift();
-          expect(tick.method).toBe(name);
-          tick.fn();
-          return tick;
-        }
-      };
-
-      angular.forEach(['enter','leave','move','addClass','removeClass'], function(method) {
-        animate[method] = function() {
-          var params = arguments;
-          animate.queue.push({
-            method : method,
-            params : params,
-            element : angular.isElement(params[0]) && params[0],
-            parent  : angular.isElement(params[1]) && params[1],
-            after   : angular.isElement(params[2]) && params[2],
-            fn : function() {
-              $delegate[method].apply($delegate, params);
-            }
-          });
-        };
-      });
-
-      return animate;
-    });
-
-  }]);
 
 
 /**
@@ -830,7 +622,6 @@ angular.mock.dump = function(object) {
       } else if (object instanceof Error) {
         out = object.stack || ('' + object.name + ': ' + object.message);
       } else {
-        // TODO(i): this prevents methods to be logged, we should have a better way to serialize objects
         out = angular.toJson(object, true);
       }
     } else {
@@ -844,7 +635,7 @@ angular.mock.dump = function(object) {
     offset = offset ||  '  ';
     var log = [offset + 'Scope(' + scope.$id + '): {'];
     for ( var key in scope ) {
-      if (Object.prototype.hasOwnProperty.call(scope, key) && !key.match(/^(\$|this)/)) {
+      if (scope.hasOwnProperty(key) && !key.match(/^(\$|this)/)) {
         log.push('  ' + key + ': ' + angular.toJson(scope[key]));
       }
     }
@@ -862,10 +653,10 @@ angular.mock.dump = function(object) {
  * @ngdoc object
  * @name ngMock.$httpBackend
  * @description
- * Fake HTTP backend implementation suitable for unit testing applications that use the
+ * Fake HTTP backend implementation suitable for unit testing application that use the
  * {@link ng.$http $http service}.
  *
- * *Note*: For fake HTTP backend implementation suitable for end-to-end testing or backend-less
+ * *Note*: For fake http backend implementation suitable for end-to-end testing or backend-less
  * development please see {@link ngMockE2E.$httpBackend e2e $httpBackend mock}.
  *
  * During unit testing, we want our unit tests to run quickly and have no external dependencies so
@@ -958,104 +749,79 @@ angular.mock.dump = function(object) {
  *
  *
  * # Unit testing with mock $httpBackend
- * The following code shows how to setup and use the mock backend in unit testing a controller.
- * First we create the controller under test
  *
-  <pre>
-  // The controller code
-  function MyController($scope, $http) {
-    var authToken;
+ * <pre>
+   // controller
+   function MyController($scope, $http) {
+     $http.get('/auth.py').success(function(data) {
+       $scope.user = data;
+     });
 
-    $http.get('/auth.py').success(function(data, status, headers) {
-      authToken = headers('A-Token');
-      $scope.user = data;
-    });
-
-    $scope.saveMessage = function(message) {
-      var headers = { 'Authorization': authToken };
-      $scope.status = 'Saving...';
-
-      $http.post('/add-msg.py', message, { headers: headers } ).success(function(response) {
-        $scope.status = '';
-      }).error(function() {
-        $scope.status = 'ERROR!';
-      });
-    };
-  }
-  </pre>
- *
- * Now we setup the mock backend and create the test specs.
- *
-  <pre>
-    // testing controller
-    describe('MyController', function() {
-       var $httpBackend, $rootScope, createController;
-
-       beforeEach(inject(function($injector) {
-         // Set up the mock http service responses
-         $httpBackend = $injector.get('$httpBackend');
-         // backend definition common for all tests
-         $httpBackend.when('GET', '/auth.py').respond({userId: 'userX'}, {'A-Token': 'xxx'});
-
-         // Get hold of a scope (i.e. the root scope)
-         $rootScope = $injector.get('$rootScope');
-         // The $controller service is used to create instances of controllers
-         var $controller = $injector.get('$controller');
-
-         createController = function() {
-           return $controller('MyController', {'$scope' : $rootScope });
-         };
-       }));
-
-
-       afterEach(function() {
-         $httpBackend.verifyNoOutstandingExpectation();
-         $httpBackend.verifyNoOutstandingRequest();
+     this.saveMessage = function(message) {
+       $scope.status = 'Saving...';
+       $http.post('/add-msg.py', message).success(function(response) {
+         $scope.status = '';
+       }).error(function() {
+         $scope.status = 'ERROR!';
        });
+     };
+   }
+
+   // testing controller
+   var $httpBackend;
+
+   beforeEach(inject(function($injector) {
+     $httpBackend = $injector.get('$httpBackend');
+
+     // backend definition common for all tests
+     $httpBackend.when('GET', '/auth.py').respond({userId: 'userX'}, {'A-Token': 'xxx'});
+   }));
 
 
-       it('should fetch authentication token', function() {
-         $httpBackend.expectGET('/auth.py');
-         var controller = createController();
-         $httpBackend.flush();
-       });
+   afterEach(function() {
+     $httpBackend.verifyNoOutstandingExpectation();
+     $httpBackend.verifyNoOutstandingRequest();
+   });
 
 
-       it('should send msg to server', function() {
-         var controller = createController();
-         $httpBackend.flush();
-
-         // now you don’t care about the authentication, but
-         // the controller will still send the request and
-         // $httpBackend will respond without you having to
-         // specify the expectation and response for this request
-
-         $httpBackend.expectPOST('/add-msg.py', 'message content').respond(201, '');
-         $rootScope.saveMessage('message content');
-         expect($rootScope.status).toBe('Saving...');
-         $httpBackend.flush();
-         expect($rootScope.status).toBe('');
-       });
+   it('should fetch authentication token', function() {
+     $httpBackend.expectGET('/auth.py');
+     var controller = scope.$new(MyController);
+     $httpBackend.flush();
+   });
 
 
-       it('should send auth header', function() {
-         var controller = createController();
-         $httpBackend.flush();
+   it('should send msg to server', function() {
+     // now you don’t care about the authentication, but
+     // the controller will still send the request and
+     // $httpBackend will respond without you having to
+     // specify the expectation and response for this request
+     $httpBackend.expectPOST('/add-msg.py', 'message content').respond(201, '');
 
-         $httpBackend.expectPOST('/add-msg.py', undefined, function(headers) {
-           // check if the header was send, if it wasn't the expectation won't
-           // match the request and the test will fail
-           return headers['Authorization'] == 'xxx';
-         }).respond(201, '');
+     var controller = scope.$new(MyController);
+     $httpBackend.flush();
+     controller.saveMessage('message content');
+     expect(controller.status).toBe('Saving...');
+     $httpBackend.flush();
+     expect(controller.status).toBe('');
+   });
 
-         $rootScope.saveMessage('whatever');
-         $httpBackend.flush();
-       });
-    });
+
+   it('should send auth header', function() {
+     $httpBackend.expectPOST('/add-msg.py', undefined, function(headers) {
+       // check if the header was send, if it wasn't the expectation won't
+       // match the request and the test will fail
+       return headers['Authorization'] == 'xxx';
+     }).respond(201, '');
+
+     var controller = scope.$new(MyController);
+     controller.saveMessage('whatever');
+     $httpBackend.flush();
+   });
    </pre>
  */
 angular.mock.$HttpBackendProvider = function() {
-  this.$get = ['$rootScope', createHttpBackendMock];
+  this.$get = [createHttpBackendMock];
 };
 
 /**
@@ -1072,7 +838,7 @@ angular.mock.$HttpBackendProvider = function() {
  * @param {Object=} $browser Auto-flushing enabled if specified
  * @return {Object} Instance of $httpBackend mock
  */
-function createHttpBackendMock($rootScope, $delegate, $browser) {
+function createHttpBackendMock($delegate, $browser) {
   var definitions = [],
       expectations = [],
       responses = [],
@@ -1089,7 +855,7 @@ function createHttpBackendMock($rootScope, $delegate, $browser) {
   }
 
   // TODO(vojta): change params to: method, url, data, headers, callback
-  function $httpBackend(method, url, data, callback, headers, timeout, withCredentials) {
+  function $httpBackend(method, url, data, callback, headers) {
     var xhr = new MockXhr(),
         expectation = expectations[0],
         wasExpected = false;
@@ -1100,41 +866,24 @@ function createHttpBackendMock($rootScope, $delegate, $browser) {
           : angular.toJson(data);
     }
 
-    function wrapResponse(wrapped) {
-      if (!$browser && timeout && timeout.then) timeout.then(handleTimeout);
-
-      return handleResponse;
-
-      function handleResponse() {
-        var response = wrapped.response(method, url, data, headers);
-        xhr.$$respHeaders = response[2];
-        callback(response[0], response[1], xhr.getAllResponseHeaders());
-      }
-
-      function handleTimeout() {
-        for (var i = 0, ii = responses.length; i < ii; i++) {
-          if (responses[i] === handleResponse) {
-            responses.splice(i, 1);
-            callback(-1, undefined, '');
-            break;
-          }
-        }
-      }
-    }
-
     if (expectation && expectation.match(method, url)) {
       if (!expectation.matchData(data))
-        throw new Error('Expected ' + expectation + ' with different data\n' +
+        throw Error('Expected ' + expectation + ' with different data\n' +
             'EXPECTED: ' + prettyPrint(expectation.data) + '\nGOT:      ' + data);
 
       if (!expectation.matchHeaders(headers))
-        throw new Error('Expected ' + expectation + ' with different headers\n' +
-            'EXPECTED: ' + prettyPrint(expectation.headers) + '\nGOT:      ' + prettyPrint(headers));
+        throw Error('Expected ' + expectation + ' with different headers\n' +
+            'EXPECTED: ' + prettyPrint(expectation.headers) + '\nGOT:      ' +
+            prettyPrint(headers));
 
       expectations.shift();
 
       if (expectation.response) {
-        responses.push(wrapResponse(expectation));
+        responses.push(function() {
+          var response = expectation.response(method, url, data, headers);
+          xhr.$$respHeaders = response[2];
+          callback(response[0], response[1], xhr.getAllResponseHeaders());
+        });
         return;
       }
       wasExpected = true;
@@ -1145,17 +894,21 @@ function createHttpBackendMock($rootScope, $delegate, $browser) {
       if (definition.match(method, url, data, headers || {})) {
         if (definition.response) {
           // if $browser specified, we do auto flush all requests
-          ($browser ? $browser.defer : responsesPush)(wrapResponse(definition));
+          ($browser ? $browser.defer : responsesPush)(function() {
+            var response = definition.response(method, url, data, headers);
+            xhr.$$respHeaders = response[2];
+            callback(response[0], response[1], xhr.getAllResponseHeaders());
+          });
         } else if (definition.passThrough) {
-          $delegate(method, url, data, callback, headers, timeout, withCredentials);
+          $delegate(method, url, data, callback, headers);
         } else throw Error('No response defined !');
         return;
       }
     }
     throw wasExpected ?
-        new Error('No response defined !') :
-        new Error('Unexpected request: ' + method + ' ' + url + '\n' +
-                  (expectation ? 'Expected ' + expectation : 'No more request expected'));
+        Error('No response defined !') :
+        Error('Unexpected request: ' + method + ' ' + url + '\n' +
+              (expectation ? 'Expected ' + expectation : 'No more request expected'));
   }
 
   /**
@@ -1167,8 +920,7 @@ function createHttpBackendMock($rootScope, $delegate, $browser) {
    *
    * @param {string} method HTTP method.
    * @param {string|RegExp} url HTTP url.
-   * @param {(string|RegExp|function(string))=} data HTTP request body or function that receives
-   *   data string and returns true if the data is as expected.
+   * @param {(string|RegExp)=} data HTTP request body.
    * @param {(Object|function(Object))=} headers HTTP headers or function that receives http header
    *   object and returns true if the headers match the current definition.
    * @returns {requestHandler} Returns an object with `respond` method that control how a matched
@@ -1244,8 +996,7 @@ function createHttpBackendMock($rootScope, $delegate, $browser) {
    * Creates a new backend definition for POST requests. For more info see `when()`.
    *
    * @param {string|RegExp} url HTTP url.
-   * @param {(string|RegExp|function(string))=} data HTTP request body or function that receives
-   *   data string and returns true if the data is as expected.
+   * @param {(string|RegExp)=} data HTTP request body.
    * @param {(Object|function(Object))=} headers HTTP headers.
    * @returns {requestHandler} Returns an object with `respond` method that control how a matched
    * request is handled.
@@ -1259,8 +1010,7 @@ function createHttpBackendMock($rootScope, $delegate, $browser) {
    * Creates a new backend definition for PUT requests.  For more info see `when()`.
    *
    * @param {string|RegExp} url HTTP url.
-   * @param {(string|RegExp|function(string))=} data HTTP request body or function that receives
-   *   data string and returns true if the data is as expected.
+   * @param {(string|RegExp)=} data HTTP request body.
    * @param {(Object|function(Object))=} headers HTTP headers.
    * @returns {requestHandler} Returns an object with `respond` method that control how a matched
    * request is handled.
@@ -1289,9 +1039,7 @@ function createHttpBackendMock($rootScope, $delegate, $browser) {
    *
    * @param {string} method HTTP method.
    * @param {string|RegExp} url HTTP url.
-   * @param {(string|RegExp|function(string)|Object)=} data HTTP request body or function that
-   *  receives data string and returns true if the data is as expected, or Object if request body
-   *  is in JSON format.
+   * @param {(string|RegExp)=} data HTTP request body.
    * @param {(Object|function(Object))=} headers HTTP headers or function that receives http header
    *   object and returns true if the headers match the current expectation.
    * @returns {requestHandler} Returns an object with `respond` method that control how a matched
@@ -1360,9 +1108,7 @@ function createHttpBackendMock($rootScope, $delegate, $browser) {
    * Creates a new request expectation for POST requests. For more info see `expect()`.
    *
    * @param {string|RegExp} url HTTP url.
-   * @param {(string|RegExp|function(string)|Object)=} data HTTP request body or function that
-   *  receives data string and returns true if the data is as expected, or Object if request body
-   *  is in JSON format.
+   * @param {(string|RegExp)=} data HTTP request body.
    * @param {Object=} headers HTTP headers.
    * @returns {requestHandler} Returns an object with `respond` method that control how a matched
    *   request is handled.
@@ -1376,9 +1122,7 @@ function createHttpBackendMock($rootScope, $delegate, $browser) {
    * Creates a new request expectation for PUT requests. For more info see `expect()`.
    *
    * @param {string|RegExp} url HTTP url.
-   * @param {(string|RegExp|function(string)|Object)=} data HTTP request body or function that
-   *  receives data string and returns true if the data is as expected, or Object if request body
-   *  is in JSON format.
+   * @param {(string|RegExp)=} data HTTP request body.
    * @param {Object=} headers HTTP headers.
    * @returns {requestHandler} Returns an object with `respond` method that control how a matched
    *   request is handled.
@@ -1392,9 +1136,7 @@ function createHttpBackendMock($rootScope, $delegate, $browser) {
    * Creates a new request expectation for PATCH requests. For more info see `expect()`.
    *
    * @param {string|RegExp} url HTTP url.
-   * @param {(string|RegExp|function(string)|Object)=} data HTTP request body or function that
-   *  receives data string and returns true if the data is as expected, or Object if request body
-   *  is in JSON format.
+   * @param {(string|RegExp)=} data HTTP request body.
    * @param {Object=} headers HTTP headers.
    * @returns {requestHandler} Returns an object with `respond` method that control how a matched
    *   request is handled.
@@ -1426,7 +1168,6 @@ function createHttpBackendMock($rootScope, $delegate, $browser) {
    *   is called an exception is thrown (as this typically a sign of programming error).
    */
   $httpBackend.flush = function(count) {
-    $rootScope.$digest();
     if (!responses.length) throw Error('No pending request to flush !');
 
     if (angular.isDefined(count)) {
@@ -1455,13 +1196,12 @@ function createHttpBackendMock($rootScope, $delegate, $browser) {
    * "afterEach" clause.
    *
    * <pre>
-   *   afterEach($httpBackend.verifyNoOutstandingExpectation);
+   *   afterEach($httpBackend.verifyExpectations);
    * </pre>
    */
   $httpBackend.verifyNoOutstandingExpectation = function() {
-    $rootScope.$digest();
     if (expectations.length) {
-      throw new Error('Unsatisfied requests: ' + expectations.join(', '));
+      throw Error('Unsatisfied requests: ' + expectations.join(', '));
     }
   };
 
@@ -1547,7 +1287,6 @@ function MockHttpExpectation(method, url, data, headers) {
   this.matchData = function(d) {
     if (angular.isUndefined(data)) return true;
     if (data && angular.isFunction(data.test)) return data.test(d);
-    if (data && angular.isFunction(data)) return data(d);
     if (data && !angular.isString(data)) return angular.toJson(data) == d;
     return data == d;
   };
@@ -1613,65 +1352,17 @@ function MockXhr() {
  * @description
  *
  * This service is just a simple decorator for {@link ng.$timeout $timeout} service
- * that adds a "flush" and "verifyNoPendingTasks" methods.
+ * that adds a "flush" method.
  */
 
-angular.mock.$TimeoutDecorator = function($delegate, $browser) {
-
-  /**
-   * @ngdoc method
-   * @name ngMock.$timeout#flush
-   * @methodOf ngMock.$timeout
-   * @description
-   *
-   * Flushes the queue of pending tasks.
-   *
-   * @param {number=} delay maximum timeout amount to flush up until
-   */
-  $delegate.flush = function(delay) {
-    $browser.defer.flush(delay);
-  };
-
-  /**
-   * @ngdoc method
-   * @name ngMock.$timeout#flushNext
-   * @methodOf ngMock.$timeout
-   * @description
-   *
-   * Flushes the next timeout in the queue and compares it to the provided delay
-   *
-   * @param {number=} expectedDelay the delay value that will be asserted against the delay of the next timeout function
-   */
-  $delegate.flushNext = function(expectedDelay) {
-    $browser.defer.flushNext(expectedDelay);
-  };
-
-  /**
-   * @ngdoc method
-   * @name ngMock.$timeout#verifyNoPendingTasks
-   * @methodOf ngMock.$timeout
-   * @description
-   *
-   * Verifies that there are no pending tasks that need to be flushed.
-   */
-  $delegate.verifyNoPendingTasks = function() {
-    if ($browser.deferredFns.length) {
-      throw new Error('Deferred tasks to flush (' + $browser.deferredFns.length + '): ' +
-          formatPendingTasksAsString($browser.deferredFns));
-    }
-  };
-
-  function formatPendingTasksAsString(tasks) {
-    var result = [];
-    angular.forEach(tasks, function(task) {
-      result.push('{id: ' + task.id + ', ' + 'time: ' + task.time + '}');
-    });
-
-    return result.join(', ');
-  }
-
-  return $delegate;
-};
+/**
+ * @ngdoc method
+ * @name ngMock.$timeout#flush
+ * @methodOf ngMock.$timeout
+ * @description
+ *
+ * Flushes the queue of pending tasks.
+ */
 
 /**
  *
@@ -1694,12 +1385,17 @@ angular.module('ngMock', ['ng']).provider({
   $browser: angular.mock.$BrowserProvider,
   $exceptionHandler: angular.mock.$ExceptionHandlerProvider,
   $log: angular.mock.$LogProvider,
-  $interval: angular.mock.$IntervalProvider,
   $httpBackend: angular.mock.$HttpBackendProvider,
   $rootElement: angular.mock.$RootElementProvider
 }).config(function($provide) {
-  $provide.decorator('$timeout', angular.mock.$TimeoutDecorator);
+  $provide.decorator('$timeout', function($delegate, $browser) {
+    $delegate.flush = function() {
+      $browser.defer.flush();
+    };
+    return $delegate;
+  });
 });
+
 
 /**
  * @ngdoc overview
@@ -1752,7 +1448,7 @@ angular.module('ngMockE2E', ['ng']).config(function($provide) {
  *
  *     // adds a new phone to the phones array
  *     $httpBackend.whenPOST('/phones').respond(function(method, url, data) {
- *       phones.push(angular.fromJson(data));
+ *       phones.push(angular.fromJSON(data));
  *     });
  *     $httpBackend.whenGET(/^\/templates\//).passThrough();
  *     //...
@@ -1879,7 +1575,7 @@ angular.module('ngMockE2E', ['ng']).config(function($provide) {
  *   control how a matched request is handled.
  */
 angular.mock.e2e = {};
-angular.mock.e2e.$httpBackendDecorator = ['$rootScope', '$delegate', '$browser', createHttpBackendMock];
+angular.mock.e2e.$httpBackendDecorator = ['$delegate', '$browser', createHttpBackendMock];
 
 
 angular.mock.clearDataCache = function() {
@@ -1887,34 +1583,44 @@ angular.mock.clearDataCache = function() {
       cache = angular.element.cache;
 
   for(key in cache) {
-    if (Object.prototype.hasOwnProperty.call(cache,key)) {
+    if (cache.hasOwnProperty(key)) {
       var handle = cache[key].handle;
 
-      handle && angular.element(handle.elem).off();
+      handle && angular.element(handle.elem).unbind();
       delete cache[key];
     }
   }
 };
 
 
+window.jstestdriver && (function(window) {
+  /**
+   * Global method to output any number of objects into JSTD console. Useful for debugging.
+   */
+  window.dump = function() {
+    var args = [];
+    angular.forEach(arguments, function(arg) {
+      args.push(angular.mock.dump(arg));
+    });
+    jstestdriver.console.log.apply(jstestdriver.console, args);
+    if (window.console) {
+      window.console.log.apply(window.console, args);
+    }
+  };
+})(window);
 
-(window.jasmine || window.mocha) && (function(window) {
 
-  var currentSpec = null;
-
-  beforeEach(function() {
-    currentSpec = this;
-  });
+window.jasmine && (function(window) {
 
   afterEach(function() {
-    var injector = currentSpec.$injector;
+    var spec = getCurrentSpec();
+    var injector = spec.$injector;
 
-    currentSpec.$injector = null;
-    currentSpec.$modules = null;
-    currentSpec = null;
+    spec.$injector = null;
+    spec.$modules = null;
 
     if (injector) {
-      injector.get('$rootElement').off();
+      injector.get('$rootElement').unbind();
       injector.get('$browser').pollFns.length = 0;
     }
 
@@ -1933,8 +1639,13 @@ angular.mock.clearDataCache = function() {
     angular.callbacks.counter = 0;
   });
 
+  function getCurrentSpec() {
+    return jasmine.getEnv().currentSpec;
+  }
+
   function isSpecRunning() {
-    return currentSpec && (window.mocha || currentSpec.queue.running);
+    var spec = getCurrentSpec();
+    return spec && spec.queue.running;
   }
 
   /**
@@ -1943,37 +1654,29 @@ angular.mock.clearDataCache = function() {
    * @description
    *
    * *NOTE*: This function is also published on window for easy access.<br>
+   * *NOTE*: Only available with {@link http://pivotal.github.com/jasmine/ jasmine}.
    *
    * This function registers a module configuration code. It collects the configuration information
    * which will be used when the injector is created by {@link angular.mock.inject inject}.
    *
    * See {@link angular.mock.inject inject} for usage example
    *
-   * @param {...(string|Function|Object)} fns any number of modules which are represented as string
+   * @param {...(string|Function)} fns any number of modules which are represented as string
    *        aliases or as anonymous module initialization functions. The modules are used to
-   *        configure the injector. The 'ng' and 'ngMock' modules are automatically loaded. If an 
-   *        object literal is passed they will be register as values in the module, the key being
-   *        the module name and the value being what is returned.
+   *        configure the injector. The 'ng' and 'ngMock' modules are automatically loaded.
    */
   window.module = angular.mock.module = function() {
     var moduleFns = Array.prototype.slice.call(arguments, 0);
     return isSpecRunning() ? workFn() : workFn;
     /////////////////////
     function workFn() {
-      if (currentSpec.$injector) {
+      var spec = getCurrentSpec();
+      if (spec.$injector) {
         throw Error('Injector already created, can not register a module!');
       } else {
-        var modules = currentSpec.$modules || (currentSpec.$modules = []);
+        var modules = spec.$modules || (spec.$modules = []);
         angular.forEach(moduleFns, function(module) {
-          if (angular.isObject(module) && !angular.isArray(module)) {
-            modules.push(function($provide) {
-              angular.forEach(module, function(value, key) {
-                $provide.value(key, value);
-              });
-            });
-          } else {
-            modules.push(module);
-          }
+          modules.push(module);
         });
       }
     }
@@ -1984,46 +1687,19 @@ angular.mock.clearDataCache = function() {
    * @name angular.mock.inject
    * @description
    *
+<<<<<<< HEAD
+   * *NOTE*: This is function is also published on window for easy access.<br>
+   * *NOTE*: Only available with {@link http://pivotal.github.com/jasmine/ jasmine}.
+=======
    * *NOTE*: This function is also published on window for easy access.<br>
+>>>>>>> 8dca056... docs(mocks): fix typos
    *
    * The inject function wraps a function into an injectable function. The inject() creates new
    * instance of {@link AUTO.$injector $injector} per test, which is then used for
    * resolving references.
    *
+   * See also {@link angular.mock.module module}
    *
-   * ## Resolving References (Underscore Wrapping)
-   * Often, we would like to inject a reference once, in a `beforeEach()` block and reuse this
-   * in multiple `it()` clauses. To be able to do this we must assign the reference to a variable
-   * that is declared in the scope of the `describe()` block. Since we would, most likely, want 
-   * the variable to have the same name of the reference we have a problem, since the parameter
-   * to the `inject()` function would hide the outer variable.
-   *
-   * To help with this, the injected parameters can, optionally, be enclosed with underscores.
-   * These are ignored by the injector when the reference name is resolved.
-   * 
-   * For example, the parameter `_myService_` would be resolved as the reference `myService`.
-   * Since it is available in the function body as _myService_, we can then assign it to a variable
-   * defined in an outer scope.
-   * 
-   * ```
-   * // Defined out reference variable outside
-   * var myService;
-   *
-   * // Wrap the parameter in underscores
-   * beforeEach( inject( function(_myService_){
-   *   myService = _myService_;
-   * })); 
-   *
-   * // Use myService in a series of tests.
-   * it('makes use of myService', function() {
-   *   myService.doStuff();
-   * });
-   * 
-   * ```
-   * 
-   * See also {@link angular.mock.module angular.mock.module}
-   *
-   * ## Example
    * Example of what a typical jasmine tests looks like with the inject method.
    * <pre>
    *
@@ -2056,11 +1732,11 @@ angular.mock.clearDataCache = function() {
    *       inject(function(version) {
    *         expect(version).toEqual('overridden');
    *       });
-   *     });
+   *     ));
    *   });
    *
    * </pre>
-   * 
+   *
    * @param {...Function} fns any number of functions which will be injected using the injector.
    */
   window.inject = angular.mock.inject = function() {
@@ -2069,13 +1745,13 @@ angular.mock.clearDataCache = function() {
     return isSpecRunning() ? workFn() : workFn;
     /////////////////////
     function workFn() {
-      var modules = currentSpec.$modules || [];
-
+      var spec = getCurrentSpec();
+      var modules = spec.$modules || [];
       modules.unshift('ngMock');
       modules.unshift('ng');
-      var injector = currentSpec.$injector;
+      var injector = spec.$injector;
       if (!injector) {
-        injector = currentSpec.$injector = angular.injector(modules);
+        injector = spec.$injector = angular.injector(modules);
       }
       for(var i = 0, ii = blockFns.length; i < ii; i++) {
         try {
