@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('publicEducationApp')
-  .controller('ListMarkersCtrl', function ($scope, $window, Leaflet, storage, Marker, Geolocation, $location, $timeout, IS_MOBILE, $routeParams, CUSTOM_CSS) {
+  .controller('ListMarkersCtrl', function ($scope, $window, Leaflet, storage, Marker, Geolocation, $location, $timeout, IS_MOBILE, $routeParams, CUSTOM_CSS, URHERE_ICON) {
 
     // Storage custom css information in the LocalStorage.
     storage.bind($scope,'isCustomCss', {defaultValue: false});
