@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('publicEducationApp')
-  .controller('AddMarkerCtrl', function ($scope, $location, $window, Leaflet, Geolocation, IS_MOBILE, Foursquare, storage, User, Marker, BACKEND_URL, OAuthIo) {
+  .controller('AddMarkerCtrl', function ($scope, $location, $window, Leaflet, Geolocation, IS_MOBILE, Foursquare, storage, User, Marker, BACKEND_URL, OAuthIo, URHERE_ICON) {
 
     /**
      * Update the map's center, and get the venue name from FourSquare.
@@ -166,6 +166,7 @@ angular.module('publicEducationApp')
     $scope.marker.lng = $scope.center.lng;
     // Set icon current position.
     $scope.marker.icon = $window.L.icon({
+      // Phonegap only work, if a property have an URI, not with a local file.
       iconUrl: URHERE_ICON,
       iconSize: [80, 80],
       // These values are required.
