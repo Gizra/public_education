@@ -3,8 +3,16 @@
   <button ng-click="startRecord()" class="start-rec">Start record</button>
 </div>
 
-<div ng-show="state == 'recording'">
-  <div class="remaining-time" ng-show="counter > 0" ng-class="{warning: counter < 2}">00:0{{ counter }}</div>
+<div ng-show="state == 'recording'" ng-show="counter > 0" ng-class="{warning: counter <= 2}">
+  <div class="remaining-time">00:0{{ counter }}</div>
+
+	<div class="spinner">
+	  <div class="spinner-inner"></div>
+	  <div class="spinner-mask"></div>
+	  <div class="spinner-mask-two"></div>
+	</div>
+	<div class="spinner-cover"></div>
+  
   <button ng-click="stopRecord()" class="stop-rec">Stop record</button>
 </div>
 

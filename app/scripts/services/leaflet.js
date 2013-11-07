@@ -22,7 +22,7 @@ angular.module('publicEducationApp')
           defaults: {
             tileLayer: 'http://{s}.tiles.mapbox.com/v3/mushon.map-wjhkqj4n/{z}/{x}/{y}.png',
             maxZoom: 20,
-            minZoom: 14,
+            minZoom: 13,
             attributionControl: false
           }
         };

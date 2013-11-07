@@ -2,6 +2,8 @@
 
 $instructions: #C5222D;
 $recorder: #218AFC;
+$time-left: #429620;
+$spinner-cover: #eee;
 $disabled: #9B9B9B;
 $warning: #C5222D;
 $command-text: #1C299A;
@@ -23,6 +25,7 @@ body{
   font-family: $sans;
   font-size: 16px;
   background: #333;
+  overflow: hidden;
 
   // @media
   // (-webkit-min-device-pixel-ratio: 2),
@@ -41,6 +44,10 @@ body{
 .container {
   margin: 0;
   width: 100%;
+
+  >div {
+    height: 100%;
+  }
 }
 
 // Home page
@@ -181,7 +188,7 @@ div.leaflet-div-icon {
 }
 
 .close {
-  position: fixed;
+  position: absolute;
   right: 0;
   @media screen and (max-width: 600px) {top: 15px;}
   display: block;
@@ -190,7 +197,7 @@ div.leaflet-div-icon {
   height: 32px;
   width: 32px;
   text-indent: -999999px;
-  z-index: 999999;
+  z-index: 100;
 }
 
 .leaflet-control-container .leaflet-top {
@@ -368,9 +375,20 @@ div.leaflet-div-icon {
       &.disabled {
         color: $disabled;
       }
+    }
 
-      &.warning {
-        color: $warning
+    .warning {
+
+      .remaining-time {
+        color: $warning;
+      }
+
+      .spinner  {
+        background: $warning;
+      }
+
+      .spinner-mask  {
+        border-top-color: $warning;
       }
     }
 
@@ -500,29 +518,56 @@ div.leaflet-div-icon {
 
 .completed-wrapper {
   height: 100%;
+}
 
-  .completed-modal {
-    border-radius: 5px;
-    background: rgba(0, 0, 0, 0.7);
-    margin: 10%;
-    height: 80%;
-    width: 80%;
-    position: absolute;
-    top: 0%;
-    left: 0%;
+.modal {
+  border-radius: 5px;
+  background: rgba(0, 0, 0, 0.7);
+  margin: 10%;
+  height: 80%;
+  width: 80%;
+  position: absolute;
+  top: 0%;
+  left: 0%;
+  z-index: 100;
+
+  .close {
+    top: 0;
   }
 
-  .confirmation-message {
-    padding: 70px 5% 0;
-    background: url(../images/confirmation@2x.png) center 40px no-repeat;
-    background-size: 45px; //retina
+  .modal-message {
+    padding: 20px 5% 0;
     text-align: center;
     color: $gray-text;
+    line-height: 1.4em;
 
     strong {
       color: $success;
     }
   }
+
+  &.thanks .modal-message {
+    margin-top: 70px;
+    background: url(../images/confirmation@2x.png) center 40px no-repeat;
+    background-size: 45px; //retina
+  }
+
+  a.btn-install {
+    width: 195px;
+    height: 67px;
+    display: block;
+    background: url(../images/btn-app-store@2x.png);
+    background-size: 195px 67px;
+    margin: 20px auto 0;
+    text-indent: -9999999em;
+    overflow: hidden;
+
+    &.btn-google-play {
+      background: url(../images/btn-google-play@2x.png);
+      background-size: 195px 67px;
+    }
+  }
+  
 }
 
 /* Play mode */
@@ -598,9 +643,15 @@ div.leaflet-div-icon {
 .edit-mode {
   width:100%;
   opacity: 0.9;
-  z-index: 99;
+  z-index: 1000;
   background: rgba(0,0,0,0.7);
   color: white;
+  position:fixed !important;
+  position:absolute;
+  top:0;
+  right:0;
+  bottom:0;
+  left:0;
 
   .action {
     display: block;
@@ -614,7 +665,6 @@ div.leaflet-div-icon {
 }
 
 .recording-content {
-  background: #0d0d0d;
   height: 100%;
   padding: 1em 5% 5em;
   position: relative;
@@ -625,7 +675,8 @@ div.leaflet-div-icon {
     font-size: 1.5em;
     line-height: 1.3em;
     font-weight: 700;
-    margin: 0.25em 0;
+    margin: 0.5em 0 1em;
+    text-align: center;
   }
 
   .edit-text {
@@ -749,7 +800,6 @@ div.leaflet-div-icon {
 }
 
 #site-meta {
-  display: block;
   position: absolute;
   width: 100%;
   bottom: 10%;
@@ -761,7 +811,7 @@ div.leaflet-div-icon {
   color: #fff;
   z-index: 10;
   padding-bottom: 1em;
-  overflow: scroll;
+  overflow: hidden;
 
   @media screen and (max-width: 600px) {
     width: 100%;
@@ -792,6 +842,10 @@ div.leaflet-div-icon {
     margin: 0.5em 0;
   }
 
+  p.installation {
+    display: none;
+  }
+
   a {
     text-decoration: none;
     color: red;
@@ -818,6 +872,7 @@ div.leaflet-div-icon {
   }
 
   &.showDetails {
+    overflow: scroll;
 
     .work-desc {
       display: block;
@@ -825,6 +880,220 @@ div.leaflet-div-icon {
   }
 }
 
+#site-meta.play-marker-meta {
+  display: none;
+}
+
 .hide {
   display: none;
+}
+
+$metabar: 192px;
+
+/* Unique settings for the 1090x1920px display */
+.koc {
+  margin-bottom: 10%;
+  height: 90%;
+
+  #site-meta,
+  #site-meta.play-marker-meta {
+    display: block;
+    height: $metabar;
+    display: fixed;
+    bottom: 0;
+    background: red;
+    width: 100%;
+    left: 0;
+    margin: 0;
+    padding: 0;
+    z-index: 9999999;
+
+    .close {
+      display: none;
+    }
+
+    header {
+      
+      margin: 0;
+
+      h1 {
+        font-weight: 700;
+        font-size: 48px;
+        color: #FFFFFF;
+        line-height: 42px;
+        width: 200px;
+        float: left;
+        padding: 50px 40px;
+        margin: 0;
+      }
+
+      p.subheading {
+        display: none;
+      }
+
+      p.installation {
+        display: block;
+        float: left;
+        width: 760px;
+        font-family: "Helvetica Neue", Helvetica, Arial, sans;
+        font-family: Helvetica;
+        font-size: 24px;
+        line-height: 28px;
+        font-style: normal;
+        padding: 80px 0 60px 40px;
+        margin: 0;
+        background: url(../images/qr.png) 95% center no-repeat ;
+
+        a {
+          text-decoration: none;
+          color: #fff;
+          font-weight: 700;
+        }
+      }
+    }
+  }
+
+  .cycle,
+  .locate-me div {
+    bottom: $metabar+10px;
+  }
+
+  .bottom-bar {
+    bottom: $metabar;
+  }
+
+}
+
+/* Spinner Animation */
+
+.spinner {
+  -webkit-mask-box-image: -webkit-radial-gradient(center, ellipse cover, black 68%, rgba(0, 0, 0, 0) 69.5%);
+  background: $time-left;
+  width: 136px;
+  height: 136px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin: -68px;
+}
+
+.spinner-cover{
+  width: 124px;
+  height: 124px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin: -62px;
+  background: url(../images/spinner-cover@2x.png) center center no-repeat;
+  background-size: 150px;
+  border-radius: 150px;
+}
+
+.spinner-inner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: transparent;
+  border-width: 68px;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-color: transparent;
+  border-top-color: $spinner-cover;
+  -webkit-transform: rotate(-45deg);
+  -webkit-animation: inner 6s linear;
+}
+
+.spinner-mask {
+  position: absolute;
+  top: 1px;
+  left: 0px;
+  background: transparent;
+  border-width: 68px;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-color: transparent;
+  border-top-color: $time-left;
+  -webkit-transform: rotate(-45deg);
+  -webkit-animation: mask 6s linear;
+}
+.spinner-mask:after, .spinner-mask-two {
+  display: block;
+  content: '';
+  opacity: 0;
+  position: absolute;
+  top: 1px;
+  left: 0px;
+  background: transparent;
+  border-width: 68px;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-color: transparent;
+  border-top-color: $spinner-cover;
+  -webkit-transform: rotate(45deg);
+  -webkit-animation: mask-two 6s linear;
+}
+
+@-webkit-keyframes inner {
+  0% {
+    -webkit-transform: rotate(-45deg);
+  }
+  25% {border-left-color:transparent;}
+  26% {
+    border-left-color:  $spinner-cover;
+  }
+  50% {border-bottom-color:transparent;}
+  51% {
+    border-bottom-color:  $spinner-cover;
+  }
+  75% {border-right-color:transparent;}
+  76% {
+    border-right-color:  $spinner-cover;
+  }
+  100% {
+    -webkit-transform: rotate(315deg);
+    border-left-color:  $spinner-cover;
+    border-bottom-color:  $spinner-cover;
+    border-right-color:  $spinner-cover;
+  }
+}
+
+ @-webkit-keyframes mask {
+  0% {
+    -webkit-transform: rotate(-45deg);
+  }
+  75% {
+    -webkit-transform: rotate(-45deg);
+  }
+  100% {
+    -webkit-transform: rotate(45deg);
+  }
+}
+
+@-webkit-keyframes mask-two {
+  0% {
+    opacity: 0;
+  }
+  25% {
+    opacity: 0;
+  }
+  26% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@-webkit-keyframes whee {
+  from {
+    -webkit-transform: rotate(0deg);
+    -webkit-filter: sepia() hue-rotate(0deg) contrast(95%);
+  }
+  to {
+    -webkit-transform: rotate(360deg);
+    -webkit-filter: sepia() hue-rotate(360deg) contrast(95%);
+  }
 }
