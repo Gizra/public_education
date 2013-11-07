@@ -168,9 +168,9 @@ angular.module('publicEducationApp')
     $scope.marker.icon = $window.L.icon({
       // Phonegap only work, if a property have an URI, not with a local file.
       iconUrl: URHERE_ICON,
-      iconSize: [80, 80],
+      iconSize: [40, 40],
       // These values are required.
-      iconAnchor: [0, 0],
+      iconAnchor: [20, 20],
       shadowSize:   [0, 0],
       shadowAnchor: [0, 0],
       popupAnchor:  [0, 0]

@@ -15,6 +15,10 @@
 
   <leaflet center="center" marker="marker" markers="markers" defaults="defaults"></leaflet>
 
+  <div class="locate-me">
+    <div ng-click="getCurrentPosition()">Locate me</div>
+  </div>
+
   <div class="location-wrapper bottom-bar" ng-show="center.zoom >= 16 && !mapIsMoving">
 
     <a class="edit-place">Edit Place</a>
