@@ -13,12 +13,12 @@ angular.module('publicEducationApp')
       $scope.customCss = $scope.customCss + ' ' +  CUSTOM_CSS.css;
     }
     else if ($routeParams.route === 'reset') {
-      // Return default values
+      // Return default values.
       $scope.isCustomCss = false;
       $scope.customCss = 'reset-custom-css';
     }
 
-    // Reset the the route to main view when activete/deactive a custom css..
+    // Reset the route to main view, when activate/deactivate a custom css.
     if ($routeParams.route) {
       $location.path('/');
     }
