@@ -40,6 +40,10 @@ angular.module('publicEducationApp', [
         templateUrl: 'views/login.html',
         controller: 'loginCtrl'
       })
+      .when('/main/:class', {
+        templateUrl: 'views/main.html',
+        controller: 'listMarkersCtrl'
+      })
       .otherwise({
         redirectTo: '/'
       });
