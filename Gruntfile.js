@@ -286,7 +286,8 @@ module.exports = function (grunt) {
             'config.xml',
             'CNAME',
             'cordova.js',
-            'cordova_plugins.js'
+            'cordova_plugins.js',
+            'fixed_images/**/*'
           ]
         }, {
           expand: true,
