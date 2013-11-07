@@ -408,7 +408,8 @@ module.exports = function (grunt) {
           // Define the backend URL.
           BACKEND_URL: '<%= yeoman.development.BACKEND_URL %>',
           DUMMY_WAV_FILE: '<%= yeoman.development.DUMMY_WAV_FILE %>',
-          URL_STORE: '<%= yeoman.development.URL_STORE %>'
+          URL_STORE: '<%= yeoman.development.URL_STORE %>',
+          CUSTOM_CSS: '<%= yeoman.development.CUSTOM_CSS %>'
         }
       }],
       production: [{
@@ -424,7 +425,8 @@ module.exports = function (grunt) {
           // Define the backend URL.
           BACKEND_URL: '<%= yeoman.production.BACKEND_URL %>',
           DUMMY_WAV_FILE: '<%= yeoman.production.DUMMY_WAV_FILE %>',
-          URL_STORE: '<%= yeoman.production.URL_STORE %>'
+          URL_STORE: '<%= yeoman.production.URL_STORE %>',
+          CUSTOM_CSS: '<%= yeoman.production.CUSTOM_CSS %>'
         }
       }]
     }

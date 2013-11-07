@@ -13,6 +13,10 @@ angular.module('publicEducationApp', [
         templateUrl: 'views/main.html',
         controller: 'ListMarkersCtrl'
       })
+      .when('/custom-css/:route', {
+        templateUrl: 'views/main.html',
+        controller: 'ListMarkersCtrl'
+      })
       .when('/add-marker', {
         templateUrl: 'views/add-marker.html',
         controller: 'AddMarkerCtrl'
