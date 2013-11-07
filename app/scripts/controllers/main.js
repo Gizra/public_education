@@ -15,6 +15,10 @@ angular.module('publicEducationApp')
       iconSize: [80, 80]
     });
 
+    $scope.setInstallState = function() {
+      $scope.state = 'install';
+    };
+
 
     $scope.getCurrentPosition = function() {
       Geolocation.gettingCurrentPosition().then(function(data) {

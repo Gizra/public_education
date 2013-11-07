@@ -5,8 +5,12 @@ angular.module('publicEducationApp')
     return {
       templateUrl: 'scripts/directives/addMarker/addMarker.html',
       restrict: 'E',
-      scope: true,
+      scope: {
+        setInstallState: '&'
+      },
       link: function postLink(scope) {
+
+        scope.isMobile = IS_MOBILE;
 
         // Set the store url in each device.
         // It's needed set the specific application url info in the config.json
