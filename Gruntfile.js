@@ -410,7 +410,8 @@ module.exports = function (grunt) {
           BACKEND_URL: '<%= yeoman.development.BACKEND_URL %>',
           DUMMY_WAV_FILE: '<%= yeoman.development.DUMMY_WAV_FILE %>',
           URL_STORE: '<%= yeoman.development.URL_STORE %>',
-          URHERE_ICON: '<%= yeoman.development.URHERE_ICON %>'
+          URHERE_ICON: '<%= yeoman.development.URHERE_ICON %>',
+          WEB_URL: '<%= yeoman.development.WEB_URL %>'
         }
       }],
       production: [{
@@ -427,7 +428,8 @@ module.exports = function (grunt) {
           BACKEND_URL: '<%= yeoman.production.BACKEND_URL %>',
           DUMMY_WAV_FILE: '<%= yeoman.production.DUMMY_WAV_FILE %>',
           URL_STORE: '<%= yeoman.production.URL_STORE %>',
-          URHERE_ICON: '<%= yeoman.production.URHERE_ICON %>'
+          URHERE_ICON: '<%= yeoman.production.URHERE_ICON %>',
+          WEB_URL: '<%= yeoman.production.WEB_URL %>'
         }
       }]
     }
