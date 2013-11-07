@@ -15,6 +15,7 @@
       "iOS": "https://itunes.apple.com/app/chrome/id535886823?mt=8",
       "android" : "https://play.google.com/store/apps/details?id=com.android.chrome"
     },
+    "URHERE_ICON": "https://raw.github.com/Gizra/public_education/master/app/images/urhere@2x.png",
     "WEB_URL": "http://pe.mushon.com"
   },
   "production": {
@@ -33,6 +34,7 @@
       "iOS": "https://itunes.apple.com/app/chrome/id535886823?mt=8",
       "android" : "https://play.google.com/store/apps/details?id=com.android.chrome"
     },
+    "URHERE_ICON": "https://raw.github.com/Gizra/public_education/master/app/images/urhere@2x.png",
     "WEB_URL": "http://pe.mushon.com"
   }
 }
