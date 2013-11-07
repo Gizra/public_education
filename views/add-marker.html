@@ -13,7 +13,7 @@
     </div>
   </div>
 
-  <leaflet center="center" markers="markers" defaults="defaults"></leaflet>
+  <leaflet center="center" marker="marker" markers="markers" defaults="defaults"></leaflet>
 
   <div class="location-wrapper bottom-bar" ng-show="center.zoom >= 16 && !mapIsMoving">
 
@@ -79,7 +79,7 @@
 <div class="login-wrapper" ng-show="state == 'credentials'">
   <a title="Back to recording" class="close" ng-click="setState('record')">X</a>
   <div class="login-btn login-fb">
-    <a ng-click="oauth('facebook')">Facebook</a>
+    <a ng-click="oauth('facebook')">Login through Facebook</a>
   </div>
   <div class="login-or"><span>or</span></div>
   <div class="login-btn login-anon">
@@ -94,12 +94,12 @@
   <leaflet center="center" markers="markers" defaults="defaults"></leaflet>
   <a href="#/" ng-click="setState('mark')" class="dark-overlay"></a>
 
-  <div class="completed-modal">
+  <div class="modal thanks">
     <div>
       <a href="#/" ng-click="setState('mark')" class="close">X Close</a>
     </div>
 
-    <div class="confirmation-message">
+    <div class="modal-message">
       <p>
         <strong>Thanks!</strong>
       </p>
@@ -110,12 +110,7 @@
         now, go tell your friends!
       </p>
     </div>
-    <ul class="share-btns">
-      <li><a href="#" class="share-tw">Share on Twitter</a></li>
-      <li><a href="#" class="share-fb">Share on Facebook</a></li>
-      <li><a href="#" class="share-email">Send as in an email</a></li>
-      <li><a href="#" class="share-link">Link to this command</a></li>
-    </ul>
+    <share-buttons id="venue.id" text="text" web-url="webUrl"></share-buttons>
   </div>
 
 </div>

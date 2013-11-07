@@ -1,3 +1,4 @@
 <div class="add-marker-wrapper">
-    <a href="{{ url }}">Add Marker</a>
+  <a ng-show="isMobile" href="{{ url }}">Add Marker</a>
+  <a ng-show="!isMobile" ng-click="setInstallState()">Add Marker</a>
 </div>

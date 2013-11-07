@@ -1,44 +1,66 @@
-<div id="site-meta" ng-hide="closeMeta" ng-class="{showDetails: showDetails}">
- 	<a href="" class="close" ng-click="closeMeta = ! closeMeta">close</a>
- 	<header>
-	  <h1>Public Education</h1>
-	  <p class="subheading">Recorded audio commands voiced and bestowed by the people on the people.<br>
-	  Geocached anywhere on the map. <a href="" class="more" ng-click="showDetails = ! showDetails">read more</a></p>
-  	</header>
+<div class="{{customCss}}">
+	<!-- SITE-META -->
+	<div id="site-meta" ng-hide="closeMeta || state == 'install'" ng-class="{showDetails: showDetails}" ng-show="!isMobile">
+		<a href="" class="close" ng-click="closeMeta = ! closeMeta">close</a>
+		<header>
+		  <h1>Public Education</h1>
+		  <p class="subheading">Recorded audio commands voiced and bestowed by the people on the people.<br>
+		  Geocached anywhere on the map. <a href="" class="more" ng-click="showDetails =! showDetails">read more</a></p>
+		  <p class="installation">Record your commands and add them to the map<br>
+			Download for iPhone or Android @ <a href="http://pe.mushon.com">pe.mushon.com</a></p>
+		</header>
 
-  <div class="work-desc">
-	  <blockquote>
-	    <p>“In a cross-cultural comparison, the average number of commands (an indicator of behavioral control) issued by Turkish mothers was 14.5 per minute in a community sample of Turkish parents, whereas this number ranged between 1.5 and 9 per minute among the mothers of Head Start children, the mothers of children with ADHD, and the mothers who were referred to family protective services in the U.S.”</p>
-	    <cite>—Dr. Nazli Baydar, Running head: Parental Control and Externalizing Behaviors</cite>
-	  </blockquote>
+		<div class="work-desc">
+		  <blockquote>
+		    <p>“In a cross-cultural comparison, the average number of commands (an indicator of behavioral control) issued by Turkish mothers was 14.5 per minute in a community sample of Turkish parents, whereas this number ranged between 1.5 and 9 per minute among the mothers of Head Start children, the mothers of children with ADHD, and the mothers who were referred to family protective services in the U.S.”</p>
+		    <cite>—Dr. Nazli Baydar, Running head: Parental Control and Externalizing Behaviors</cite>
+		  </blockquote>
 
-	  <p>Public Education is a work inspired by the surprising findings of Dr. Nazli Baydar and other Koç University researchers concerning the unique education styles of Turkish mothers. While the mothers interaction with their children is very commanding and controlling it is also considered very warm and caring. This cultural phenomenon helps explain why mothers are reluctance to send children to preschool and prefer to keep them home-schooled instead. Dr. Baydar believes it is time to get creative in finding ways to get children ready to the current and future challenges of our globalized world while still accommodating different cultural contexts. Public Education tries to do exactly that.</p>
+		  <p>Public Education is a work inspired by the surprising findings of Dr. Nazli Baydar and other Koç University researchers concerning the unique education styles of Turkish mothers. While the mothers interaction with their children is very commanding and controlling it is also considered very warm and caring. This cultural phenomenon helps explain why mothers are reluctance to send children to preschool and prefer to keep them home-schooled instead. Dr. Baydar believes it is time to get creative in finding ways to get children ready to the current and future challenges of our globalized world while still accommodating different cultural contexts. Public Education tries to do exactly that.</p>
 
-	  <p>The work suggests a distributed model of public education that would meet the children’s needs by placing them under the command of the networked public.</p>
+		  <p>The work suggests a distributed model of public education that would meet the children’s needs by placing them under the command of the networked public.</p>
 
-	  <p>A world map switching 14.5 locations per minute, each voicing its own short site-specific commands. These short commands will be contributed by visitors to the mobile app. Each would choose the location they want their command to be played in and record their short command to join a map of distributed omnipresent control.</p>
+		  <p>A world map switching 14.5 locations per minute, each voicing its own short site-specific commands. These short commands will be contributed by visitors to the mobile app. Each would choose the location they want their command to be played in and record their short command to join a map of distributed omnipresent control.</p>
 
-	  <p>Public Education attempts to go beyond parenting or any specific cultural phenomenon. It is an opportunity to inquire about the role and control of media in public space and to challenge the way we mindlessly rush away from old models of control and towards new ones.</p>
+		  <p>Public Education attempts to go beyond parenting or any specific cultural phenomenon. It is an opportunity to inquire about the role and control of media in public space and to challenge the way we mindlessly rush away from old models of control and towards new ones.</p>
 
-	  <p>Browse the commands and install the app at http://pe.mushon.com</p>
+		  <p>Browse the commands and install the app at http://pe.mushon.com</p>
 
-	  <p>Work &amp; design by <a href="http://mushon.com">Mushon Zer-Aviv</a>.<br>
-	  	Code by <a href="http://gizra.com">Gizra.com</a></p>
+		  <p>Work &amp; design by <a href="http://mushon.com">Mushon Zer-Aviv</a>.<br>
+		  	Code by <a href="http://gizra.com">Gizra.com</a></p>
 
-	  <p>For feedback and support contact: <br>
-	  	<a href="http://twitter.com/pubedapp" target="_blank">@PubEdApp</a> or pubedapp (at) Gmail.com</p>
+		  <p>For feedback and support contact: <br>
+		  	<a href="http://twitter.com/pubedapp" target="_blank">@PubEdApp</a> or pubedapp (at) Gmail.com</p>
+		</div>
 	</div>
-</div>
+	<!-- END SITE-META -->
 
-<add-marker></add-marker>
+  <add-marker set-install-state="setInstallState()"></add-marker>
 
-<leaflet center="center" marker="marker" markers="markers" defaults="defaults"></leaflet>
+	<!-- INSTALL -->
+	<div class="modal install" ng-show="state == 'install'">
+	    <div>
+	      <a href="#/" ng-click="state = 'main'" class="close">X Close</a>
+	    </div>
 
-<div class="locate-me">
-  <div ng-click="getCurrentPosition()">Locate me</div>
-</div>
+	    <div class="modal-message">
+	      <p>
+	        To record a message please download the free Public Education app for your Apple or Android device
+	      </p>
+	    </div>
+	    <a href="https://itunes.apple.com/il/app/public-education/id734648426?mt=8" class="btn-install btn-app-store">Available on the App Store</a>
+	    <a href="#" class="btn-install btn-google-play">Available on the App Store</a>
+	</div>
+	<!-- END INSTALL -->
 
-<div ng-hide="isMobile" class="cycle">
-  <a href="#" ng-click="playAllMarkers()" class="play-cycle">Play cycle</a>
-  <a href="#" ng-click="playAllMarkers()" class="pause-cycle hide">Pause cycle</a>
+	<leaflet center="center" marker="marker" markers="markers" defaults="defaults"></leaflet>
+
+	<div class="locate-me">
+		<div ng-click="getCurrentPosition()">Locate me</div>
+	</div>
+
+	<div ng-hide="isMobile" class="cycle">
+		<a href="#" ng-click="playAllMarkers()" class="play-cycle">Play cycle</a>
+		<a href="#" ng-click="playAllMarkers()" class="pause-cycle hide">Pause cycle</a>
+	</div>
 </div>
