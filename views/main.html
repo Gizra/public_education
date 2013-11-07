@@ -1,9 +1,9 @@
 <div id="site-meta" ng-hide="closeMeta" ng-class="{showDetails: showDetails}">
- 	<a href="" class="close" ng-click="closeMeta = ! closeMeta">close</a> 
+ 	<a href="" class="close" ng-click="closeMeta = ! closeMeta">close</a>
  	<header>
 	  <h1>Public Education</h1>
 	  <p class="subheading">Recorded audio commands voiced and bestowed by the people on the people.<br>
-	  Geocached anywhere on the map. <a href="" class="more" ng-click="showDetails = ! showDetails">read more</a></p> 
+	  Geocached anywhere on the map. <a href="" class="more" ng-click="showDetails = ! showDetails">read more</a></p>
   	</header>
 
   <div class="work-desc">
@@ -32,7 +32,7 @@
 
 <add-marker></add-marker>
 
-<leaflet center="center" markers="markers" defaults="defaults"></leaflet>
+<leaflet center="center" marker="marker" markers="markers" defaults="defaults"></leaflet>
 
 <div class="locate-me">
   <div ng-click="getCurrentPosition()">Locate me</div>
