@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('publicEducationApp')
-  .controller('AddMarkerCtrl', function ($scope, $location, $window, Leaflet, Foursquare, storage, User, Marker, BACKEND_URL, OAuthIo) {
+  .controller('AddMarkerCtrl', function ($scope, $location, $window, Leaflet, Geolocation, IS_MOBILE, Foursquare, storage, User, Marker, BACKEND_URL, OAuthIo) {
 
     /**
      * Update the map's center, and get the venue name from FourSquare.
@@ -158,4 +158,37 @@ angular.module('publicEducationApp')
 
     $scope.markers = {};
     $scope.backendUrl = BACKEND_URL;
+
+
+
+    $scope.marker = {};
+    $scope.marker.lat = $scope.center.lat;
+    $scope.marker.lng = $scope.center.lng;
+    // Set icon current position.
+    $scope.marker.icon = $window.L.icon({
+      iconUrl: '../images/urhere@2x.png',
+      iconSize: [80, 80]
+    });
+
+
+    $scope.getCurrentPosition = function() {
+      Geolocation.gettingCurrentPosition().then(function(data) {
+        // Set Current position marker. By using "marker" instead of "markers" we
+        // assure it's going to be the first marker in the list.
+        $scope.marker.lat = data.lat;
+        $scope.marker.lng = data.lng;
+      });
+    };
+
+    if (!Geolocation.checkGotCurrentPosition()) {
+      Geolocation.setGotCurrentPosition();
+      if (IS_MOBILE) {
+        // Devices.
+        document.addEventListener('deviceready', $scope.getCurrentPosition, false);
+      }
+      else {
+        // Web.
+        $scope.getCurrentPosition();
+      }
+    }
   });
