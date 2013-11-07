@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('publicEducationApp')
-  .controller('AddMarkerCtrl', function ($scope, $location, $window, Leaflet, Foursquare, storage, User, Marker, BACKEND_URL, OAuthIo) {
+  .controller('AddMarkerCtrl', function ($scope, $location, $window, Leaflet, Foursquare, md5, storage, User, Marker, BACKEND_URL, OAuthIo, WEB_URL) {
 
     /**
      * Update the map's center, and get the venue name from FourSquare.
@@ -97,16 +97,18 @@ angular.module('publicEducationApp')
      */
     $scope.onRecorded = function() {
       // Add the new marker.
-      var venue = {
-          id: $scope.markers.marker.venue.id,
-          name: $scope.markers.marker.venue.name,
-          lat: $scope.markers.marker.venue.location.lat,
-          lng: $scope.markers.marker.venue.location.lng
+      var location = {
+        lng: $scope.markers.marker.lng,
+        lat: $scope.markers.marker.lat
         },
-        location = {
-          lng: $scope.markers.marker.lng,
-          lat: $scope.markers.marker.lat
+        venue = {
+          id: md5.createHash(angular.toJson(location, false)),
+          name: $scope.markers.marker.venue.name,
+          lat: location.lat,
+          lng: location.lng
         };
+
+      $scope.venue = venue;
 
       // Getting the promise of add a new marker.
       Marker.addMarker(venue, $scope.text, $scope.file, location, $scope.user);
@@ -158,4 +160,5 @@ angular.module('publicEducationApp')
 
     $scope.markers = {};
     $scope.backendUrl = BACKEND_URL;
+    $scope.webUrl = WEB_URL;
   });

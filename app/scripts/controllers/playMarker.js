@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('publicEducationApp')
-  .controller('PlayMarkerCtrl', function ($scope, $routeParams, $location, storage, Marker, Leaflet, Phonegap, $window) {
+  .controller('PlayMarkerCtrl', function ($scope, $routeParams, $location, storage, Marker, Leaflet, WEB_URL) {
 
     $scope.venueId = $routeParams.venueId;
     angular.extend($scope, {
@@ -15,6 +15,7 @@ angular.module('publicEducationApp')
     $scope.center = Leaflet.getCenter();
     $scope.selectedMarker = {};
     $scope.playList = [];
+    $scope.webUrl = WEB_URL;
 
     // Default values edit mode ng-class.
     $scope.classPlayerMode = 'playlist-info bottom-bar';
