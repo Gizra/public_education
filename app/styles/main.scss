@@ -44,6 +44,10 @@ body{
 .container {
   margin: 0;
   width: 100%;
+
+  >div {
+    height: 100%;
+  }
 }
 
 // Home page
@@ -887,21 +891,9 @@ div.leaflet-div-icon {
 $metabar: 192px;
 
 /* Unique settings for the 1090x1920px display */
-
-@media screen
-and (max-width:  1080px)
-and (min-width:  1080px)
-and (max-height: 1920px)
-and (min-height: 1920px)
-{
-  body{
-    margin-bottom: $metabar;
-    overflow: hidden;
-  }
-  .container {
-    margin-bottom: 10%;
-    height: 90%;
-  }
+.koc {
+  margin-bottom: 10%;
+  height: 90%;
 
   #site-meta,
   #site-meta.play-marker-meta {
@@ -959,8 +951,6 @@ and (min-height: 1920px)
         }
       }
     }
-
-
   }
 
   .cycle,

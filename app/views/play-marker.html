@@ -1,47 +1,49 @@
-<div id="site-meta" ng-hide="closeMeta" ng-class="{showDetails: showDetails}" class="play-marker-meta">
-  <header>
-    <h1>Public Education</h1>
-    <p class="installation">Record your commands and add them to the map<br>
-    Download for iPhone or Android @ <a href="http://pe.mushon.com">pe.mushon.com</a></p>
-  </header>
-</div>
+<div class="{{customCss}}">
+  <div id="site-meta" ng-hide="closeMeta" ng-class="{showDetails: showDetails}" class="play-marker-meta">
+    <header>
+      <h1>Public Education</h1>
+      <p class="installation">Record your commands and add them to the map<br>
+      Download for iPhone or Android @ <a href="http://pe.mushon.com">pe.mushon.com</a></p>
+    </header>
+  </div>
 
-<div class="actions-wrapper">
-  <div class="actions-icons">
-    <add-marker></add-marker>
-    <div>
-      <a ng-href="#/" ng-click="stopPlayingAndCycle()" class="close">Close</a>
+  <div class="actions-wrapper">
+    <div class="actions-icons">
+      <add-marker></add-marker>
+      <div>
+        <a ng-href="#/" ng-click="stopPlayingAndCycle()" class="close">Close</a>
+      </div>
     </div>
   </div>
-</div>
 
-<div class="map-wrapper">
-  <leaflet center="center" markers="markers" defaults="defaults" ></leaflet>
-  <a ng-click="stopPlayingAndCycle()" ng-href="#/" class="dark-overlay"></a>
-  <!-- Placeholder audio marker to float above the map -->
-  <div class="placemark-big"></div>
-</div>
-
-<div class="playlist-info" ng-class="{'bottom-bar': !editMode, 'edit-mode': editMode}">
-  <div class="profie-pic">
-    <img ng-show="selectedMarker.currentRecord.user.photo" ng-src="{{ selectedMarker.currentRecord.user.photo }}" />
+  <div class="map-wrapper">
+    <leaflet center="center" markers="markers" defaults="defaults" ></leaflet>
+    <a ng-click="stopPlayingAndCycle()" ng-href="#/" class="dark-overlay"></a>
+    <!-- Placeholder audio marker to float above the map -->
+    <div class="placemark-big"></div>
   </div>
-  <div class="user-wrapper">
-    <div class="venue-name">
-      {{ selectedMarker.name }}
+
+  <div class="playlist-info" ng-class="{'bottom-bar': !editMode, 'edit-mode': editMode}">
+    <div class="profie-pic">
+      <img ng-show="selectedMarker.currentRecord.user.photo" ng-src="{{ selectedMarker.currentRecord.user.photo }}" />
     </div>
-    <div class="user-name">
-     {{ selectedMarker.currentRecord.user.name }}
-    </div>
-    <div class="action expand" ng-click="toggleEditMode()"> </div>
-    <div class="recording-content">
-      <audio-player play-list="playList" current-record="selectedMarker.currentRecord" play-list-finished="playListFinished" stop-playing="stopPlaying"></audio-player>
+    <div class="user-wrapper">
+      <div class="venue-name">
+        {{ selectedMarker.name }}
+      </div>
+      <div class="user-name">
+       {{ selectedMarker.currentRecord.user.name }}
+      </div>
+      <div class="action expand" ng-click="toggleEditMode()"> </div>
+      <div class="recording-content">
+        <audio-player play-list="playList" current-record="selectedMarker.currentRecord" play-list-finished="playListFinished" stop-playing="stopPlaying"></audio-player>
 
-      <p class="record-text"> {{ selectedMarker.currentRecord.text }}</p>
+        <p class="record-text"> {{ selectedMarker.currentRecord.text }}</p>
 
 
-      <share-buttons id="venueId" text="selectedMarker.currentRecord.text" web-url="webUrl"></share-buttons>
+        <share-buttons id="venueId" text="selectedMarker.currentRecord.text" web-url="webUrl"></share-buttons>
 
+      </div>
     </div>
   </div>
 </div>
