@@ -410,6 +410,7 @@ module.exports = function (grunt) {
           DUMMY_WAV_FILE: '<%= yeoman.development.DUMMY_WAV_FILE %>',
           URL_STORE: '<%= yeoman.development.URL_STORE %>',
           CUSTOM_CSS: '<%= yeoman.development.CUSTOM_CSS %>'
+          WEB_URL: '<%= yeoman.development.WEB_URL %>'
         }
       }],
       production: [{
@@ -427,6 +428,7 @@ module.exports = function (grunt) {
           DUMMY_WAV_FILE: '<%= yeoman.production.DUMMY_WAV_FILE %>',
           URL_STORE: '<%= yeoman.production.URL_STORE %>',
           CUSTOM_CSS: '<%= yeoman.production.CUSTOM_CSS %>'
+          WEB_URL: '<%= yeoman.production.WEB_URL %>'
         }
       }]
     }

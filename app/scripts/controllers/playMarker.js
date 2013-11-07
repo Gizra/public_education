@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('publicEducationApp')
-  .controller('PlayMarkerCtrl', function ($scope, $routeParams, $location, storage, Marker, Leaflet, Phonegap, $window) {
+  .controller('PlayMarkerCtrl', function ($scope, $routeParams, $location, storage, Marker, Leaflet, WEB_URL) {
 
     // Apply custom css, if exist.
     storage.bind($scope,'customCss', {defaultValue: 'reset-custom-css'});
@@ -18,6 +18,7 @@ angular.module('publicEducationApp')
     $scope.center = Leaflet.getCenter();
     $scope.selectedMarker = {};
     $scope.playList = [];
+    $scope.webUrl = WEB_URL;
 
     // Default values edit mode ng-class.
     $scope.classPlayerMode = 'playlist-info bottom-bar';
@@ -125,26 +126,5 @@ angular.module('publicEducationApp')
     $scope.toggleEditMode = function() {
       $scope.editMode = !$scope.editMode;
     };
-
-    /**
-     * Share link to twitter, facebook, email.
-     */
-    $scope.shareLink = function(method) {
-      var url;
-      var text = $scope.selectedMarker.currentRecord.text + '-' + encodeURIComponent($location.absUrl());
-
-      if (method === 'twitter') {
-        url = 'https://twitter.com/share?text='+text;
-      }
-      else if (method === 'facebook') {
-        url = 'http://www.facebook.com/sharer/sharer.php?s=100&p[url]=' + encodeURIComponent($location.absUrl()) + '&p[title]=Public%20Education&p[summary]=' + text;
-      }
-      else if (method === 'email') {
-        url = 'mailto:?body=' + text + ' - ' + encodeURIComponent($location.absUrl());
-      }
-
-      $window.open(url, method, 'width=626,height=445');
-    };
-
 
   });
