@@ -15,10 +15,7 @@
       "iOS": "https://itunes.apple.com/app/chrome/id535886823?mt=8",
       "android" : "https://play.google.com/store/apps/details?id=com.android.chrome"
     },
-    "CUSTOM_CSS" : {
-      "route": "koc",
-      "css" : "custom-css"
-    }
+    "CUSTOM_CSS" : "koc"
   },
   "production": {
     "FOURSQUARE": {
@@ -36,9 +33,6 @@
       "iOS": "https://itunes.apple.com/app/chrome/id535886823?mt=8",
       "android" : "https://play.google.com/store/apps/details?id=com.android.chrome"
     },
-    "CUSTOM_CSS" : {
-      "route": "koc",
-      "css" : "custom-css"
-    }
+    "CUSTOM_CSS" : "koc"
   }
 }

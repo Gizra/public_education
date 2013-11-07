@@ -7,10 +7,10 @@ angular.module('publicEducationApp')
     storage.bind($scope,'isCustomCss', {defaultValue: false});
     storage.bind($scope,'customCss', {defaultValue: 'reset-custom-css'});
 
-    if ($routeParams.route === CUSTOM_CSS.route) {
+    if ($routeParams.route === 'apply') {
       // Activate custom css.
       $scope.isCustomCss = true;
-      $scope.customCss = $scope.customCss + ' ' +  CUSTOM_CSS.css;
+      $scope.customCss = $scope.customCss + ' ' +  CUSTOM_CSS;
     }
     else if ($routeParams.route === 'reset') {
       // Return default values.
