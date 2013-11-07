@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('publicEducationApp')
-  .controller('ListMarkersCtrl', function ($scope, $window, Leaflet, storage, Marker, Geolocation, $location, $timeout, IS_MOBILE) {
+  .controller('ListMarkersCtrl', function ($scope, $window, Leaflet, storage, Marker, Geolocation, $location, $timeout, IS_MOBILE, URHERE_ICON) {
 
     angular.extend($scope, Leaflet.getDefaults());
     storage.bind($scope,'center', {defaultValue: Leaflet.getCenter()});
@@ -11,7 +11,8 @@ angular.module('publicEducationApp')
     $scope.marker.lng = $scope.center.lng;
     // Set icon current position.
     $scope.marker.icon = $window.L.icon({
-      iconUrl: '../fixed_images/urhere@2x.png',
+      // On phonegap only work a URI not a local file
+      iconUrl: URHERE_ICON,
       iconSize: [80, 80],
       // These values are required.
       iconAnchor: [0, 0],

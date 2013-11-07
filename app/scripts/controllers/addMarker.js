@@ -166,7 +166,7 @@ angular.module('publicEducationApp')
     $scope.marker.lng = $scope.center.lng;
     // Set icon current position.
     $scope.marker.icon = $window.L.icon({
-      iconUrl: '../fixed_images/urhere@2x.png',
+      iconUrl: URHERE_ICON,
       iconSize: [80, 80],
       // These values are required.
       iconAnchor: [0, 0],

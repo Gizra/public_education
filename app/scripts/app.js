@@ -8,6 +8,7 @@ angular.module('publicEducationApp', [
     'angular-md5'
   ])
   .config(function ($routeProvider, $httpProvider) {
+
     $routeProvider
       .when('/', {
         templateUrl: 'views/main.html',
