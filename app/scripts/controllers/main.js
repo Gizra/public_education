@@ -5,6 +5,10 @@ angular.module('publicEducationApp')
 
     angular.extend($scope, Leaflet.getDefaults());
     storage.bind($scope,'center', {defaultValue: Leaflet.getCenter()});
+    $scope.markers = {};
+    $scope.marker = {};
+    $scope.marker.lat = $scope.center.lat;
+    $scope.marker.lng = $scope.center.lng;
 
 
     $scope.getCurrentPosition = function() {
@@ -12,6 +16,21 @@ angular.module('publicEducationApp')
         $scope.center.lat = data.lat;
         $scope.center.lng = data.lng;
         $scope.center.zoom = 16;
+      });
+
+
+      // Set Current position marker. By using "marker" instead of "markers" we
+      // assure it's going to be the first marker in the list.
+      $scope.marker = {};
+      $scope.marker.lat = $scope.center.lat;
+      $scope.marker.lng = $scope.center.lng;
+      // Set icon current position.
+      $scope.marker.icon = $window.L.divIcon({
+        iconSize: [30, 35],
+        // Set the icon according to the playlist count.
+        html: '<div class="marker-icon-current"></div>',
+        // @todo: angular-leaflet fails without this one.
+        iconAnchor:   [15, 35]
       });
     };
 
@@ -27,8 +46,6 @@ angular.module('publicEducationApp')
       }
     }
 
-
-    $scope.markers = {};
 
     $scope.playAllMarkers = function() {
       Marker.setPlayingAllMarkers(true);
@@ -65,6 +82,8 @@ angular.module('publicEducationApp')
 
           $scope.markers[key] = marker;
         });
+
+        // @todo: create a directive? or look for a best way with css?
       })
         // Refresh markers each minute, after data was received.
         .then($timeout(getMarkers, 60000).resolve);
