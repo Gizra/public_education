@@ -12,24 +12,23 @@ angular.module('publicEducationApp')
       },
       link: function postLink(scope, element, attrs) {
 
-        scope.webUrl = scope.webUrl + '/#/play-marker/' + scope.id;
-
         /**
          * Share link to twitter, facebook, email.
          */
-        scope.shareLink = function(method) {
+        scope.shareLink = function(method, text, id) {
           var url;
-          scope.encodedWebUrl = encodeURIComponent(scope.webUrl);
-          var text = scope.text + '-' + scope.encodedWebUrl;
+          var webUrl = scope.webUrl + '/#/play-marker/' + id;
+          var encodedWebUrl = encodeURIComponent(webUrl);
+          text = text + '-' + encodedWebUrl;
 
           if (method === 'twitter') {
             url = 'https://twitter.com/share?text=' + text;
           }
           else if (method === 'facebook') {
-            url = 'http://www.facebook.com/sharer/sharer.php?s=100&p[url]=' + scope.encodedWebUrl + '&p[title]=Public%20Education&p[summary]=' + text;
+            url = 'http://www.facebook.com/sharer/sharer.php?s=100&p[url]=' + encodedWebUrl + '&p[title]=Public%20Education&p[summary]=' + text;
           }
           else if (method === 'email') {
-            url = 'mailto:?body=' + text + ' - ' + scope.encodedWebUrl;
+            url = 'mailto:?body=' + text + ' - ' + encodedWebUrl;
           }
 
           $window.open(url, method, 'width=626,height=445');
