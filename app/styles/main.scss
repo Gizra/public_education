@@ -132,23 +132,18 @@ div.leaflet-div-icon {
 
 }
 
-// @todo It's possible show use icon with css, reseting the parent div.leaflet-div-icon
-// background images without creating a new class div.leaflet-div-icon-current.
+.leaflet-marker-pane {
 
-div.leaflet-div-icon-current {
-  border: 0;
-  background: url(../images/urhere@2x.png) no-repeat;
-  background-size: contain;
-  display: block;
-  height: 30px;
-  width: 35px;
-
-  .marker-icon-current {
-    background: transparent;
-    font-size: 0;
-    color: #fff;
+  div.leaflet-marker-icon:first-child {
+    background: url(../images/urhere@2x.png) no-repeat;
+    background-size: contain;
+    display: block;
+    height: 30px;
+    width: 35px;
   }
+
 }
+
 
 
 
@@ -283,16 +278,16 @@ div.leaflet-div-icon-current {
   padding: 0.55em 5%;
   border: 0;
   background: #FFFDF7 url(../images/grid-paper-lines.png);
- 
+
   @media
-  
+
   only screen and (-webkit-min-device-pixel-ratio: 2),
   only screen and (-moz-min-device-pixel-ratio: 2),
   only screen and (-o-min-device-pixel-ratio: 2/1),
   only screen and (min-device-pixel-ratio: 2),
-  only screen and (min-resolution: 2dppx) 
-  
-  //screen and (max-width: 600px) 
+  only screen and (min-resolution: 2dppx)
+
+  //screen and (max-width: 600px)
   {
     padding-top: 20px;
     background: #FFFDF7 url(../images/grid-paper-lines@2x.png) 0px 7px;
