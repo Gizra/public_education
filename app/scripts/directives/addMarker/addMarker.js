@@ -18,7 +18,7 @@ angular.module('publicEducationApp')
         if (!IS_MOBILE && Phonegap.isMobile.iOS()) {
           scope.url = URL_STORE.iOS;
         }
-        else if (Phonegap.isMobile.Android()) {
+        else if (!IS_MOBILE && Phonegap.isMobile.Android()) {
           scope.url = URL_STORE.android;
         }
         else {
