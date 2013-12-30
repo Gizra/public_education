@@ -16,12 +16,24 @@ angular.module('publicEducationApp')
         scope.isPhoneGap = Phonegap.isMobile.any();
 
         scope.previous = function() {
+          // Pause before change record.
+          if (scope.isPhoneGap) {
+            scope.mediaPlayer.stop();
+            scope.mediaPlayer.release();
+          }
+
           if (scope.currentTrack > 0) {
             --scope.currentTrack;
           }
         };
 
         scope.next = function() {
+          // Pause before change record.
+          if (scope.isPhoneGap) {
+            scope.mediaPlayer.stop();
+            scope.mediaPlayer.release();
+          }
+
           if (scope.currentTrack < scope.playList.length - 1) {
             ++scope.currentTrack;
           }
@@ -48,10 +60,33 @@ angular.module('publicEducationApp')
         }
 
 
-        /**
-         * Play an item in PhoneGap devices.
+        /* Play and pause a record in PhoneGap devices.
+         *
+         * @param pause
+         *  true: Pause the current record.
+         *  false Continue playing the current record.
          */
-        scope.playPhoneGap = function() {
+        scope.playPhoneGap = function(pause) {
+
+          // Realize pause and resume action.
+          if (pause) {
+            if (scope.play) {
+              scope.mediaPlayer.pause();
+            }
+            else {
+              scope.mediaPlayer.play();
+            }
+            scope.play = !scope.play;
+            console.log(scope.play, 'play?');
+            return;
+          }
+
+          // Release resources if not need the last record first.
+          if (scope.mediaPlayer !== undefined) {
+            scope.mediaPlayer.stop();
+            scope.mediaPlayer.release();
+          }
+
           scope.mediaPlayer = Phonegap.getMedia(scope.currentRecord.src,
             function onSuccess() {
 
@@ -64,7 +99,6 @@ angular.module('publicEducationApp')
 
             });
 
-          scope.play = true;
           scope.mediaPlayer.play();
         };
 
@@ -84,12 +118,13 @@ angular.module('publicEducationApp')
 
           // Update currentRecord.
           scope.currentRecord = scope.playList[track];
+          // Set play state.
+          scope.play = true;
 
           if (scope.isPhoneGap) {
             scope.playPhoneGap();
           }
           else if (oldTrack > 0) {
-            scope.play = true;
             // HTML <audio> tag.
             if (oldTrack < track) {
               scope.playerControl.next();
@@ -135,7 +170,7 @@ angular.module('publicEducationApp')
           });
 
           // Initialize the play property.
-          scope.play = true;
+          // scope.play = true;
         }
 
         /**

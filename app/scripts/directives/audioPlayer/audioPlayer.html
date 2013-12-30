@@ -2,7 +2,7 @@
   <audio audio-player player-control="playerControl" playlist="playList" autoplay="true"></audio>
   <a href class="rwd" ng-click="previous()">previous</a>
   <a href ng-class="{'pause': play, 'play': !play}" ng-click="playPauseHtml5()" ng-show="!isPhoneGap">re-play</a>
-  <a href ng-class="{'pause': play, 'play': !play}" ng-click="playPhoneGap()" ng-show="isPhoneGap">re-play</a>
+  <a href ng-class="{'pause': play, 'play': !play}" ng-click="playPhoneGap(true)" ng-show="isPhoneGap">re-play</a>
   <a href class="fwd" ng-click="next()">next</a>
 </div>
 
